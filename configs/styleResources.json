@@ -1,0 +1,27 @@
+﻿{
+	'main':{ 
+		attrs : {
+		
+		}
+		, items: [
+			'/third-party/jquery.ui/css/flick/jquery-ui-1.10.3.custom.min.css',
+			'/styles/css/app/mixSub.css',
+			'/third-party/bootstrap/css/bootstrap.min.css',
+			'/third-party/bootstrap/css/bootstrap-responsive.css',
+			'/styles/css/app/bootstrap-theme/uniform/default.css',
+			'/styles/css/app/bootstrap-theme/uniform/simplenso.css',
+			'/styles/css/app/yaryin.ui.css',
+			'/styles/css/app/main.css',
+
+		]
+	}
+	, 'mob':{ 
+		attrs : {
+		
+		}
+		, items: [
+		'/styles/css/app/yaryin.ui.css',
+		'/third-party/jquery.mobile/custom/a_h.css',
+		]
+	}
+}

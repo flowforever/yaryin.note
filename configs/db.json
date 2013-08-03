@@ -1,0 +1,4 @@
+﻿{
+    mongo:'mongodb://localhost/avril_meal'
+	, shortUrl:'mongodb://localhost/avril_shortUrl'
+}

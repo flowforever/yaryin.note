@@ -1,0 +1,103 @@
+﻿@{
+    var avril = locals.helper.avril;
+    var guid = avril.guid();
+}
+<div class="btn-toolbar">
+    @if(locals.commands){         
+        for(var p in locals.commands){
+        <a class="btn btn-large @locals.commands[p]["class"]" href="@locals.commands[p].href" @locals.helper.html.attrs(locals.commands[p].attrs) >@(p.localize(locals.helper))</a>
+        }
+    }
+</div>
+<div id="datatable_wrapper" class="dataTables_wrapper" role="grid">
+    <div class="row-fluid">
+        <div class="span6">
+            <div id="datatable_length-@guid" class="dataTables_length">
+            </div>
+        </div>
+    </div>
+    @if(locals.model){
+        if(locals.model.items&&locals.model.items.length){
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered bootstrap-datatable dataTable" id="datatable-@guid" aria-describedby="datatable_info">
+            <thead>
+                <tr role="row">
+                    @for(var i = 0 ; i < locals.columns.length; i++){                        
+                        if(typeof (locals.columns[i]) == 'object'){
+                        <th class="header @locals.columns[i].headCls"  @(locals.columns[i].headAttrs?locals.helper.html.attrs(locals.columns[i].headAttrs()||{}):'')>
+                            @((locals.columns[i].text || locals.columns[i].name || '').localize(locals.helper))
+                        </th>
+                        }else{
+                        <th class="header">@((locals.columns[i]||'').localize(locals.helper))</th>
+                        }
+                    }
+                    <th class="header">@("Actions".localize(locals.helper))</th>
+                </tr>
+            </thead>
+
+            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                @for(var i = 0 ; i < locals.model.items.length; i++){
+                    <tr class="@(i%2==0?"odd":"even")" >
+                        @for(var j = 0 ; j < locals.columns.length; j++){
+                            if(typeof (locals.columns[j]) == 'object'){
+                            <td class="@locals.columns[j].itemCls" @(locals.columns[j].itemAttrs?locals.helper.html.attrs(locals.columns[j].itemAttrs(locals.model.items[i])||{}):'')>
+                                @if(locals.columns[j].func){
+                                    <span>@(locals.columns[j].func(locals.model.items[i]))</span>
+                                    }else{
+                                    <span>@locals.model.items[i][locals.columns[j].name || locals.columns[j].text]</span>
+                                    }
+                            </td>
+                            }else{
+                            <td>@locals.model.items[i][locals.columns[j]]</td>
+                            }
+                        }
+                        <td class="center actions">
+                            @if(locals.actions){
+                                for(var j=0;j<locals.actions.length;j++){
+                                <a class="@locals.actions[j].cls" href="@(locals.actions[j].action?locals.helper.url.action(locals.actions[j].action(locals.model.items[i])):'')"  @(locals.actions[j].attrs?locals.helper.html.attrs(locals.actions[j].attrs(locals.model.items[i])||{}):'')>
+                                    <i class="@locals.actions[j].icon"></i>
+                                    @locals.actions[j].text.localize(locals.helper)
+                                </a> 
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        }
+        if(locals.model.pageNum>0){
+        <div class="row-fluid">
+            <div class="span6">
+                <label>
+                    @locals.helper.html.select("datatable_length", locals.model.pageSize ||  50 , "10,25,50,100".split(","),{"data-param":"pageSize","class":"beautify" ,style:"width:100px"})
+                    @("records per page".localize(locals.helper))
+                </label>
+                <div class="dataTables_info" id="datatable_info-@guid">@locals.model.currentIndex - @locals.model.pageNum</div>
+            </div>
+            <div class="span6">
+                <div class="dataTables_paginate paging_bootstrap pagination">
+                    <ul>
+                        @if(locals.model.currentIndex>0){
+                            <li class="prev"><a href="@locals.url.action(locals.helper.avril.extend( locals.helper.req().query,{ index:locals.model.currentIndex - 1} ))">← Previous</a></li>
+                        }
+
+                        @for(var i = locals.model.currentIndex-1; i >= 0 && i>= locals.model.currentIndex-2 ; i-- ){
+                            <li><a href="@locals.url.action(locals.helper.avril.extend( locals.helper.req().query,{ index:i } ))">@(i+1)</a></li>
+                        }
+
+                        <li class="active"><a href="javascript:;">@(locals.model.currentIndex+1)</a></li>
+                        @for(var i = locals.model.currentIndex + 1; i < locals.model.pageNum  && i<= locals.model.currentIndex+2 ; i++){
+                            <li><a href="@locals.url.action(locals.helper.avril.extend( locals.helper.req().query,{ index:i } ))">@(i+1)</a></li>
+                        }
+                        @if(locals.model.currentIndex<locals.model.pageNum-1){
+                            <li class="next"><a href="@locals.url.action(locals.helper.avril.extend( locals.helper.req().query,{ index:locals.model.currentIndex +1 } ))">Next → </a></li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        }
+    }
+</div>
+

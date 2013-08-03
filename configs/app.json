@@ -1,0 +1,21 @@
+﻿{
+	version:new Date().toJSON().substring(0, 18).replace(/\:/g, '-').replace('.', '-')
+    , port:9301
+	, combine:0
+	, minifyJs:0
+	, minifyCss:0
+	, host:'http://localhost:9301'
+	, smtpOptions: {
+        host: "smtp.exmail.qq.com", // hostname
+        secureConnection: true, // use SSL
+        port: 465, // port for secure SMTP
+        auth: {
+            user: 'dev@yaryin.com',
+            pass: 'yaryin2012'
+        }
+    }
+	, serverErrorNotifyEmail:'dev_error@yaryin.com'
+	, serverName:"develop server"
+	, appid :'songyiwen_' +(20100226).toString(13) // songyiwen_4219c33
+	, bdAppKey : '074c0c513cf3c8860a1619dbc9a2b7bf'
+} 

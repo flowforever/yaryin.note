@@ -1,0 +1,7 @@
+﻿{
+	'/:hashkey':{
+		controller:'home'
+		, action:'index'
+		, method:'*'
+	}
+}

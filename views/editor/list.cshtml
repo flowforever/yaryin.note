@@ -1,0 +1,43 @@
+﻿@{
+    var statusClsDic =  { 
+                            "actived":" badge-success"  
+                            , "closed" : " badge-inverse"
+                        };
+}
+<h3>@("My file list".localize(locals.helper))</h3>
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered bootstrap-datatable dataTable"
+    id="datatable" aria-describedby="datatable_info">
+    <thead>
+        <tr role="row">
+            <th class="header headerSortDown" tabindex="0" style="width: 195px;">@("title".localize(locals.helper))</th>
+            <th class="header"
+                colspan="1" style="width: 123px;" aria-label="Status: activate to sort column ascending">@("date".localize(locals.helper))</th>
+            <th class="header"
+                colspan="1" style="width: 418px;" aria-label="Actions: activate to sort column ascending">@("Actions".localize(locals.helper))</th>
+        </tr>
+    </thead>
+
+    <tbody role="alert" aria-live="polite" aria-relevant="all">
+
+        @if (locals.model.docs)
+                        {
+                            for (var i = 0; i < locals.model.docs.length; i++)
+                            { 
+            <tr class="@(i % 2 == 0 ? "odd" : "even")">
+                <td class="  sorting_1">@locals.model.docs[i].title</td>
+                <td class="center " data-date-calendar="MMMM Do YYYY, h:mm:ss a">@locals.model.docs[i].date</td>
+                <td class="center ">
+                    <a class="btn btn-info" href="@locals.url.action("edit",{shopId:locals.model.docs[i].id})" data-pop="">
+                        <i class="icon-edit icon-white"></i>
+                        @("Edit".localize(locals.helper))
+                    </a>
+                    <a class="btn btn-info" href="@locals.url.action("advance",{shopId:locals.model.docs[i].id})" data-pop="{}">
+                        <i class="icon-edit icon-white"></i>
+                        @("Delete".localize(locals.helper))
+                    </a>
+                </td>
+            </tr>
+                            }
+                        }
+    </tbody>
+</table>
