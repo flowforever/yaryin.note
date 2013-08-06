@@ -16,10 +16,11 @@
 			'/scripts/moment.js',
 			'/scripts/langs.min.js',
 
-			'/scripts/yaryin/yaryin.js',
-			'/scripts/yaryin/yaryin.ui.js',
-			'/scripts/common/yaryin.tools.js',
-			'/scripts/yaryin/yaryin.validator.js',
+			'/third-party/yaryin-front/extension.js',
+			'/third-party/yaryin-front/yaryin.js',
+			'/third-party/yaryin-front/yaryin.ui.js',
+			'/third-party/yaryin-front/yaryin.tools.js',
+			'/third-party/yaryin-front/yaryin.validator.js',
 
 		]
 	}
@@ -45,10 +46,11 @@
 			'/third-party/bootstrap/js/bootstrap.js',
 			'/scripts/chosen.jquery.min.js',
 
-			'/scripts/yaryin/yaryin.js',
-			'/scripts/yaryin/yaryin.ui.js',
-			'/scripts/yaryin/yaryin.tools.js',
-			'/scripts/yaryin/yaryin.validator.js',
+			'/third-party/yaryin-front/extension.js',
+			'/third-party/yaryin-front/yaryin.js',
+			'/third-party/yaryin-front/yaryin.ui.js',
+			'/third-party/yaryin-front/yaryin.tools.js',
+			'/third-party/yaryin-front/yaryin.validator.js',
 
 			'/scripts/app/app.main.js',
 			'/scripts/app/app.events.js'
