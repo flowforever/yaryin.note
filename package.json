@@ -1,0 +1,21 @@
+﻿{
+  "name": "yaryin.meal",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Yaryin meal service",
+  "main": "app9301.js",
+  "scripts": {
+    "start": "forever start app9301.js"
+  },
+  "dependencies": {
+    "express": "=3.0.6",
+    "avril": "=0.0.10",
+    "underscore": "=1.4.3",
+    "forever": "=0.10.0",
+    "wind.js": "",
+    "short": ""
+  },
+  "repository": "",
+  "author": "Bruce Dou",
+  "license": "BSD"
+}

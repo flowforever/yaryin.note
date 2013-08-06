@@ -1,0 +1,3 @@
+[submodule "public/third-party/yaryin-front"]
+	path = public/third-party/yaryin-front
+	url = https://github.com/flowforever/yaryin-front
