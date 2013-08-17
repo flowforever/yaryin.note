@@ -13,17 +13,11 @@ var path = require('path')
 String.prototype.real = function (helper) {
     return helper.view.lookup(this.toString());
 }
-
-
-
 var resourceScript = avril.mvc.HtmlHelper.prototype.resourceScript;
 
 var resourceStyle = avril.mvc.HtmlHelper.prototype.resourceStyle
 
 Object.keys(scriptResources).forEach(function (key) {
-    console.log('fuck');
-    console.log(key);
-    console.log(scriptResources[key]);
     resourceScript(key, scriptResources[key].minify || appConfig.minifyJs, scriptResources[key].version || appConfig.version, scriptResources[key].items, scriptResources[key].attrs, appConfig.minifyScriptEx);
     //resourceName, combine, version, scriptList, attrs
 });

@@ -69,10 +69,10 @@
         app.use(express.bodyParser());
 
         var avril = require('avril');
-
         avril.app = app;
-
         avril.initRootDir(__dirname);
+
+        var appConfig = avril.getConfig('app');
 
         avril.initComponent('mvc', {
             app: app
@@ -85,7 +85,7 @@
 
         avril.initComponent('localize', {});
 
-        var appConfig = avril.getConfig('app');
+        
 
         appConfig.port = port || appConfig.port;
 

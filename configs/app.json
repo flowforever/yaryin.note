@@ -1,10 +1,9 @@
 ﻿{
 	version:new Date().toJSON().substring(0, 18).replace(/\:/g, '-').replace('.', '-')
     , port:9301
-	, combine:0
-	, minifyJs:0
+	, minifyJs:false
 	, minifyJsEx:'.dev.js'
-	, minifyCss:0
+	, minifyCss:false
 	, minifyCssEx:'.dev.css'
 	, host:'http://localhost:9301'
 	, smtpOptions: {
