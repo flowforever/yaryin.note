@@ -11,12 +11,8 @@
 
 module.exports = {
     index: function (req, res, next, helper) {
-        if (!req.param('hashkey')) {
-            res.redirect('/' + generateHashKey());
-        } else {
-            res.view({
-                current: new Date() + req.param('hashkey')
-            });
-        }
+        res.view({
+            hashkey: generateHashKey()
+        });
     }
 };

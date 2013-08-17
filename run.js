@@ -78,6 +78,9 @@
             app: app
             , viewEngine: require('jshtml')
             , routes: avril.getConfig('route')
+            , appConfig: appConfig
+            , styleResources: avril.getConfig('styleResources')
+            , scriptResources: avril.getConfig('scriptResources')
         });
 
         avril.initComponent('localize', {});
