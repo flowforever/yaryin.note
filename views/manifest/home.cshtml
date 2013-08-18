@@ -1,0 +1,20 @@
+﻿CACHE MANIFEST
+# version @locals.helper.avril.getConfig('app').version
+
+#page
+/
+
+#script
+/resources/configScript  
+/third-party/tinymce/js/tinymce/tinymce.min.js  
+@locals.helper.html.resourceScriptList("base").join('\r\n')
+@locals.helper.html.resourceScriptList("home").join('\r\n')
+
+
+#styles
+@locals.helper.html.resourceStyleList("main").join('\r\n')
+
+NETWORK:
+*
+
+FALLBACK:

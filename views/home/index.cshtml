@@ -9,7 +9,9 @@
 </div>
 <script>
     var noteData = {
-        hashkey: '@model.hashkey'
+        hashkey: document.location.hash || '@model.hashkey'
     };
+
+    !document.location.hash && (document.location.href = '#@model.hashkey');
 </script>
 

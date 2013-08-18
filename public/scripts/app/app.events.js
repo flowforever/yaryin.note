@@ -425,13 +425,9 @@
 
     //init tinymce 
     yaryin.app.initDoc.onInitDoc(function init_tinymce() {
-
         tinymce.init({
             selector: "textarea.tinymce",
             language: yaryin.app.config.language.replace('-', '_'),
-            /*menu: {
-                file: { title: 'File', items: 'yaryin_newfile yaryin_recent | yaryin_save' }
-            },*/
             plugins: [
            "advlist autolink lists link image charmap print preview hr anchor pagebreak",
            "searchreplace wordcount visualblocks visualchars code fullscreen",

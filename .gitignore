@@ -1,1 +1,3 @@
 /logs/*.ylog
+/public/scripts/bin
+/public/styles/bin

@@ -63,11 +63,11 @@
         }
         , changeUrl: function (orgUrl) {
 
-            orgUrl = orgUrl || decodeURI(document.location.pathname);
+            orgUrl = orgUrl || document.location.hash.replace('#','');
 
             if (orgUrl.indexOf('/') >= 0) { orgUrl = orgUrl.replace('/', '') }
 
-            var invalidChart = function () { return /\%|\\|\/|\:|\#|\s+/g };
+            var invalidChart = function () { return /\%|\\|\/|\:|\#/g };
 
             yaryin.prompt('input you url please.'.localize(localizeKey), function (url) {
                 if (url) {
@@ -78,9 +78,9 @@
                         return false;
                     } else {
                         if (window.history && window.history.pushState) {
-                            history.pushState(null, '', url);
+                            history.pushState(null, '', '#' + url);
                         } else {
-                            document.location.href = '/' + url;
+                            document.location.href = '#' + url;
                         }
                     }
                 } else {
@@ -140,12 +140,12 @@
         editor.addButton('yaryin_changeurl', {
             text: 'Change url',
             icon: false,
-            onclick: function () { note.changeUrl(decodeURI(document.location.pathname)) }
+            onclick: function () { note.changeUrl() }
         });
         editor.addMenuItem('yaryin_changeurl', {
             text: 'Change url',
             context: 'file',
-            onclick: function () { note.changeUrl(decodeURI(document.location.pathname)) }
+            onclick: function () { note.changeUrl() }
         });
 
         //share

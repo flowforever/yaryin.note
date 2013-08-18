@@ -4,14 +4,16 @@
 		
 		}
 		, items:[
-			'/scripts/lib/jquery-1.8.2.js',
-			
+			'/scripts/lib/jquery-1.8.2.js',			
 			'/third-party/jquery.ui/jquery-ui-1.9.1.custom.js',
 
 			'/scripts/lib/jquery.tmpl.js',
 
 			'/scripts/lib/underscore.js',
 			'/scripts/lib/backbone.js',
+			'/scripts/lib/moment.js',
+			'/scripts/lib/chosen.jquery.min.js',
+			'/third-party/bootstrap/js/bootstrap.min.js',
 
 			'/third-party/yaryin-front/extension.js',
 			'/third-party/yaryin-front/yaryin.js',
@@ -27,7 +29,7 @@
 		, items : [
 		'/scripts/app/app.config.js',
 		'/scripts/app/app.main.js',
-		'/scripts/app/app.events.home.js',
+		'/scripts/app/app.events.js',
 		]
 	}
 }
