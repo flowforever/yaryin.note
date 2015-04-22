@@ -1,5 +1,4 @@
 /logs/*.ylog
 /public/scripts/bin
 /public/styles/bin
-node_modules/*
-.idea/*
+

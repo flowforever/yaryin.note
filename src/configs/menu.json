@@ -1,0 +1,7 @@
+{
+	mainMenu:[
+		{text:"Home",url:"/"},
+		{text:"Documentations",url:"/doc"},
+		{text:"API",url:"/api"},
+	]
+}

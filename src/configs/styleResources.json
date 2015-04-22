@@ -1,0 +1,18 @@
+﻿{
+	'base':{ 
+		attrs : {
+		
+		}
+		, items: [
+			'/third-party/AdminLTE/css/AdminLTE.css',
+		]
+	}
+	, 'app':{
+		attrs : {
+		
+		}
+		, items: [
+			'/styles/app/style.css',
+		]
+	}
+}

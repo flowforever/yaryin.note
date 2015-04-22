@@ -1,0 +1,9 @@
+﻿{
+	pageSetting:{
+		num:10,
+		index:0
+	}
+	, rate : {
+		delNum: 10
+	}
+}
