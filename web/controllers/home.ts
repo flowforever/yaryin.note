@@ -1,9 +1,13 @@
 ///<reference path="../_references.d.ts"/>
 import express = require('express');
 
+import db = require('../../db/db');
+
 class Controller {
-    'index' (req: express.Request, res: express.Response) {
-        res.send('hello typescript');
+
+    'index' (req: express.Request, res) {
+
+        res.view();
     }
 
     'getName' (req: express.Request, res: express.Response) {
