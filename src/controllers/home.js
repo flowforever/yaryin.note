@@ -5,6 +5,7 @@ var Controller = (function () {
         res.send('hello typescript');
     };
     Controller.prototype['getName'] = function (req, res) {
+        res.send('ok');
     };
     return Controller;
 })();

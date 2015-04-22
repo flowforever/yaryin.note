@@ -6,6 +6,8 @@ class Controller {
         res.send('hello typescript');
     }
 
-    'getName' (req: express.Request, res: express.Response) {}
+    'getName' (req: express.Request, res: express.Response) {
+        res.send('ok');
+    }
 }
 module.exports = new Controller();
