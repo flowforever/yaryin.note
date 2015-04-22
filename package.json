@@ -8,8 +8,7 @@
     "start": "forever start app9301.js"
   },
   "dependencies": {
-    "avril": "*",
-    "nodemailer": "*"
+    "avril": "*"
   },
   "repository": {
     "type": "git",

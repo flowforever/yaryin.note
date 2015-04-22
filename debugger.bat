@@ -1,2 +1,0 @@
-always app.js
-pause
