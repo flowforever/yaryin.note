@@ -66,7 +66,7 @@ function pushIndent() {
 function popIndent() {
     indent = indent.slice(0, -2);
 }
-var _ = require('loadash');
+var _ = require('lodash');
 function forEachName(names, action) {
     if (_.isString(names)) {
         action(names);
