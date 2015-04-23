@@ -1,12 +1,11 @@
 ///<reference path="../_references.d.ts"/>
 import express = require('express');
 
-import db = require('../../db/db');
+import services = require('../../services/userServices');
 
 class Controller {
 
     'index' (req: express.Request, res) {
-
         res.view();
     }
 

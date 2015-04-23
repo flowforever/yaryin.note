@@ -1,1 +1,1 @@
-{"version":3,"file":"userServices.js","sourceRoot":"","sources":["userServices.ts"],"names":[],"mappings":"AACgC"}
+{"version":3,"file":"userServices.js","sourceRoot":"","sources":["userServices.ts"],"names":["User","User.constructor"],"mappings":"AAEA,IAAa,IAAI;IAAjBA,SAAaA,IAAIA;IAEjBC,CAACA;IAADD,WAACA;AAADA,CAACA,AAFD,IAEC;AAFY,YAAI,GAAJ,IAEZ,CAAA"}

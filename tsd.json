@@ -16,6 +16,12 @@
     },
     "commander/commander.d.ts": {
       "commit": "2c6d3c7ee23ee9eb51ea8e64f860a5131963e7eb"
+    },
+    "node-fibers/node-fibers.d.ts": {
+      "commit": "25da006de5de3d2e31252fdc988296c7c212f231"
+    },
+    "fibers/fibers.d.ts": {
+      "commit": "25da006de5de3d2e31252fdc988296c7c212f231"
     }
   }
 }
