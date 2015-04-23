@@ -1,6 +1,3 @@
 ﻿{
-    "default_db": "mongodb://localhost/ajax_so_recipe"
-	, "system_db": "mongodb://localhost/ajax_so_system"
-	, "user_db": "mongodb://localhost/ajax_so_user"
-	, "front_db": "mongodb://localhost/ajax_so_system"
+    "default_db": "mongodb://localhost/yaryin_notes"
 }

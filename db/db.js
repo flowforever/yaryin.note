@@ -8,16 +8,17 @@ var DBContext = (function () {
     function DBContext() {
         this._UserSchema = new Schema({});
         this.User = mongoose.model('User', this._UserSchema);
-        this._NoteSchema = new Schema({
+        this._Document = new Schema({
             name: String,
             content: String
         });
-        this.Note = mongoose.model('Note', this._NoteSchema);
-        this.init();
+        this.Document = mongoose.model('Document', this._Document);
     }
-    DBContext.prototype.init = function () {
+    DBContext.prototype.init = function (connectionStr) {
+        mongoose.connect(connectionStr || 'mongodb://localhost/notes');
     };
     return DBContext;
 })();
 exports.DBContext = DBContext;
+$injector.register('db', DBContext);
 //# sourceMappingURL=db.js.map

@@ -326,7 +326,7 @@ var Yok = (function () {
         }
     };
     Yok.prototype.resolveByName = function (name, ctorArguments) {
-        if (name[0] === "$") {
+        if (name[0] === "table") {
             name = name.substr(1);
         }
         if (this.resolutionProgress[name]) {

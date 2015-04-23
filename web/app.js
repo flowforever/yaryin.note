@@ -1,4 +1,5 @@
 /// <reference path="./_references.d.ts"/>
+require('./bootstrap');
 var express = require('express');
 var commander = require('commander'), bodyParser = require('body-parser'), multer = require('multer'), avril = require('avril').initRootDir(process.cwd()), appConfig = avril.getConfig('app');
 var App = (function () {
@@ -18,9 +19,15 @@ var App = (function () {
         App.initCommander();
         this.initExpress();
         this.initAvril();
+        this.initDB();
         this.app.listen(appConfig.port);
         console.log('Application running on:', appConfig.port);
         return this;
+    };
+    App.prototype.initDB = function () {
+        var dbConfig = avril.getConfig('db');
+        var db = $injector.resolve('db');
+        db.init(dbConfig.default_db);
     };
     App.prototype.initExpress = function () {
         var app = this.app;

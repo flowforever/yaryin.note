@@ -10,20 +10,23 @@ var Schema = mongoose.Schema;
 export class DBContext {
 
     constructor () {
-        this.init();
+
     }
 
-    init() { }
+    init (connectionStr?: string) {
+        mongoose.connect(connectionStr || 'mongodb://localhost/notes');
+    }
 
     _UserSchema = new Schema({
-
     });
     User =  mongoose.model('User', this._UserSchema);
 
-    _NoteSchema = new Schema({
+    _Document = new Schema({
         name: String
         , content: String
     });
-    Note = mongoose.model('Note', this._NoteSchema);
+    Document = mongoose.model('Document', this._Document);
 
 }
+
+$injector.register('db', DBContext);

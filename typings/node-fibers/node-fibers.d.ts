@@ -9,6 +9,21 @@ interface Fiber {
     throwInto: (ex: any) => any;
 }
 
+interface IFuture<T> {
+    detach(): void;
+    get(): T;
+    isResolved (): boolean;
+    proxy<U>(future: IFuture<U>): void;
+    proxyErrors(future: IFuture<any>): IFuture<T>;
+    proxyErrors(futureList: IFuture<any>[]): IFuture<T>;
+    resolver(): Function;
+    resolve(fn: (err: any, result?: T) => void): void;
+    resolveSuccess(fn: (result: T) => void): void;
+    return(result?: T): void;
+    throw(error: any): void;
+    wait(): T;
+}
+
 declare module "fibers" {
 
     function Fiber(fn: Function): Fiber;
@@ -21,24 +36,48 @@ declare module "fibers" {
     export = Fiber;
 }
 
+interface ICallableFuture<T> {
+    (...args: any[]): IFuture<T>;
+}
+
+interface IFutureFactory<T> {
+    (): IFuture<T>;
+}
+
+interface Function {
+    future<T>(...args: any[]): IFutureFactory<T>;
+}
+
 declare module "fibers/future" {
 
-    class Future {
+    class Future<T> implements IFuture<T> {
         constructor();
         detach(): void;
-        get(): any;
+        get(): T;
         isResolved (): boolean;
-        proxy(future: Future): void;
-        proxyErrors(futureOrList: any): Future;
+        proxy<U>(future: IFuture<U>): void;
+        proxyErrors(future: IFuture<any>): IFuture<T>;
+        proxyErrors(futureList: IFuture<any>[]): IFuture<T>;
         resolver(): Function;
         resolve(fn: Function): void;
         resolveSuccess(fn: Function): void;
-        return(result?: any): void;
+        return(result?: T): void;
         throw (error: any): void;
-        wait (): void;
-        static wait(future: Future);
-        static wait(future_list: Future[]);
-        static wrap(fn: Function): Future;
+        wait(): T;
+        static wrap<W>(obj?: W): W;
+
+        static wait<T>(future: IFuture<T>): void;
+        static wait(future_list: IFuture<any>[]): void;
+        static wait(...future_list: IFuture<any>[]): void;
+
+        static settle<T>(future: IFuture<T>): void;
+        static settle(future_list: IFuture<any>[]): void;
+        static settle(...future_list: IFuture<any>[]): void;
+
+        static fromResult<T>(value: T): IFuture<T>;
+        static fromResult(): IFuture<void>;
+
+        static assertNoFutureLeftBehind(): void;
     }
 
     export = Future;

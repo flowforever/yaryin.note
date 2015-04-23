@@ -1,4 +1,5 @@
 /// <reference path="./_references.d.ts"/>
+require('./bootstrap');
 
 import express = require('express');
 
@@ -28,10 +29,19 @@ class App {
 
         this.initAvril();
 
+        this.initDB();
+
         this.app.listen(appConfig.port);
 
         console.log('Application running on:', appConfig.port);
         return this;
+    }
+
+    initDB(){
+        var dbConfig = avril.getConfig('db');
+        var db = $injector.resolve('db');
+
+        db.init( dbConfig.default_db );
     }
 
     initExpress(){
@@ -65,6 +75,7 @@ class App {
         appConfig.mode =  program.mode;
         appConfig.port = program.port || appConfig.port;
     }
+
 }
 module.exports = new App();
 module .exports.run();
