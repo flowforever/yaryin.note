@@ -33,4 +33,10 @@ export class ServiceBase {
         });
         return future;
     }
+
+    findById(id: string): IFuture<any> {
+        return this.$table.findOneFuture.bind(this.table)({
+            _id: id
+        });
+    }
 }

@@ -12,10 +12,6 @@ export class Document extends sb.ServiceBase {
         super( db.Document );
     }
 
-    getName(id: string) {
-        return this.table.findByIdFuture(id);
-    }
-
     getList() : IFuture<any> {
         return this.getAll();
     }

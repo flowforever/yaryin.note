@@ -363,7 +363,7 @@ export class Yok implements IInjector {
     }
 
     private resolveByName(name: string, ctorArguments?: IDictionary<any>): any {
-        if(name[0] === "table") {
+        if(name[0] === "$") {
             name = name.substr(1);
         }
 

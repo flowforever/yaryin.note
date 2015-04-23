@@ -22,6 +22,11 @@ var ServiceBase = (function () {
         });
         return future;
     };
+    ServiceBase.prototype.findById = function (id) {
+        return this.$table.findOneFuture.bind(this.table)({
+            _id: id
+        });
+    };
     return ServiceBase;
 })();
 exports.ServiceBase = ServiceBase;

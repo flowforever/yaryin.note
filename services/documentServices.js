@@ -11,9 +11,6 @@ var Document = (function (_super) {
         var db = $injector.resolve('db');
         _super.call(this, db.Document);
     }
-    Document.prototype.getName = function (id) {
-        return this.table.findByIdFuture(id);
-    };
     Document.prototype.getList = function () {
         return this.getAll();
     };
