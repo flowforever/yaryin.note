@@ -19,8 +19,12 @@ interface ICommandParameter {
 
 interface Function {
 	future<T>(...args: any[]): IFutureFactory<T>;
-}
 
+	$inject: {
+		args: string[];
+		name: string;
+	};
+}
 
 interface ICommandArgument { }
 
