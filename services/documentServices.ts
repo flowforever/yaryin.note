@@ -7,10 +7,12 @@ import sb = require('./servicesBase');
 
 export class Document extends sb.ServiceBase {
 
-    constructor() {
-        var db = $injector.resolve('db');
-        super( db.Document );
+    constructor($db) {
+        super( $db.Document );
+        this.db = $db;
     }
+
+    db;
 
     getList() : IFuture<any> {
         return this.getAll();

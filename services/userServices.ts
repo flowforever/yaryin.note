@@ -3,24 +3,24 @@ import db = require('../db/db');
 
 import Future = require("fibers/future");
 import Fiber = require('fibers');
+import sb = require('./servicesBase');
 
-export class User {
+export class UserServices extends sb.ServiceBase {
 
-    db = $injector.resolve('db');
-
-    $User = Future.wrap( this.db.User );
-
-    getName() {
-        return 'user';
+    constructor($db) {
+        super($db.User);
+        this.db = $db;
     }
 
+    db;
+
     getList() : IFuture<any> {
-        return this.$User.findFuture({});
+        return this.$table.findFuture({});
     }
 
     add(user) : IFuture<void>{
-        return this.$User.createFuture(user);
+        return this.$table.createFuture(user);
     }
 }
 
-$injector.register('userServices', User);
+$injector.register('userServices', UserServices);

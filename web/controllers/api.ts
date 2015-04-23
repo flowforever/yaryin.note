@@ -27,14 +27,13 @@ class Controller {
 
     'add' (req: express.Request, res: express.Response) {
         (()=>{
-            this.services.add({
+            var saved = this.services.add({
                 name: 'hello-'+ Math.random()
                 , content: 'world-' + new Date()
             }).wait();
-            res.send('ok')
+            res.send(saved)
         }).future()()
     }
-
 
     'get/:id' (req: express.Request, res: express.Response) {
         (()=>{

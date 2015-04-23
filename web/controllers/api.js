@@ -18,11 +18,11 @@ var Controller = (function () {
     Controller.prototype['add'] = function (req, res) {
         var _this = this;
         (function () {
-            _this.services.add({
+            var saved = _this.services.add({
                 name: 'hello-' + Math.random(),
                 content: 'world-' + new Date()
             }).wait();
-            res.send('ok');
+            res.send(saved);
         }).future()();
     };
     Controller.prototype['get/:id'] = function (req, res) {

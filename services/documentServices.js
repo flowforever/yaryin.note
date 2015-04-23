@@ -7,9 +7,9 @@ var __extends = this.__extends || function (d, b) {
 var sb = require('./servicesBase');
 var Document = (function (_super) {
     __extends(Document, _super);
-    function Document() {
-        var db = $injector.resolve('db');
-        _super.call(this, db.Document);
+    function Document($db) {
+        _super.call(this, $db.Document);
+        this.db = $db;
     }
     Document.prototype.getList = function () {
         return this.getAll();

@@ -8,6 +8,7 @@ import Future = require("fibers/future");
 import Fiber = require('fibers');
 
 export class ServiceBase {
+
     constructor(table) {
         this.table = table;
         this.$table = Future.wrap(table);
@@ -17,21 +18,11 @@ export class ServiceBase {
     $table;
 
     getAll() : IFuture<any> {
-        var future = new Future<any>();
-        this.table.find({}, (err, docs) => {
-            if(err) return future.throw(err);
-            return future.return(docs);
-        });
-        return future;
+        return this.$table.findFuture.bind(this.table)({});
     }
 
     add(model): IFuture<any> {
-        var future = new Future<any>();
-        this.table.create(model, (err, res) => {
-            if(err) return future.throw(err);
-            return future.return(res);
-        });
-        return future;
+        return this.$table.createFuture.bind(this.table)(model);
     }
 
     findById(id: string): IFuture<any> {
