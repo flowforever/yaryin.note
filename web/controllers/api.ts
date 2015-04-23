@@ -35,6 +35,7 @@ class Controller {
         }).future()()
     }
 
+
     'get/:id' (req: express.Request, res: express.Response) {
         (()=>{
             var doc = this.services.findById( req.params.id ).wait();
