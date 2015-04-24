@@ -1,0 +1,22 @@
+{
+  "name": "avril.queue",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/flowforever/avril.queue",
+  "keywords": [
+    "async",
+    "flow",
+    "controll"
+  ],
+  "authors": [
+    "Judd Trump"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

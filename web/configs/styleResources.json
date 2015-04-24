@@ -1,5 +1,6 @@
 ﻿{
-	'base':{ 
+	'base':{
+	  	version: '0.0.1',
 		attrs : {
 		
 		}
@@ -7,12 +8,13 @@
 			'/third-party/AdminLTE/css/AdminLTE.css',
 		]
 	}
-	, 'app':{
+	, 'application':{
+  		version: '0.0.1',
 		attrs : {
 		
 		}
 		, items: [
-			'/styles/app/style.css',
+
 		]
 	}
 }

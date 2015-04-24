@@ -1,0 +1,31 @@
+{
+  "name": "avril.queue",
+  "main": "index.js",
+  "homepage": "https://github.com/flowforever/avril.queue",
+  "keywords": [
+    "async",
+    "flow",
+    "controll"
+  ],
+  "authors": [
+    "Judd Trump"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "c58066cf06",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "c58066cf060553b090e06aaba20d7fbaba0ac262"
+  },
+  "_source": "git://github.com/flowforever/avril.queue.git",
+  "_target": "*",
+  "_originalSource": "avril.queue",
+  "_direct": true
+}

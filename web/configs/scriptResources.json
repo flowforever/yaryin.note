@@ -5,18 +5,11 @@
 		}
 		, "version": "0.0.1"
 		, "items": [
-			"/scripts/lib/jquery-1.11.2.min.js",
-			"/scripts/lib/jquery.validate.js",
-			"/scripts/lib/additional-methods.js",
-			"/scripts/lib/jquery.json-2.2.js",
-			"/scripts/lib/jquery.form.min.js",
-			"/third-party/jquery.ui/jquery-ui-1.9.1.custom.js",
-
-			"/scripts/lib/moment.js",
-			"/scripts/lib/langs.min.js",
-
+			"/bower_components/jquery/dist/jquery.js",
+			"/bower_components/angular/angular.js",
+			"/bower_components/lodash/lodash.js",
 			"/bower_components/avril.queue/index.js",
-			"/bower_components/director/build/director.js",
+			"/bower_components/bootstrap/dist/js/bootstrap.js",
 		]
 	}
 	
@@ -37,7 +30,8 @@
 			"/third-party/lt-ie9/respond.min.js"
 		]
 	}
-  	, "app":{
+  	, "application":{
+   		"version": "0.0.1",
 	  "attrs":{
 	  }
       , "items":[

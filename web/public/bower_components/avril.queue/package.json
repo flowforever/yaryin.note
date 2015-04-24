@@ -1,0 +1,31 @@
+{
+  "name": "avril.queue",
+  "version": "0.0.10",
+  "description": "an async flow control queue module",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flowforever/avril.queue.git"
+  },
+  "keywords": [
+    "queue",
+    "avril",
+    "avQ",
+    "async"
+  ],
+  "author": "trump.wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flowforever/avril.queue/issues"
+  },
+  "homepage": "https://github.com/flowforever/avril.queue",
+  "devDependencies": {
+    "fs-extra": "^0.14.0"
+  }
+}
