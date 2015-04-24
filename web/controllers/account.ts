@@ -1,6 +1,6 @@
 ///<reference path="../_references.d.ts"/>
 class  Controller {
-    constructor($userServices, $documentServices){
+    constructor($userServices, $documentServices) {
 
     }
 }

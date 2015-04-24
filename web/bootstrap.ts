@@ -8,8 +8,8 @@ var fs = require('fs');
 global.$injector = require('./../utils/yok').injector;
 
 [
-    '../services'
-    , '../db'
+    '../db'
+    , '../services'
 ].forEach(resolveDir);
 
 function resolveDir(dir) {
