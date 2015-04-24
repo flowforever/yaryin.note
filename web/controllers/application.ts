@@ -33,6 +33,8 @@ class Controller {
             }
         }
 
+        manifest.push('NETWORK:');
+        manifest.push('*');
         res.end( manifest.join('\n') );
 
     }

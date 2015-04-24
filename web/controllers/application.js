@@ -20,6 +20,8 @@ var Controller = (function () {
                 manifest.push(resource.items[k] + '?v=' + resource.version);
             }
         }
+        manifest.push('NETWORK:');
+        manifest.push('*');
         res.end(manifest.join('\n'));
     };
     return Controller;
