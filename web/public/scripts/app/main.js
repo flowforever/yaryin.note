@@ -99,10 +99,19 @@
             , _preDocName = getDocName()
             , loadDocument = function(name) {
                 $('title').html(name + ' - Yindoc');
+                toggleLoadingMode(true);
                 apiServices.getDocument(name, function(res) {
                     editor.setValue(res.content);
                     editor.clearSelection();
+                    toggleLoadingMode(false);
                 });
+            }
+            , toggleLoadingMode = function(loadingMode) {
+                if(loadingMode) {
+                    $('.x-hide-onready').show();
+                }else{
+                    $('.x-hide-onready').hide();
+                }
             };
 
         loadDocument(_preDocName);
@@ -122,5 +131,7 @@
                 loadDocument(docName);
             }
         });
+
+
     });
 })(jQuery);

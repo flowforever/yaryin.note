@@ -8,7 +8,88 @@
     @locals.html.resourceStyle("application")
 </head>
 <body>
-<div class="ui-layout-north">
+
+<style>
+    .spinner {
+        margin: 260px auto;
+        width: 50px;
+        height: 30px;
+        text-align: center;
+        font-size: 10px;
+    }
+
+    .spinner > div {
+        background-color: #333;
+        height: 100%;
+        width: 6px;
+        display: inline-block;
+
+        -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+        animation: stretchdelay 1.2s infinite ease-in-out;
+    }
+
+    .spinner .rect2 {
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s;
+    }
+
+    .spinner .rect3 {
+        -webkit-animation-delay: -1.0s;
+        animation-delay: -1.0s;
+    }
+
+    .spinner .rect4 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+    }
+
+    .spinner .rect5 {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
+    }
+
+    @-webkit-keyframes stretchdelay {
+        0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+        20% { -webkit-transform: scaleY(1.0) }
+    }
+
+    @keyframes stretchdelay {
+        0%, 40%, 100% {
+            transform: scaleY(0.4);
+            -webkit-transform: scaleY(0.4);
+        }  20% {
+               transform: scaleY(1.0);
+               -webkit-transform: scaleY(1.0);
+           }
+    }
+
+    .loader {
+        position: absolute;
+        z-index: 999;
+        width: 100%;
+        height: 100%;
+        background-color:#eeeeee;
+    }
+    .loader span {
+        display: inline-block;
+        position: fixed;
+        bottom: 54px;
+        right: 54px;
+    }
+</style>
+
+<div class="loader x-hide-onready">
+    <span>Loading ....</span>
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+</div>
+
+<div class="ui-layout-north ">
     <div id="toolbar" class="noselect" data-open-title="Hide Toolbar" data-closed-title="Show Toolbar"> <!-- 工具栏 -->
         <i title="New" class="fa fa-file-text-o file-icon app-only" data-name="new"></i>
         <i title="Open" class="fa fa-folder-open-o file-icon app-only" data-name="open"></i>
@@ -70,10 +151,11 @@ T3: 2014-01-02, 9d"></i>
         <i title="Enter license" class="fa fa-key guest-only" data-remodal-target="license-modal"></i>
     </div>
 </div>
-<div class="ui-layout-center">
+<div class="ui-layout-center ">
     <div id="editor" note-editor></div>
     <!-- 编辑器 -->
-    <div class="remodal" data-remodal-options="hashTracking: false" id="emoji-modal" data-remodal-id="emoji-modal"> <!-- emoji 弹出框 -->
+    <div class="remodal" data-remodal-options="hashTracking: false" id="emoji-modal" data-remodal-id="emoji-modal">
+        <!-- emoji 弹出框 -->
         <h2>Please enter an emoji code:</h2>
 
         <p>Examples: "smile", "whale", "santa", "panda_face", "dog", "truck" ...</p>
@@ -85,7 +167,8 @@ T3: 2014-01-02, 9d"></i>
         <br/><a class="remodal-cancel">Cancel</a>
         <a class="remodal-confirm" id="emoji-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" id="fa-modal" data-remodal-id="fa-modal"> <!-- Font Awesome 弹出框 -->
+    <div class="remodal" data-remodal-options="hashTracking: false" id="fa-modal" data-remodal-id="fa-modal">
+        <!-- Font Awesome 弹出框 -->
         <h2>Please enter a Font Awesome code:</h2>
 
         <p>Examples: "cloud", "flag", "car", "truck", "heart", "dollar" ...</p>
@@ -97,7 +180,8 @@ T3: 2014-01-02, 9d"></i>
         <br/><a class="remodal-cancel">Cancel</a>
         <a class="remodal-confirm" id="fa-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" id="ion-modal" data-remodal-id="ion-modal"> <!-- Ionicons 弹出框 -->
+    <div class="remodal" data-remodal-options="hashTracking: false" id="ion-modal" data-remodal-id="ion-modal">
+        <!-- Ionicons 弹出框 -->
         <h2>Please enter an Ionicons code:</h2>
 
         <p>Examples: "beer", "key", "locked", "location", "plane", "ios-eye" ...</p>
@@ -108,7 +192,8 @@ T3: 2014-01-02, 9d"></i>
         <br/><a class="remodal-cancel">Cancel</a>
         <a class="remodal-confirm" id="ion-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="preferences-modal"> <!-- Preferences 弹出框 -->
+    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="preferences-modal">
+        <!-- Preferences 弹出框 -->
         <img src="/images/icon.png" width="64"/>
 
         <h2>Markdown Plus Preferences</h2>
@@ -190,7 +275,8 @@ T3: 2014-01-02, 9d"></i>
         <p>Home page: <a href="https://tylingsoft.com/mdp" target="_blank">https://tylingsoft.com/mdp</a>.</p>
         <br/><a class="remodal-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="license-modal"> <!-- license 弹出框 -->
+    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="license-modal">
+        <!-- license 弹出框 -->
         <img src="/images/icon.png" width="64"/>
 
         <h2>Please enter your license</h2>
@@ -204,7 +290,7 @@ T3: 2014-01-02, 9d"></i>
         <a class="remodal-confirm">OK</a>
     </div>
 </div>
-<div class="ui-layout-east">
+<div class="ui-layout-east ">
     <article class="markdown-body" id="preview" data-open-title="Hide Preview"
              data-closed-title="Show Preview"></article>
     <!-- 实时预览 -->

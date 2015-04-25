@@ -29,7 +29,7 @@ class Controller {
             return res.end( this.manifest );
         }
 
-        var version = appConfig.minifyJs && appConfig.minifyCss ? this.version : new Date();
+        var version = !appConfig.devMode && appConfig.minifyJs && appConfig.minifyCss ? this.version : new Date();
 
         var manifest = [
             'CACHE MANIFEST'
