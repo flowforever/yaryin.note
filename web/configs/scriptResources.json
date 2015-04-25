@@ -1,41 +1,55 @@
 ﻿{
-	"base":{
-		"attrs" : {
-		
-		}
-		, "version": "0.0.1"
-		, "items": [
-			"/bower_components/jquery/dist/jquery.js",
-			"/bower_components/angular/angular.js",
-			"/bower_components/lodash/lodash.js",
-			"/bower_components/avril.queue/index.js",
-			"/bower_components/bootstrap/dist/js/bootstrap.js",
-		]
-	}
-	
-	, "avril": {
-		"attrs":{
-		}
-		, "items":[
-			"/third-party/avril-front/avril-release/avril.all.latest.js",
-		]
-	}
+  "base": {
+    "attrs": {
+    },
+    "version": "0.0.1",
+    "items": [
+      "/scripts/config.js",
+      "/bower_components/jquery/dist/jquery.js",
+      "/bower_components/jquery-ui-min/jquery-ui.min.js",
 
-	, "lt-ie9": {
-		"attrs" : {
-			
-		}
-		, "items":[
-			"/third-party/lt-ie9/html5shiv.js",
-			"/third-party/lt-ie9/respond.min.js"
-		]
-	}
-  	, "application":{
-   		"version": "0.0.1",
-	  "attrs":{
-	  }
-      , "items":[
-		"/scripts/app/main.js",
-	  ]
-	}
+      "/bower_components/angular/angular.js",
+      "/bower_components/angular-route/angular-route.js",
+      "/bower_components/lodash/lodash.js",
+      "/bower_components/avril.queue/index.js",
+      "/bower_components/bootstrap/dist/js/bootstrap.js",
+    ]
+  },
+  "editor": {
+    "attrs": {
+    },
+    "version": "0.0.1",
+    "items": [
+      "/bower_components/jquery-ui-layout-min/jquery.layout.min.js",
+      "/bower_components/jquery.cookie-min/jquery.cookie.js",
+      "/bower_components/ace-min-noconflict/ace.js",
+      "/bower_components/ace-min-noconflict/ext-static_highlight.js",
+      "/bower_components/ace-min-noconflict/ext-modelist.js",
+      "/bower_components/ace-min-noconflict/keybinding-vim.js",
+      "/bower_components/ace-min-noconflict/keybinding-emacs.js",
+      "/bower_components/markedown/markedown.min.js",
+      "/bower_components/remodal-min/jquery.remodal.min.js",
+      "/bower_components/katex-build/katex.min.js",
+      "/bower_components/mermaid-min/mermaid.full.min.js",
+      "/bower_components/markdown-plus/markdown-plus.js"
+    ]
+  },
+  "lt-ie9": {
+    "attrs": {
+    },
+    "items": [
+      "/third-party/lt-ie9/html5shiv.js",
+      "/third-party/lt-ie9/respond.min.js"
+    ]
+  },
+  "application": {
+    "version": "0.0.1",
+    "attrs": {
+    },
+    "items": [
+      "/scripts/app/appConfig.js",
+      "/scripts/lib/jquery.ba-hashchange.js",
+      "/scripts/app/main.js",
+    ]
+  }
 }

@@ -1,0 +1,51 @@
+{
+  "name": "markdown-plus",
+  "version": "1.4.2",
+  "authors": [
+    "Tyler Long <tyler4long@gmail.com>"
+  ],
+  "description": "Markdown editor with extra features.",
+  "main": "index.html",
+  "keywords": [
+    "markdown",
+    "editor",
+    "flowchart",
+    "sequence diagram",
+    "gantt diagram",
+    "emoji",
+    "GFM",
+    "LaTex",
+    "Font Awesome",
+    "Ionicons"
+  ],
+  "license": "BSD",
+  "homepage": "https://tylingsoft.com/mdp",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "README.md",
+    "screenshot.png",
+    "screenshot2.png",
+    "screenshot3.png",
+    "todo.md",
+    "fabfile.py"
+  ],
+  "dependencies": {
+    "underscore-min": null,
+    "jquery-dist": null,
+    "jquery-ui-min": null,
+    "jquery-ui-layout-min": null,
+    "font-awesome-min": null,
+    "ionicons-min": null,
+    "ace-min-noconflict": null,
+    "markedown": null,
+    "github-markdown-css": null,
+    "remodal-min": null,
+    "katex-build": null,
+    "mermaid-min": null,
+    "jquery.cookie-min": null
+  }
+}

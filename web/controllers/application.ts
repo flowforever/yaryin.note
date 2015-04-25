@@ -7,35 +7,63 @@ import express = require('express');
 import services = require('../../services/documentServices');
 
 var avril = require('avril');
+var appConfig = avril.getConfig('app');
 var scriptConfig = avril.getConfig('scriptResources');
 var styleConfig = avril.getConfig('styleResources');
 
 class Controller {
-    version = Date.now();
+    constructor() {
+        var imgs = [];
+        function readDir() {
+        }
+    }
+    version = new Date();
+
+    manifest: string;
+
+    imgResources = [];
 
     'note' (req: express.Request, res) {
-        var version = this.version;
+
+        if(this.manifest){
+            //return res.end( this.manifest );
+        }
+
+        var version = Date.now();//appConfig.minifyJs && appConfig.minifyCss ? this.version : new Date();
 
         var manifest = [
             'CACHE MANIFEST'
+            , '#' + version
             , '/'
         ];
 
-        cacheResourceItems( scriptConfig.base );
-        cacheResourceItems( scriptConfig.application );
+        cacheResourceItems( 'base', true);
+        cacheResourceItems( 'editor', true);
+        cacheResourceItems( 'application', true);
 
-        cacheResourceItems( styleConfig.base );
-        cacheResourceItems( styleConfig.application );
+        cacheResourceItems( 'base' );
+        cacheResourceItems( 'editor');
+        cacheResourceItems( 'application');
 
-        function cacheResourceItems(resource) {
-            for(var k in resource.items) {
-                manifest.push( resource.items[k] + '?v=' + resource.version);
+        function cacheResourceItems(resourceName, isJS = false) {
+            var items = isJS ? avril.mvc.HtmlHelper.resourceScriptList(resourceName)
+                :  avril.mvc.HtmlHelper.resourceStyleList(resourceName);
+
+            for(var k in items) {
+                manifest.push( items[k] );
             }
+        }
+
+        for(var i in this.imgResources){
+            manifest.push( this.imgResources[i] );
         }
 
         manifest.push('NETWORK:');
         manifest.push('*');
-        res.end( manifest.join('\n') );
+
+        this.manifest = manifest.join('\n');
+
+        res.end( this.manifest );
 
     }
 

@@ -2,46 +2,39 @@ var Controller = (function () {
     function Controller($documentServices) {
         this.services = $documentServices;
     }
-    Controller.prototype['documents'] = function (req, res) {
-        (function () {
-            var services = $injector.resolve('documentServices');
-            var docs = services.getList().wait();
-            var docs2 = services.getList().wait();
-            var docs3 = services.getList().wait();
-            res.send([
-                docs,
-                docs2,
-                docs3
-            ]);
-        }).future()();
-    };
-    Controller.prototype['add'] = function (req, res) {
+    Controller.prototype['get/:name'] = function (req, res) {
         var _this = this;
         (function () {
-            var saved = _this.services.add({
-                name: 'hello-' + Math.random(),
-                content: 'world-' + new Date()
+            var doc = _this.services.findOne({
+                name: req.params.name
             }).wait();
-            res.send(saved);
+            res.send(doc || {});
         }).future()();
     };
-    Controller.prototype['get/:id'] = function (req, res) {
+    Controller.prototype['[post]edit'] = function (req, res) {
         var _this = this;
         (function () {
-            var doc = _this.services.findById(req.params.id).wait();
-            _this.services.findById(req.params.id).wait();
-            var all = _this.services.getAll().wait();
-            var arr = [];
-            for (var i = 0; i < 5; i++) {
-                arr.push(_this.services.getAll().wait());
-                arr.push(_this.services.findById(req.params.id).wait());
+            var saved = null;
+            if (!req.body._id) {
+                saved = _this.services.add({
+                    name: req.body.name,
+                    content: req.body.content
+                }).wait();
+                res.send(saved);
             }
-            res.send({
-                detail: doc,
-                all: all,
-                total: arr
-            });
+            else {
+                saved = _this.services.findById(req.body._id).wait();
+                saved.content = req.body.content;
+                saved.name = req.body.name;
+                saved.save(function () {
+                    res.send(saved);
+                });
+            }
         }).future()();
+    };
+    Controller.prototype.rename = function (req, res) {
+    };
+    Controller.prototype.remove = function (req, res) {
     };
     return Controller;
 })();

@@ -15,6 +15,12 @@ var ServiceBase = (function () {
             _id: id
         });
     };
+    ServiceBase.prototype.find = function (query) {
+        return this.$table.findFuture.bind(this.table)(query);
+    };
+    ServiceBase.prototype.findOne = function (query) {
+        return this.$table.findOneFuture.bind(this.table)(query);
+    };
     return ServiceBase;
 })();
 exports.ServiceBase = ServiceBase;

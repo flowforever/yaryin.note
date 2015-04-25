@@ -17,7 +17,7 @@ function resolveDir(dir) {
         if (/\.js$/.test(filePath)) {
             require(filePath);
         }
-        else if (!(/\.ts$|\.map$/.test(filePath)) && stats.isDirectory()) {
+        else if (!(/\.ts$|\.map$|\.DS_Store$/i.test(filePath)) && stats.isDirectory()) {
             resolveDir(filePath);
         }
     });

@@ -30,4 +30,12 @@ export class ServiceBase {
             _id: id
         });
     }
+
+    find(query:any): IFuture<any>{
+        return this.$table.findFuture.bind(this.table)(query);
+    }
+
+    findOne(query:any): IFuture<any>{
+        return this.$table.findOneFuture.bind(this.table)(query);
+    }
 }

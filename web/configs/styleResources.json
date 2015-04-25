@@ -1,20 +1,43 @@
 ﻿{
-	'base':{
-	  	version: '0.0.1',
-		attrs : {
-		
-		}
-		, items: [
-			'/third-party/AdminLTE/css/AdminLTE.css',
-		]
-	}
-	, 'application':{
-  		version: '0.0.1',
-		attrs : {
-		
-		}
-		, items: [
-
-		]
-	}
+  "base": {
+    "version": "0.0.1",
+    "attrs": {
+    },
+    "items": [
+      "/third-party/AdminLTE/css/AdminLTE.css",
+      "/bower_components/jquery-ui-min/themes/base/jquery-ui.min.css",
+      "/bower_components/jquery-ui-layout-min/layout-default.css",
+      "/bower_components/github-markdown-css/github-markdown.css",
+      "/bower_components/font-awesome-min/css/font-awesome.min.css",
+      "/bower_components/remodal-min/jquery.remodal.css",
+      "/bower_components/katex-build/katex.min.css",
+      "/bower_components/ionicons-min/css/ionicons.min.css",
+      "/bower_components/mermaid-min/mermaid.css",
+      "/bower_components/markdown-plus/markdown-plus.css"
+    ]
+  },
+  "editor": {
+    "version": "0.0.1",
+    "attrs": {
+    },
+    "items": [
+      "/bower_components/jquery-ui-min/themes/base/jquery-ui.min.css",
+      "/bower_components/jquery-ui-layout-min/layout-default.css",
+      "/bower_components/github-markdown-css/github-markdown.css",
+      "/bower_components/font-awesome-min/css/font-awesome.min.css",
+      "/bower_components/remodal-min/jquery.remodal.css",
+      "/bower_components/katex-build/katex.min.css",
+      "/bower_components/ionicons-min/css/ionicons.min.css",
+      "/bower_components/mermaid-min/mermaid.css",
+      "/bower_components/markdown-plus/markdown-plus.css"
+    ]
+  },
+  "application": {
+    "version": "0.0.1",
+    "attrs": {
+    },
+    "items": [
+      "/styles/main.css"
+    ]
+  }
 }

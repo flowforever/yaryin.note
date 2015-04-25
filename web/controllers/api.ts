@@ -11,49 +11,43 @@ class Controller {
 
     services;// = <services.Document>$injector.resolve('documentServices');
 
-    'documents' (req: express.Request, res: express.Response) {
-        (()=>{
-            var services = <services.Document>$injector.resolve('documentServices');
-            var docs = services.getList().wait();
-            var docs2 = services.getList().wait();
-            var docs3 = services.getList().wait();
-            res.send( [
-                docs,
-                docs2,
-                docs3
-            ] )
+    'get/:name'(req:express.Request, res:express.Response) {
+        (()=> {
+            var doc = this.services.findOne({
+                name: req.params.name
+            }).wait();
+            res.send(doc||{});
         }).future()();
     }
 
-    'add' (req: express.Request, res: express.Response) {
-        (()=>{
-            var saved = this.services.add({
-                name: 'hello-'+ Math.random()
-                , content: 'world-' + new Date()
-            }).wait();
-            res.send(saved)
+    '[post]edit'(req:express.Request, res:express.Response) {
+        (()=> {
+            var saved = null;
+            if(!req.body._id) {
+                saved = this.services.add({
+                    name: req.body.name
+                    , content: req.body.content
+                }).wait();
+                res.send(saved);
+            } else {
+                saved = this.services.findById(req.body._id).wait();
+                saved.content = req.body.content;
+                saved.name = req.body.name;
+                saved.save(function(){
+                    res.send(saved);
+                });
+            }
         }).future()()
     }
 
-    'get/:id' (req: express.Request, res: express.Response) {
-        (()=>{
-            var doc = this.services.findById( req.params.id ).wait();
-            this.services.findById( req.params.id ).wait();
+    rename(req:express.Request, res:express.Response) {
 
-            var all = this.services.getAll().wait();
-
-            var arr = [];
-            for(var i=0; i<5;i++){
-                arr.push( this.services.getAll().wait() );
-                arr.push( this.services.findById( req.params.id ).wait() );
-            }
-            res.send({
-                detail: doc
-                , all: all
-                , total: arr
-            });
-        }).future()();
     }
+
+    remove(req, res) {
+
+    }
+
 }
 
 $injector.register('apiHomeController', Controller);
