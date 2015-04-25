@@ -5,7 +5,15 @@ var styleConfig = avril.getConfig('styleResources');
 var Controller = (function () {
     function Controller() {
         this.version = new Date();
-        this.imgResources = [];
+        this.staticResources = [
+            "/bower_components/ace-min-noconflict/ace.js",
+            "/bower_components/ace-min-noconflict/ext-static_highlight.js",
+            "/bower_components/ace-min-noconflict/theme-tomorrow_night_eighties.js",
+            "/bower_components/ace-min-noconflict/ext-modelist.js",
+            "/bower_components/ace-min-noconflict/keybinding-vim.js",
+            "/bower_components/ace-min-noconflict/keybinding-emacs.js",
+            "/bower_components/ace-min-noconflict/mode-markdown.js"
+        ];
         var imgs = [];
         function readDir() {
         }
@@ -33,8 +41,8 @@ var Controller = (function () {
                 manifest.push(items[k]);
             }
         }
-        for (var i in this.imgResources) {
-            manifest.push(this.imgResources[i]);
+        for (var i in this.staticResources) {
+            manifest.push(this.staticResources[i]);
         }
         manifest.push('NETWORK:');
         manifest.push('*');
