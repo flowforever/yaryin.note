@@ -26,10 +26,10 @@ class Controller {
     'note' (req: express.Request, res) {
 
         if(this.manifest){
-            //return res.end( this.manifest );
+            return res.end( this.manifest );
         }
 
-        var version = Date.now();//appConfig.minifyJs && appConfig.minifyCss ? this.version : new Date();
+        var version = appConfig.minifyJs && appConfig.minifyCss ? this.version : new Date();
 
         var manifest = [
             'CACHE MANIFEST'
