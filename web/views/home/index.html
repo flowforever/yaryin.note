@@ -91,12 +91,16 @@
 
 <div class="ui-layout-north ">
     <div id="toolbar" class="noselect" data-open-title="Hide Toolbar" data-closed-title="Show Toolbar"> <!-- 工具栏 -->
-        <i title="New" class="fa fa-file-text-o file-icon app-only" data-name="new"></i>
+        <i title="New" class="fa fa-file-text-o file-icon"
+           data-name="new"
+           data-remodal-target="dlg-new-file"
+                ></i>
+        <i title="Open" class="fa fa-folder-open-o file-icon" data-name="open"></i>
         <i title="Open" class="fa fa-folder-open-o file-icon app-only" data-name="open"></i>
         <i title="Save" class="fa fa-save file-icon app-only" data-name="save"></i>
         <i title="Export to HTML" class="fa fa-file-code-o file-icon app-only" data-name="html"></i>
         <i title="Export to PDF" class="fa fa-file-pdf-o file-icon app-only" data-name="pdf"></i>
-        <i class="dividor app-only">|</i>
+        <i class="dividor">|</i>
         <i title="Bold" class="fa fa-bold styling-icon" data-modifier="**"></i>
         <i title="Italic" class="fa fa-italic styling-icon" data-modifier="*"></i>
         <i title="Strikethrough" class="fa fa-strikethrough styling-icon" data-modifier="~~"></i>
@@ -152,7 +156,7 @@ T3: 2014-01-02, 9d"></i>
     </div>
 </div>
 <div class="ui-layout-center ">
-    <div id="editor" note-editor></div>
+    <div id="editor"></div>
     <!-- 编辑器 -->
     <div class="remodal" data-remodal-options="hashTracking: false" id="emoji-modal" data-remodal-id="emoji-modal">
         <!-- emoji 弹出框 -->
@@ -275,18 +279,14 @@ T3: 2014-01-02, 9d"></i>
         <p>Home page: <a href="https://tylingsoft.com/mdp" target="_blank">https://tylingsoft.com/mdp</a>.</p>
         <br/><a class="remodal-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="license-modal">
-        <!-- license 弹出框 -->
-        <img src="/images/icon.png" width="64"/>
-
-        <h2>Please enter your license</h2>
-
-        <p>Email: <input id="email"/></p>
-
-        <p>License: <input id="license"/></p>
-
-        <p>Don't have a license? <a href="https://tylingsoft.com/mdp" target="_blank">Purchase one</a>.</p>
-        <br/><a class="remodal-cancel">Cancel</a>
+    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="dlg-new-file">
+        <h2>Please input new file name:</h2>
+        <p>Name: <input id="email" placeholder="new file"/> </p>
+        <a class="remodal-confirm">OK</a>
+    </div>
+    <div class="remodal" data-remodal-options="hashTracking: false" editor-component="rename" data-remodal-id="dlg-rename">
+        <h2>Please input new file name:</h2>
+        <p>Name: <input placeholder="new file"/> </p>
         <a class="remodal-confirm">OK</a>
     </div>
 </div>
