@@ -23,9 +23,13 @@
                 this.writeXHR.abort();
                 this.writeXHR = null;
             }
-            var self = this;
+            var self = this
+                , otherArg = '';
+            if($.browser.msie) {
+                otherArg = '?r=' + (new Date()).getTime()
+            }
             this.writeXHR = $.ajax({
-                url: '/api/get/' + encodeURIComponent(name)
+                url: '/api/get/' + encodeURIComponent(name) + otherArg
                 , dataType: 'json'
                 , success: function (res) {
                     done(res);
