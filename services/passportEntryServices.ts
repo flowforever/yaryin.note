@@ -10,6 +10,7 @@ class PassportEntryServices implements passports.IPassportEntryServices {
 
     constructor(
         $sinaPassportServices
+        , $qqPassportServices
     ) {
         for (var i in arguments) {
             this.passports.push(arguments[i]);

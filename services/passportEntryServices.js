@@ -3,7 +3,7 @@
  */
 /// <reference path="./_references.d.ts"/>
 var PassportEntryServices = (function () {
-    function PassportEntryServices($sinaPassportServices) {
+    function PassportEntryServices($sinaPassportServices, $qqPassportServices) {
         this.passports = [];
         for (var i in arguments) {
             this.passports.push(arguments[i]);
