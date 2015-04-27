@@ -3,3 +3,4 @@
 /public/styles/bin
 node_modules/*
 .idea/*
+*.production.json

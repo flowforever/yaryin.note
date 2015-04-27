@@ -3,3 +3,4 @@
 /// <reference path="node/node.d.ts" />
 /// <reference path="commander/commander.d.ts" />
 /// <reference path="node-fibers/node-fibers.d.ts" />
+/// <reference path="passport/passport.d.ts" />

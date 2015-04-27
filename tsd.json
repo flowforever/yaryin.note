@@ -22,6 +22,9 @@
     },
     "fibers/fibers.d.ts": {
       "commit": "25da006de5de3d2e31252fdc988296c7c212f231"
+    },
+    "passport/passport.d.ts": {
+      "commit": "00e7f3fede5f2df55b56c72f40a144824f0f0bfa"
     }
   }
 }

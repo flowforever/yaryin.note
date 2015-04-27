@@ -38,6 +38,5 @@ var Controller = (function () {
     };
     return Controller;
 })();
-$injector.register('apiHomeController', Controller);
-module.exports = $injector.resolve('apiHomeController');
+module.exports = $injector.resolve(Controller);
 //# sourceMappingURL=api.js.map

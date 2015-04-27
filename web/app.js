@@ -1,9 +1,16 @@
 /// <reference path="./_references.d.ts"/>
 require('./bootstrap');
 var express = require('express');
+var passport = require('passport');
 var commander = require('commander'), bodyParser = require('body-parser'), multer = require('multer'), avril = require('avril').initRootDir(process.cwd()), appConfig = avril.getConfig('app');
 var App = (function () {
-    function App() {
+    function App($passportEntryServices) {
+        this.passportEntry = $passportEntryServices;
+        App.initCommander();
+        this.initExpress();
+        this.initPasport();
+        this.initAvril();
+        App.initDB();
     }
     Object.defineProperty(App.prototype, "app", {
         get: function () {
@@ -15,25 +22,17 @@ var App = (function () {
         enumerable: true,
         configurable: true
     });
-    App.prototype.run = function () {
-        App.initCommander();
-        this.initExpress();
-        this.initAvril();
-        this.initDB();
-        this.app.listen(appConfig.port);
-        console.log('Application running on:', appConfig.port);
-        return this;
-    };
-    App.prototype.initDB = function () {
-        var dbConfig = avril.getConfig('db');
-        var db = $injector.resolve('db');
-        db.init(dbConfig.default_db);
+    App.initCommander = function () {
+        var program = commander.version(appConfig.version).option('-p, --port <n>', 'port').parse(process.argv);
+        appConfig.mode = program.mode;
+        appConfig.port = program.port || process.env.port || appConfig.port;
     };
     App.prototype.initExpress = function () {
         var app = this.app;
         //use nginx to serve static files on production
         process.env.NODE_ENV !== 'production' && app.use(express['static'](__dirname + '/public'));
         app.use(require('cookie-parser')());
+        app.use(require('cookie-session')({ secret: 'a keyboard cat' }));
         app.use(bodyParser.json()); // for parsing application/json
         app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
         app.use(multer()); // for parsing multipart/form-data
@@ -48,13 +47,37 @@ var App = (function () {
             scriptResources: avril.getConfig('scriptResources')
         });
     };
-    App.initCommander = function () {
-        var program = commander.version(appConfig.version).option('-p, --port <n>', 'port').parse(process.argv);
-        appConfig.mode = program.mode;
-        appConfig.port = program.port || appConfig.port;
+    App.prototype.initPasport = function () {
+        var _this = this;
+        passport.serializeUser(function (user, callback) {
+            callback(null, user);
+        });
+        passport.deserializeUser(function (obj, callback) {
+            callback(null, obj);
+        });
+        this.passportEntry.passports.forEach(function (p) {
+            p.init();
+        });
+        // initialize for express
+        this.app.use(passport.initialize());
+        // passport session for express
+        this.app.use(passport.session());
+        this.passportEntry.passports.forEach(function (p) {
+            _this.app.get(p.authUrl, p.authAction);
+            _this.app.get(p.callbackUrl, p.authCallback);
+        });
+    };
+    App.prototype.run = function () {
+        this.app.listen(appConfig.port);
+        console.log('Application running on:', appConfig.port);
+        return this;
+    };
+    App.initDB = function () {
+        var dbConfig = avril.getConfig('db');
+        var db = $injector.resolve('db');
+        db.init(dbConfig.default_db);
     };
     return App;
 })();
-module.exports = new App();
-module.exports.run();
+$injector.resolve(App).run();
 //# sourceMappingURL=app.js.map

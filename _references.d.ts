@@ -4,3 +4,4 @@
 /// <reference path="./typings/tsd.d.ts" />
 /// <reference path="./db/db.ts" />
 /// <reference path="./utils/yok" />
+/// <reference path="./interfaces/passports.d.ts" />

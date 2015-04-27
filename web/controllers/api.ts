@@ -50,6 +50,4 @@ class Controller {
 
 }
 
-$injector.register('apiHomeController', Controller);
-
-module.exports = $injector.resolve('apiHomeController');
+module.exports = $injector.resolve(Controller);

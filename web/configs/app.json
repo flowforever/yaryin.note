@@ -1,5 +1,6 @@
 {
   "version": "1.2",
+  "host" : "http://yindoc.com",
   "port": 9501,
   "minifyJs": false,
   "minifyCss": false,
