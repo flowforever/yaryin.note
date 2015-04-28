@@ -21,6 +21,20 @@ export class UserServices extends sb.ServiceBase {
     add(user) : IFuture<void>{
         return this.$table.createFuture(user);
     }
+
+    findByAccount (accountId: string): IFuture<any> {
+        return (()=>{
+
+            var user = this.$table.findById(accountId).wait();
+            if(!user) {
+                user = this.$table.findOne({
+                    name: accountId
+                }).wait();
+            }
+            return user;
+
+        }).future()();
+    }
 }
 
 $injector.register('userServices', UserServices);

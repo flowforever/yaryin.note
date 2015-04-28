@@ -5,13 +5,14 @@
 var passport = require('passport');
 var passport_sina = require('passport-sina');
 var SinaPassportServices = (function () {
-    function SinaPassportServices($serviceConfig) {
+    function SinaPassportServices($serviceConfig, $db) {
         this.authName = "sina";
         this.authUrl = '/passport/auth/sina';
         this.callbackUrl = '/passport/callback/sina';
         this.authAction = passport.authenticate('sina');
         this.authCallback = passport.authenticate('sina', { failureRedirect: '/passport/failed/sina', successRedirect: '/' });
         this.serviceConfig = $serviceConfig;
+        this.db = $db;
     }
     SinaPassportServices.prototype.init = function () {
         var sinaConfig = this.serviceConfig.authConfig.sina;
@@ -20,6 +21,7 @@ var SinaPassportServices = (function () {
             clientSecret: sinaConfig.APP_SECRET,
             callbackURL: this.serviceConfig.absUrl(this.callbackUrl)
         }, function (accessToken, refreshToken, profile, callback) {
+            console.log(arguments);
             process.nextTick(function () {
                 return callback(null, profile);
             });

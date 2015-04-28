@@ -27,6 +27,7 @@ class QQPassportServices implements passports.IPassport {
                 callbackURL: this.serviceConfig.absUrl(this.callbackUrl)
             },
             function(accessToken, refreshToken, profile, done) {
+                console.log( arguments );
                 // asynchronous verification, for effect...
                 process.nextTick(function () {
                     return done(null, profile);

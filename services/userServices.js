@@ -17,6 +17,18 @@ var UserServices = (function (_super) {
     UserServices.prototype.add = function (user) {
         return this.$table.createFuture(user);
     };
+    UserServices.prototype.findByAccount = function (accountId) {
+        var _this = this;
+        return (function () {
+            var user = _this.$table.findById(accountId).wait();
+            if (!user) {
+                user = _this.$table.findOne({
+                    name: accountId
+                }).wait();
+            }
+            return user;
+        }).future()();
+    };
     return UserServices;
 })(sb.ServiceBase);
 exports.UserServices = UserServices;

@@ -11,9 +11,11 @@ var passport_sina = require('passport-sina');
 
 class SinaPassportServices implements passports.IPassport {
     serviceConfig;
+    db;
 
-    constructor($serviceConfig) {
+    constructor($serviceConfig, $db) {
         this.serviceConfig = $serviceConfig;
+        this.db = $db;
     }
 
     authName = "sina";
@@ -28,6 +30,7 @@ class SinaPassportServices implements passports.IPassport {
                 callbackURL: this.serviceConfig.absUrl(this.callbackUrl)
             },
             function (accessToken, refreshToken, profile, callback) {
+                console.log( arguments );
                 process.nextTick(function () {
                     return callback(null, profile);
                 });

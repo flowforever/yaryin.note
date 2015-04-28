@@ -1,7 +1,7 @@
 ﻿{
-	'visithome':{
+	'/:accountId':{
 		controller:'home'
-		,action:'index'
+		, action:'accountUser'
 	}
 }
 

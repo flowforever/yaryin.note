@@ -6,11 +6,22 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var DBContext = (function () {
     function DBContext() {
-        this._UserSchema = new Schema({});
+        this._UserSchema = new Schema({
+            name: String,
+            email: String,
+            password: String,
+            nickName: String,
+            phone: String,
+            sinaId: String,
+            githubId: String,
+            qqId: String
+        });
         this.User = mongoose.model('User', this._UserSchema);
         this._Document = new Schema({
             name: String,
-            content: String
+            content: String,
+            password: String,
+            mode: String // html, markdown
         });
         this.Document = mongoose.model('Document', this._Document);
     }

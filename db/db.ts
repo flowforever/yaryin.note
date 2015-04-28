@@ -18,12 +18,26 @@ export class DBContext {
     }
 
     _UserSchema = new Schema({
+        name: String
+        , email: String
+        , password: String
+        , nickName: String
+        , phone: String
+
+        //begin social ids
+        , sinaId: String
+        , githubId: String
+        , qqId: String
+        //end social ids
     });
+
     User =  mongoose.model('User', this._UserSchema);
 
     _Document = new Schema({
         name: String
         , content: String
+        , password: String
+        , mode:String // html, markdown
     });
     Document = mongoose.model('Document', this._Document);
 

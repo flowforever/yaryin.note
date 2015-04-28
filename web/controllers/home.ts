@@ -4,10 +4,28 @@ import express = require('express');
 import services = require('../../services/documentServices');
 
 class Controller {
+    userServices;
 
-    'index' (req: express.Request, res) {
+    constructor($userServices) {
+        this.userServices = $userServices;
+    }
+
+    'index'(req:express.Request, res) {
         res.view();
     }
 
+    'accountUser' (req:express.Request, res) {
+        var accountId = req.params.accountId;
+        (() => {
+            var user = this.userServices.findByAccount(accountId).wait();
+            if(!user) {
+                res.view('user_not_found');
+            }else{
+                res.view('index', { user: user });
+            }
+        }).future()();
+    }
+
+
 }
-module.exports = new Controller();
+module.exports = $injector.resolve(Controller);
