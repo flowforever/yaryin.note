@@ -5,7 +5,9 @@ var QQPassportServices = (function () {
         this.authName = "qq";
         this.authUrl = '/passport/auth/qq';
         this.callbackUrl = '/passport/callback/qq';
-        this.authAction = passport.authenticate('qq');
+        this.authAction = passport.authenticate('qq', {
+            state: 'random state value'
+        });
         this.authCallback = passport.authenticate('qq', { failureRedirect: '/passport/failed/qq', successRedirect: '/' });
         this.serviceConfig = $serviceConfig;
     }
@@ -14,6 +16,7 @@ var QQPassportServices = (function () {
         passport.use(new TqqStrategy({
             clientID: qqConfig.APP_KEY,
             clientSecret: qqConfig.APP_SECRET,
+            state: 'trump',
             callbackURL: this.serviceConfig.absUrl(this.callbackUrl)
         }, function (accessToken, refreshToken, profile, done) {
             console.log(arguments);

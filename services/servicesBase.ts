@@ -12,8 +12,10 @@ export class ServiceBase {
     constructor(table) {
         this.table = table;
         this.$table = Future.wrap(table);
+        this.db = $injector.resolve('db');
     }
 
+    db;
     table;
     $table;
 
@@ -37,5 +39,9 @@ export class ServiceBase {
 
     findOne(query:any): IFuture<any>{
         return this.$table.findOneFuture.bind(this.table)(query);
+    }
+
+    isObjectId (id){
+        return this.db.isObjectId(id);
     }
 }

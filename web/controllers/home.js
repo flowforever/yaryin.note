@@ -5,8 +5,11 @@ var Controller = (function () {
     Controller.prototype['index'] = function (req, res) {
         res.view();
     };
-    Controller.prototype['accountUser'] = function (req, res) {
+    Controller.prototype['accountUser'] = function (req, res, next) {
         var _this = this;
+        if (!req.accepts('html')) {
+            return next();
+        }
         var accountId = req.params.accountId;
         (function () {
             var user = _this.userServices.findByAccount(accountId).wait();

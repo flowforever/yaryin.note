@@ -41,6 +41,10 @@ export class DBContext {
     });
     Document = mongoose.model('Document', this._Document);
 
+    isObjectId (id) {
+        return mongoose.Types.ObjectId.isValid(id);
+    }
+
 }
 
 $injector.register('db', DBContext);

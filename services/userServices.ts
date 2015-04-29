@@ -9,10 +9,7 @@ export class UserServices extends sb.ServiceBase {
 
     constructor($db) {
         super($db.User);
-        this.db = $db;
     }
-
-    db;
 
     getList() : IFuture<any> {
         return this.$table.findFuture({});
@@ -23,13 +20,14 @@ export class UserServices extends sb.ServiceBase {
     }
 
     findByAccount (accountId: string): IFuture<any> {
-        return (()=>{
-
-            var user = this.$table.findById(accountId).wait();
-            if(!user) {
-                user = this.$table.findOne({
+         return (()=>{
+            var user;
+            if(!this.isObjectId(accountId)) {
+                user = this.findOne({
                     name: accountId
                 }).wait();
+            }else{
+                user = this.findById(accountId).wait()
             }
             return user;
 

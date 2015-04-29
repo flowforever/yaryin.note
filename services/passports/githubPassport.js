@@ -1,5 +1,5 @@
 var passport = require('passport');
-var GitHubStrategy = require('passport-github');
+var GitHubStrategy = require('passport-github').Strategy;
 var GithubPassportServices = (function () {
     function GithubPassportServices($serviceConfig) {
         this.authName = 'github';
@@ -22,4 +22,5 @@ var GithubPassportServices = (function () {
     };
     return GithubPassportServices;
 })();
+$injector.register('githubPassportServices', GithubPassportServices);
 //# sourceMappingURL=githubPassport.js.map

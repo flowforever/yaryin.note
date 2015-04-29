@@ -9,7 +9,6 @@ var UserServices = (function (_super) {
     __extends(UserServices, _super);
     function UserServices($db) {
         _super.call(this, $db.User);
-        this.db = $db;
     }
     UserServices.prototype.getList = function () {
         return this.$table.findFuture({});
@@ -20,11 +19,14 @@ var UserServices = (function (_super) {
     UserServices.prototype.findByAccount = function (accountId) {
         var _this = this;
         return (function () {
-            var user = _this.$table.findById(accountId).wait();
-            if (!user) {
-                user = _this.$table.findOne({
+            var user;
+            if (!_this.isObjectId(accountId)) {
+                user = _this.findOne({
                     name: accountId
                 }).wait();
+            }
+            else {
+                user = _this.findById(accountId).wait();
             }
             return user;
         }).future()();

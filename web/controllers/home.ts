@@ -14,7 +14,10 @@ class Controller {
         res.view();
     }
 
-    'accountUser' (req:express.Request, res) {
+    'accountUser' (req:express.Request, res, next) {
+        if(!req.accepts('html')){
+            return next();
+        }
         var accountId = req.params.accountId;
         (() => {
             var user = this.userServices.findByAccount(accountId).wait();

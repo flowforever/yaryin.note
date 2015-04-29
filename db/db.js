@@ -28,6 +28,9 @@ var DBContext = (function () {
     DBContext.prototype.init = function (connectionStr) {
         mongoose.connect(connectionStr || 'mongodb://localhost/notes');
     };
+    DBContext.prototype.isObjectId = function (id) {
+        return mongoose.Types.ObjectId.isValid(id);
+    };
     return DBContext;
 })();
 exports.DBContext = DBContext;

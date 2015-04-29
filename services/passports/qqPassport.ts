@@ -24,6 +24,7 @@ class QQPassportServices implements passports.IPassport {
         passport.use(new TqqStrategy({
                 clientID: qqConfig.APP_KEY,
                 clientSecret: qqConfig.APP_SECRET,
+                state: 'trump',
                 callbackURL: this.serviceConfig.absUrl(this.callbackUrl)
             },
             function(accessToken, refreshToken, profile, done) {
@@ -36,7 +37,9 @@ class QQPassportServices implements passports.IPassport {
         ));
     }
 
-    authAction = passport.authenticate('qq');
+    authAction = passport.authenticate('qq', {
+        state: 'random state value'
+    });
 
     authCallback = passport.authenticate('qq', {failureRedirect: '/passport/failed/qq', successRedirect: '/'});
 }

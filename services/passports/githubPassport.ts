@@ -6,7 +6,7 @@ import passports = require("passports");
 
 import passport = require('passport');
 
-var GitHubStrategy = require('passport-github');
+var GitHubStrategy = require('passport-github').Strategy;
 
 class GithubPassportServices implements passports.IPassport{
     authName = 'github';
@@ -35,3 +35,5 @@ class GithubPassportServices implements passports.IPassport{
     authAction = passport.authenticate('github');
     authCallback = passport.authenticate('github', {failureRedirect: '/passport/failed/github', successRedirect: '/'});
 }
+
+$injector.register('githubPassportServices', GithubPassportServices);
