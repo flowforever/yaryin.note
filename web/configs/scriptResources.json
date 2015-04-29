@@ -7,6 +7,7 @@
       "/scripts/config.js",
       "/bower_components/jquery/dist/jquery.js",
       "/bower_components/jquery-ui-min/jquery-ui.min.js",
+      "/bower_components/bootstrap/dist/js/bootstrap.js",
       "/bower_components/lodash/lodash.js",
       "/bower_components/avril.queue/index.js",
     ]
@@ -30,7 +31,6 @@
       "/bower_components/jquery-ui-layout-min/jquery.layout.min.js",
       "/bower_components/jquery.cookie-min/jquery.cookie.js",
       "/bower_components/markedown/markedown.min.js",
-      "/bower_components/remodal-min/jquery.remodal.min.js",
       "/bower_components/katex-build/katex.min.js",
       "/bower_components/mermaid-min/mermaid.full.min.js",
       "/bower_components/markdown-plus/markdown-plus.js"

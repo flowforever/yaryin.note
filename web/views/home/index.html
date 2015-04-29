@@ -49,18 +49,23 @@
     }
 
     @-webkit-keyframes stretchdelay {
-        0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
-        20% { -webkit-transform: scaleY(1.0) }
+        0%, 40%, 100% {
+            -webkit-transform: scaleY(0.4)
+        }
+        20% {
+            -webkit-transform: scaleY(1.0)
+        }
     }
 
     @keyframes stretchdelay {
         0%, 40%, 100% {
             transform: scaleY(0.4);
             -webkit-transform: scaleY(0.4);
-        }  20% {
-               transform: scaleY(1.0);
-               -webkit-transform: scaleY(1.0);
-           }
+        }
+        20% {
+            transform: scaleY(1.0);
+            -webkit-transform: scaleY(1.0);
+        }
     }
 
     .loader {
@@ -68,8 +73,9 @@
         z-index: 999;
         width: 100%;
         height: 100%;
-        background-color:#eeeeee;
+        background-color: #eeeeee;
     }
+
     .loader span {
         display: inline-block;
         position: fixed;
@@ -80,6 +86,7 @@
 
 <div class="loader x-hide-onready">
     <span>Loading ....</span>
+
     <div class="spinner">
         <div class="rect1"></div>
         <div class="rect2"></div>
@@ -93,8 +100,10 @@
     <div id="toolbar" class="noselect" data-open-title="Hide Toolbar" data-closed-title="Show Toolbar"> <!-- 工具栏 -->
         <i title="New" class="fa fa-file-text-o file-icon"
            data-name="new"
-           data-remodal-target="dlg-new-file"
-                ></i>
+           data-toggle="modal" data-target="#dlg-new-file"></i>
+        <i title="Login" class="fa fa-file-text-o file-icon"
+           data-name="new"
+           data-toggle="modal" data-target="#dlg-login"></i>
         <i title="Open" class="fa fa-folder-open-o file-icon" data-name="open"></i>
         <i title="Open" class="fa fa-folder-open-o file-icon app-only" data-name="open"></i>
         <i title="Save" class="fa fa-save file-icon app-only" data-name="save"></i>
@@ -129,9 +138,9 @@
 row 1 col 1 | row 1 col 2
 row 2 col 1 | row 2 col 2"></i>
         <i class="dividor">|</i>
-        <i title="Emoji" class="fa fa-smile-o" data-remodal-target="emoji-modal"></i>
-        <i title="Font Awesome" class="fa fa-flag-o" data-remodal-target="fa-modal"></i>
-        <i title="Ionicons" class="icon ion-ionic" data-remodal-target="ion-modal"></i>
+        <i title="Emoji" class="fa fa-smile-o" data-toggle="modal" data-target="emoji-modal"></i>
+        <i title="Font Awesome" class="fa fa-flag-o" data-toggle="modal" data-target="fa-modal"></i>
+        <i title="Ionicons" class="icon ion-ionic" data-toggle="modal" data-target="ion-modal"></i>
         <i class="dividor">|</i>
         <i title="Mathematical formulae" class="fa fa-superscript" id="math-icon" data-sample="E = mc^2"></i>
         <i title="Flowchart" class="fa fa-long-arrow-right mermaid-icon" data-sample="graph LR
@@ -148,17 +157,26 @@ T2: 2014-01-11, 9d
 section S3
 T3: 2014-01-02, 9d"></i>
         <i class="dividor">|</i>
-        <i title="Preferences" class="fa fa-cog" data-remodal-target="preferences-modal"></i>
-        <i title="Help" class="fa fa-question-circle" data-remodal-target="help-modal"></i>
-        <i title="About" class="fa fa-info-circle" data-remodal-target="about-modal"></i>
+        <i title="Preferences" class="fa fa-cog" data-toggle="modal" data-target="preferences-modal"></i>
+        <i title="Help" class="fa fa-question-circle" data-toggle="modal" data-target="help-modal"></i>
+        <i title="About" class="fa fa-info-circle" data-toggle="modal" data-target="about-modal"></i>
         <i class="dividor guest-only">|</i>
-        <i title="Enter license" class="fa fa-key guest-only" data-remodal-target="license-modal"></i>
+        <i title="Enter license" class="fa fa-key guest-only" data-toggle="modal" data-target="license-modal"></i>
     </div>
 </div>
 <div class="ui-layout-center ">
     <div id="editor"></div>
+
+</div>
+<div class="ui-layout-east ">
+    <article class="markdown-body" id="preview" data-open-title="Hide Preview"
+             data-closed-title="Show Preview"></article>
+    <!-- 实时预览 -->
+</div>
+
+<div class="modals">
     <!-- 编辑器 -->
-    <div class="remodal" data-remodal-options="hashTracking: false" id="emoji-modal" data-remodal-id="emoji-modal">
+    <div class="remodal" data-remodal-options="hashTracking: false" id="emoji-modal" id="emoji-modal">
         <!-- emoji 弹出框 -->
         <h2>Please enter an emoji code:</h2>
 
@@ -171,7 +189,7 @@ T3: 2014-01-02, 9d"></i>
         <br/><a class="remodal-cancel">Cancel</a>
         <a class="remodal-confirm" id="emoji-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" id="fa-modal" data-remodal-id="fa-modal">
+    <div class="remodal" data-remodal-options="hashTracking: false" id="fa-modal" id="fa-modal">
         <!-- Font Awesome 弹出框 -->
         <h2>Please enter a Font Awesome code:</h2>
 
@@ -184,7 +202,7 @@ T3: 2014-01-02, 9d"></i>
         <br/><a class="remodal-cancel">Cancel</a>
         <a class="remodal-confirm" id="fa-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" id="ion-modal" data-remodal-id="ion-modal">
+    <div class="remodal" data-remodal-options="hashTracking: false" id="ion-modal" id="ion-modal">
         <!-- Ionicons 弹出框 -->
         <h2>Please enter an Ionicons code:</h2>
 
@@ -196,7 +214,7 @@ T3: 2014-01-02, 9d"></i>
         <br/><a class="remodal-cancel">Cancel</a>
         <a class="remodal-confirm" id="ion-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="preferences-modal">
+    <div class="remodal" data-remodal-options="hashTracking: false" id="preferences-modal">
         <!-- Preferences 弹出框 -->
         <img src="/images/icon.png" width="64"/>
 
@@ -233,7 +251,7 @@ T3: 2014-01-02, 9d"></i>
         </select></p>
         <br/><a class="remodal-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="help-modal"> <!-- help 弹出框 -->
+    <div class="remodal" data-remodal-options="hashTracking: false" id="help-modal"> <!-- help 弹出框 -->
         <img src="/images/icon.png" width="64"/>
 
         <h2>Markdown Plus help</h2>
@@ -268,7 +286,7 @@ T3: 2014-01-02, 9d"></i>
         </p>
         <br/><a class="remodal-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="about-modal"> <!-- about 弹出框 -->
+    <div class="remodal" data-remodal-options="hashTracking: false" id="about-modal"> <!-- about 弹出框 -->
         <img src="/images/icon.png" width="64"/>
 
         <h2>Markdown Plus</h2> Version 1.4.2
@@ -279,22 +297,103 @@ T3: 2014-01-02, 9d"></i>
         <p>Home page: <a href="https://tylingsoft.com/mdp" target="_blank">https://tylingsoft.com/mdp</a>.</p>
         <br/><a class="remodal-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" data-remodal-id="dlg-new-file">
+
+    <div id="dlg-new-file" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         data-backdrop="static"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Please input new file name:</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#dlg-new-file-tab-new" data-toggle="tab" aria-expanded="true">New File</a></li>
+                            <li class=""><a href="#dlg-new-file-rename" data-toggle="tab" aria-expanded="false">Rename</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="dlg-new-file-tab-new">
+                                <div class="input-group  input-group-lg">
+                                    <input type="text" autofocus class="form-control">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-flat" type="button">OK</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="dlg-new-file-rename">
+                                <div class="input-group  input-group-lg">
+                                    <input type="text" autofocus class="form-control">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-flat" type="button">OK</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="remodal" data-remodal-options="hashTracking: false" editor-component="rename" id="dlg-rename">
         <h2>Please input new file name:</h2>
-        <p>Name: <input id="email" placeholder="new file"/> </p>
+
+        <p>Name: <input placeholder="new file"/></p>
         <a class="remodal-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" editor-component="rename" data-remodal-id="dlg-rename">
-        <h2>Please input new file name:</h2>
-        <p>Name: <input placeholder="new file"/> </p>
-        <a class="remodal-confirm">OK</a>
+
+    <div id="dlg-login" class="modal" tabindex="-1" role="dialog"
+         data-backdrop="static"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Login:</h4>
+                </div>
+                <div class="modal-body">
+                    <a class="btn btn-danger">
+                        <i class="fa fa-fw fa-weibo"></i>
+                        Sign in with Weibo
+                    </a>
+                    <a class="btn btn-social btn-github">
+                        <i class="fa fa-github"></i>
+                        Sign in with GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
-<div class="ui-layout-east ">
-    <article class="markdown-body" id="preview" data-open-title="Hide Preview"
-             data-closed-title="Show Preview"></article>
-    <!-- 实时预览 -->
-</div>
+<!--
+
+<div id="" class="modal" tabindex="-1" role="dialog"
+         data-backdrop="static"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Please input new file name:</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+-->
 
 @locals.html.resourceScript("base")
 
@@ -302,5 +401,6 @@ T3: 2014-01-02, 9d"></i>
 
 @locals.html.resourceScript("editor")
 @locals.html.resourceScript("application")
+
 </body>
 </html>

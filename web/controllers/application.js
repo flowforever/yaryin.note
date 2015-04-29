@@ -26,7 +26,17 @@ var Controller = (function () {
         var manifest = [
             'CACHE MANIFEST',
             '#' + version,
-            '/'
+            '/',
+            "/styles/bin/resources/css/_fonts_ionicons.ttf?v=2.0.0",
+            "/styles/bin/resources/css/_fonts_fontawesome-webfont.woff?v=4.3.0",
+            "/styles/bin/resources/css/_fonts_ionicons.woff?v=2.0.0",
+            "/styles/bin/resources/css/_fonts_fontawesome-webfont.ttf?v=4.3.0",
+            "/styles/bin/resources/css/_fonts_fontawesome-webfont.woff2?v=4.3.0",
+            "/bower_components/font-awesome-min/fonts/fontawesome-webfont.woff2?v=4.3.0",
+            "/third-party/font-awesome-4.3.0/fonts/fontawesome-webfont.woff2?v=4.3.0",
+            "/bower_components/ionicons-min/fonts/ionicons.ttf?v=2.0.0",
+            "/bower_components/font-awesome-min/fonts/fontawesome-webfont.woff2?v=4.3.0",
+            "http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"
         ];
         cacheResourceItems('base', true);
         cacheResourceItems('editor', true);
