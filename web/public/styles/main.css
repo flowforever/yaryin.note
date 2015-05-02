@@ -1,0 +1,28 @@
+.editor-page .navbar{
+    min-height: 30px;
+}
+
+.editor-page .ui-layout-pane{
+    top:30px !important;
+}
+
+#toolbar{
+    height: 27px;
+}
+#toolbar .fa {
+    font-size: 16px;
+    color: white;
+    margin-top: 3px;
+}
+
+#toolbar .navbar-nav>li>a{
+    padding:6px 6px 3px;
+}
+
+.skin-blue.editor-page #toolbar .fa{
+    color: #ffffff;
+}
+
+.skin-black.editor-page #toolbar .fa{
+    color: #000000;
+}

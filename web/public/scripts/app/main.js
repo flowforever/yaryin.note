@@ -7,9 +7,21 @@
         return location.hash.replace('#', '');
     };
 
+    var removeLanguage = function(){
+        var newHref = getDocName();
+        if(/language/.test(location.search)){
+            newHref = location.pathname + newHref;
+        }
+        location.href = newHref;
+    };
+
     function navigateToNewFile(fileName) {
         fileName = fileName || ( new Date().getTime() ).toString(32);
-        document.location.href = '#' + fileName;
+        var newHref = '#' + fileName;
+        if(/language/.test(location.search)){
+            newHref = location.pathname + newHref;
+        }
+        document.location.href = newHref;
     }
 
     if (!getDocName()) {

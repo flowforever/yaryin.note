@@ -21,6 +21,9 @@ var Controller = (function () {
             }
         }).future()();
     };
+    Controller.prototype['/view/:id'] = function (req, res) {
+        res.end('view files');
+    };
     return Controller;
 })();
 module.exports = $injector.resolve(Controller);

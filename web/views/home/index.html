@@ -7,7 +7,7 @@
     @locals.html.resourceStyle("editor")
     @locals.html.resourceStyle("application")
 </head>
-<body>
+<body class="layout-top-nav fixed skin-blue editor-page">
 
 <style>
     .spinner {
@@ -69,8 +69,8 @@
     }
 
     .loader {
-        position: absolute;
-        z-index: 999;
+        position: fixed;
+        z-index: 99999;
         width: 100%;
         height: 100%;
         background-color: #eeeeee;
@@ -85,7 +85,7 @@
 </style>
 
 <div class="loader x-hide-onready">
-    <span>Loading ....</span>
+    <span>@("Loading ....".localize(locals.helper))</span>
 
     <div class="spinner">
         <div class="rect1"></div>
@@ -96,59 +96,58 @@
     </div>
 </div>
 
-<div class="ui-layout-north ">
-    <div id="toolbar" class="noselect" data-open-title="Hide Toolbar" data-closed-title="Show Toolbar"> <!-- 工具栏 -->
-        <i title="New" class="fa fa-file-text-o file-icon"
-           data-name="new"
-           data-toggle="modal" data-target="#dlg-new-file"></i>
-        <i title="Login" class="fa fa-file-text-o file-icon"
-           data-name="new"
-           data-toggle="modal" data-target="#dlg-login"></i>
-        <i title="Open" class="fa fa-folder-open-o file-icon" data-name="open"></i>
-        <i title="Open" class="fa fa-folder-open-o file-icon app-only" data-name="open"></i>
-        <i title="Save" class="fa fa-save file-icon app-only" data-name="save"></i>
-        <i title="Export to HTML" class="fa fa-file-code-o file-icon app-only" data-name="html"></i>
-        <i title="Export to PDF" class="fa fa-file-pdf-o file-icon app-only" data-name="pdf"></i>
-        <i class="dividor">|</i>
-        <i title="Bold" class="fa fa-bold styling-icon" data-modifier="**"></i>
-        <i title="Italic" class="fa fa-italic styling-icon" data-modifier="*"></i>
-        <i title="Strikethrough" class="fa fa-strikethrough styling-icon" data-modifier="~~"></i>
-        <i class="dividor">|</i>
-        <i title="Heading 1" class="fa heading-icon" data-level="1">h1</i>
-        <i title="Heading 2" class="fa heading-icon" data-level="2">h2</i>
-        <i title="Heading 3" class="fa heading-icon" data-level="3">h3</i>
-        <i title="Heading 4" class="fa heading-icon" data-level="4">h4</i>
-        <i title="Heading 5" class="fa heading-icon" data-level="5">h5</i>
-        <i title="Heading 6" class="fa heading-icon" data-level="6">h6</i>
-        <i class="dividor">|</i>
-        <i title="Horizontal rule" id="horizontal-rule" class="fa fa-minus"></i>
-        <i title="Quote" class="fa fa-quote-left list-icon" data-prefix="> "></i>
-        <i title="Unordered list" class="fa fa-list-ul list-icon" data-prefix="- "></i>
-        <i title="Ordered list" class="fa fa-list-ol list-icon" data-prefix="1. "></i>
-        <i title="Incomplete task list" class="fa fa-square-o list-icon" data-prefix="- [ ] "></i>
-        <i title="Complete task list" class="fa fa-check-square-o list-icon" data-prefix="- [x] "></i>
-        <i class="dividor">|</i>
-        <i title="Link" class="fa fa-link" id="link-icon" data-sample-text="link description"
-           data-sample-url="http://example.com"></i>
-        <i title="Image" class="fa fa-image" id="image-icon" data-sample-text="image description"
-           data-sample-url="http://example.com/example.png"></i>
-        <i title="Code" class="fa fa-code" id="code-icon"></i>
-        <i title="Table" class="fa fa-table" id="table-icon" data-sample="header 1 | header 2
+<div class="main-header">
+    <div class="navbar ">
+        <div id="toolbar" class="container-fluid noselect" data-open-title="Hide Toolbar" data-closed-title="Show Toolbar"> <!-- 工具栏 -->
+            <i title="New" class="fa fa-file-text-o file-icon"
+               data-name="new"
+               data-toggle="modal" data-target="#dlg-new-file"></i>
+
+            <i title="Open" class="fa fa-folder-open-o file-icon" data-name="open"></i>
+            <i title="Open" class="fa fa-folder-open-o file-icon app-only" data-name="open"></i>
+            <i title="Save" class="fa fa-save file-icon app-only" data-name="save"></i>
+            <i title="Export to HTML" class="fa fa-file-code-o file-icon app-only" data-name="html"></i>
+            <i title="Export to PDF" class="fa fa-file-pdf-o file-icon app-only" data-name="pdf"></i>
+            <i class="dividor">|</i>
+            <i title="Bold" class="fa fa-bold styling-icon" data-modifier="**"></i>
+            <i title="Italic" class="fa fa-italic styling-icon" data-modifier="*"></i>
+            <i title="Strikethrough" class="fa fa-strikethrough styling-icon" data-modifier="~~"></i>
+            <i class="dividor">|</i>
+            <i title="Heading 1" class="fa heading-icon" data-level="1">h1</i>
+            <i title="Heading 2" class="fa heading-icon" data-level="2">h2</i>
+            <i title="Heading 3" class="fa heading-icon" data-level="3">h3</i>
+            <i title="Heading 4" class="fa heading-icon" data-level="4">h4</i>
+            <i title="Heading 5" class="fa heading-icon" data-level="5">h5</i>
+            <i title="Heading 6" class="fa heading-icon" data-level="6">h6</i>
+            <i class="dividor">|</i>
+            <i title="Horizontal rule" id="horizontal-rule" class="fa fa-minus"></i>
+            <i title="Quote" class="fa fa-quote-left list-icon" data-prefix="> "></i>
+            <i title="Unordered list" class="fa fa-list-ul list-icon" data-prefix="- "></i>
+            <i title="Ordered list" class="fa fa-list-ol list-icon" data-prefix="1. "></i>
+            <i title="Incomplete task list" class="fa fa-square-o list-icon" data-prefix="- [ ] "></i>
+            <i title="Complete task list" class="fa fa-check-square-o list-icon" data-prefix="- [x] "></i>
+            <i class="dividor">|</i>
+            <i title="Link" class="fa fa-link" id="link-icon" data-sample-text="link description"
+               data-sample-url="http://example.com"></i>
+            <i title="Image" class="fa fa-image" id="image-icon" data-sample-text="image description"
+               data-sample-url="http://example.com/example.png"></i>
+            <i title="Code" class="fa fa-code" id="code-icon"></i>
+            <i title="Table" class="fa fa-table" id="table-icon" data-sample="header 1 | header 2
 ---|---
 row 1 col 1 | row 1 col 2
 row 2 col 1 | row 2 col 2"></i>
-        <i class="dividor">|</i>
-        <i title="Emoji" class="fa fa-smile-o" data-toggle="modal" data-target="emoji-modal"></i>
-        <i title="Font Awesome" class="fa fa-flag-o" data-toggle="modal" data-target="fa-modal"></i>
-        <i title="Ionicons" class="icon ion-ionic" data-toggle="modal" data-target="ion-modal"></i>
-        <i class="dividor">|</i>
-        <i title="Mathematical formulae" class="fa fa-superscript" id="math-icon" data-sample="E = mc^2"></i>
-        <i title="Flowchart" class="fa fa-long-arrow-right mermaid-icon" data-sample="graph LR
+            <i class="dividor">|</i>
+            <i title="Emoji" class="fa fa-smile-o" data-toggle="modal" data-target="#emoji-modal"></i>
+            <i title="Font Awesome" class="fa fa-flag-o" data-toggle="modal" data-target="#fa-modal"></i>
+            <i title="Ionicons" class="icon ion-ionic" data-toggle="modal" data-target="#ion-modal"></i>
+            <i class="dividor">|</i>
+            <i title="Mathematical formulae" class="fa fa-superscript" id="math-icon" data-sample="E = mc^2"></i>
+            <i title="Flowchart" class="fa fa-long-arrow-right mermaid-icon" data-sample="graph LR
 A-->B"></i>
-        <i title="Sequence diagram" class="fa fa-exchange mermaid-icon" data-sample="sequenceDiagram
+            <i title="Sequence diagram" class="fa fa-exchange mermaid-icon" data-sample="sequenceDiagram
 A->>B: How are you?
 B->>A: Great!"></i>
-        <i title="Gantt diagram" class="fa fa-sliders mermaid-icon" data-sample="gantt
+            <i title="Gantt diagram" class="fa fa-sliders mermaid-icon" data-sample="gantt
 dateFormat YYYY-MM-DD
 section S1
 T1: 2014-01-01, 9d
@@ -156,17 +155,37 @@ section S2
 T2: 2014-01-11, 9d
 section S3
 T3: 2014-01-02, 9d"></i>
-        <i class="dividor">|</i>
-        <i title="Preferences" class="fa fa-cog" data-toggle="modal" data-target="preferences-modal"></i>
-        <i title="Help" class="fa fa-question-circle" data-toggle="modal" data-target="help-modal"></i>
-        <i title="About" class="fa fa-info-circle" data-toggle="modal" data-target="about-modal"></i>
-        <i class="dividor guest-only">|</i>
-        <i title="Enter license" class="fa fa-key guest-only" data-toggle="modal" data-target="license-modal"></i>
+            <i class="dividor">|</i>
+            <i title="Preferences" class="fa fa-cog" data-toggle="modal" data-target="#preferences-modal"></i>
+            <i title="Help" class="fa fa-question-circle" data-toggle="modal" data-target="#help-modal"></i>
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Markdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">MarkDown</a></li>
+                        <li><a href="#">HTML</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Chinese <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="?language=zh-cn">Chinese</a></li>
+                        <li><a href="?language=en-us">English</a></li>
+                    </ul>
+                </li>
+                <li> <a class=""
+                        title="@('Login'.localize(locals.helper))"
+                        href="#dlg-login"
+                        data-name="new"
+                        data-toggle="modal"> @("Login".localize(locals.helper)) </a></li>
+            </ul>
+        </div>
     </div>
 </div>
 <div class="ui-layout-center ">
     <div id="editor"></div>
-
 </div>
 <div class="ui-layout-east ">
     <article class="markdown-body" id="preview" data-open-title="Hide Preview"
@@ -176,7 +195,7 @@ T3: 2014-01-02, 9d"></i>
 
 <div class="modals">
     <!-- 编辑器 -->
-    <div class="remodal" data-remodal-options="hashTracking: false" id="emoji-modal" id="emoji-modal">
+    <div class="remodal" data-remodal-options="hashTracking: false" id="emoji-modal">
         <!-- emoji 弹出框 -->
         <h2>Please enter an emoji code:</h2>
 
@@ -189,7 +208,7 @@ T3: 2014-01-02, 9d"></i>
         <br/><a class="remodal-cancel">Cancel</a>
         <a class="remodal-confirm" id="emoji-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" id="fa-modal" id="fa-modal">
+    <div class="remodal" data-remodal-options="hashTracking: false" id="fa-modal" >
         <!-- Font Awesome 弹出框 -->
         <h2>Please enter a Font Awesome code:</h2>
 
@@ -202,7 +221,7 @@ T3: 2014-01-02, 9d"></i>
         <br/><a class="remodal-cancel">Cancel</a>
         <a class="remodal-confirm" id="fa-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" id="ion-modal" id="ion-modal">
+    <div class="remodal" data-remodal-options="hashTracking: false" id="ion-modal">
         <!-- Ionicons 弹出框 -->
         <h2>Please enter an Ionicons code:</h2>
 
@@ -214,77 +233,100 @@ T3: 2014-01-02, 9d"></i>
         <br/><a class="remodal-cancel">Cancel</a>
         <a class="remodal-confirm" id="ion-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" id="preferences-modal">
-        <!-- Preferences 弹出框 -->
-        <img src="/images/icon.png" width="64"/>
+    <div class="modal" role="dialog" id="preferences-modal">
+        <div class="modal-dialog">
 
-        <h2>Markdown Plus Preferences</h2>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Markdown Plus Preferences</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group"><label>Editor theme: </label>
+                            <select class="form-control" id="editor-theme">
+                                <option value="tomorrow_night_blue">Blue</option>
+                                <option value="tomorrow">Bright</option>
+                                <option value="tomorrow_night_eighties">Dark</option>
+                                <option value="kuroir">Gray</option>
+                            </select></div>
+                        <div class="form-group"><label>Editor font size: </label>
+                            <select id="editor-font-size" class="form-control">
+                                <option value="8">8px</option>
+                                <option value="9">9px</option>
+                                <option value="10">10px</option>
+                                <option value="11">11px</option>
+                                <option value="12">12px</option>
+                                <option value="13">13px</option>
+                                <option value="14">14px</option>
+                                <option value="15">15px</option>
+                                <option value="16">16px</option>
+                                <option value="17">17px</option>
+                                <option value="18">18px</option>
+                                <option value="20">20px</option>
+                                <option value="24">24px</option>
+                                <option value="32">32px</option>
+                                <option value="48">48px</option>
+                                <option value="64">64px</option>
+                            </select></div>
+                        <div class="form-group"><label>
+                            Key binding:
+                        </label>
+                            <select id="key-binding" class="form-control">
+                                <option value="default">Default</option>
+                                <option value="emacs">Emacs</option>
+                                <option value="vim">Vim</option>
+                            </select></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" data-dismiss="modal">OK</a>
+                </div>
+            </div>
+        </div>
 
-        <p>Editor theme: <select id="editor-theme">
-            <option value="tomorrow_night_blue">Blue</option>
-            <option value="tomorrow">Bright</option>
-            <option value="tomorrow_night_eighties">Dark</option>
-            <option value="kuroir">Gray</option>
-        </select></p>
-        <p>Editor font size: <select id="editor-font-size">
-            <option value="8">8px</option>
-            <option value="9">9px</option>
-            <option value="10">10px</option>
-            <option value="11">11px</option>
-            <option value="12">12px</option>
-            <option value="13">13px</option>
-            <option value="14">14px</option>
-            <option value="15">15px</option>
-            <option value="16">16px</option>
-            <option value="17">17px</option>
-            <option value="18">18px</option>
-            <option value="20">20px</option>
-            <option value="24">24px</option>
-            <option value="32">32px</option>
-            <option value="48">48px</option>
-            <option value="64">64px</option>
-        </select></p>
-        <p>Key binding: <select id="key-binding">
-            <option value="default">Default</option>
-            <option value="emacs">Emacs</option>
-            <option value="vim">Vim</option>
-        </select></p>
-        <br/><a class="remodal-confirm">OK</a>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" id="help-modal"> <!-- help 弹出框 -->
-        <img src="/images/icon.png" width="64"/>
+    <div class="modal" data-remodal-options="hashTracking: false" id="help-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2>Yindoc help</h2>
 
-        <h2>Markdown Plus help</h2>
+                    <h3><a href="http://mdp.tylingsoft.com/" target="_blank">An online sample</a></h3>
 
-        <h3><a href="http://mdp.tylingsoft.com/" target="_blank">An online sample</a></h3>
+                    <p><a href="https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts" target="_blank">Keyboard
+                        Shortcuts</a></p>
 
-        <p><a href="https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts" target="_blank">Keyboard
-            Shortcuts</a></p>
+                    <p><a href="https://guides.github.com/features/mastering-markdown/" target="_blank">Markdown Basics</a></p>
 
-        <p><a href="https://guides.github.com/features/mastering-markdown/" target="_blank">Markdown Basics</a></p>
+                    <p><a href="https://help.github.com/articles/github-flavored-markdown/" target="_blank">GitHub Flavored
+                        Markdown</a></p>
 
-        <p><a href="https://help.github.com/articles/github-flavored-markdown/" target="_blank">GitHub Flavored
-            Markdown</a></p>
+                    <p><a href="http://www.emoji-cheat-sheet.com/" target="_blank">Emoji Cheat Sheet</a></p>
 
-        <p><a href="http://www.emoji-cheat-sheet.com/" target="_blank">Emoji Cheat Sheet</a></p>
+                    <p><a href="http://fontawesome.io/icons/" target="_blank">Font Awesome Icons</a></p>
 
-        <p><a href="http://fontawesome.io/icons/" target="_blank">Font Awesome Icons</a></p>
+                    <p><a href="http://ionicons.com/" target="_blank">Ionicons Website</a></p>
 
-        <p><a href="http://ionicons.com/" target="_blank">Ionicons Website</a></p>
+                    <p><a href="http://meta.wikimedia.org/wiki/Help:Displaying_a_formula" target="_blank">Mathematical Formulae</a>
+                    </p>
 
-        <p><a href="http://meta.wikimedia.org/wiki/Help:Displaying_a_formula" target="_blank">Mathematical Formulae</a>
-        </p>
+                    <p><a href="http://knsv.github.io/mermaid/flowchart.html" target="_blank">Flowchart Syntax</a></p>
 
-        <p><a href="http://knsv.github.io/mermaid/flowchart.html" target="_blank">Flowchart Syntax</a></p>
+                    <p><a href="http://knsv.github.io/mermaid/sequenceDiagram.html" target="_blank">Sequence Diagram Syntax</a></p>
 
-        <p><a href="http://knsv.github.io/mermaid/sequenceDiagram.html" target="_blank">Sequence Diagram Syntax</a></p>
+                    <p><a href="http://knsv.github.io/mermaid/gantt.html" target="_blank">Gantt Diagram Syntax</a></p>
 
-        <p><a href="http://knsv.github.io/mermaid/gantt.html" target="_blank">Gantt Diagram Syntax</a></p>
-
-        <p>If none of the above solves your problem, please email us: <a
-                href="mailto:service@tylingsoft.com?subject=Markdown Plus help needed&amp;body=Please include a screenshot of the issue.">service@tylingsoft.com</a>.
-        </p>
-        <br/><a class="remodal-confirm">OK</a>
+                    <p>If none of the above solves your problem, please email us: <a
+                            href="mailto:service@tylingsoft.com?subject=Yindoc help needed&amp;body=Please include a screenshot of the issue.">help@yindoc.com</a>.
+                    </p>
+                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary">OK</a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="remodal" data-remodal-options="hashTracking: false" id="about-modal"> <!-- about 弹出框 -->
         <img src="/images/icon.png" width="64"/>
@@ -306,46 +348,24 @@ T3: 2014-01-02, 9d"></i>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Please input new file name:</h4>
+                    <h4 class="modal-title" id="myModalLabel">@("Please input file name:".localize(locals.helper))</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#dlg-new-file-tab-new" data-toggle="tab" aria-expanded="true">New File</a></li>
-                            <li class=""><a href="#dlg-new-file-rename" data-toggle="tab" aria-expanded="false">Rename</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="dlg-new-file-tab-new">
-                                <div class="input-group  input-group-lg">
-                                    <input type="text" autofocus class="form-control">
-                                    <span class="input-group-btn">
-                                      <button class="btn btn-flat" type="button">OK</button>
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- /.tab-pane -->
-                            <div class="tab-pane" id="dlg-new-file-rename">
-                                <div class="input-group  input-group-lg">
-                                    <input type="text" autofocus class="form-control">
-                                    <span class="input-group-btn">
-                                      <button class="btn btn-flat" type="button">OK</button>
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- /.tab-pane -->
-                        </div>
-                        <!-- /.tab-content -->
+                    <div class="input-group margin input-group-lg">
+                        <input type="text" autofocus class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button">@("Rename".localize(locals.helper))</button>
+                            <button class="btn btn-info" type="button">@("New File".localize(locals.helper))</button>
+                        </span>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
     <div class="remodal" data-remodal-options="hashTracking: false" editor-component="rename" id="dlg-rename">
-        <h2>Please input new file name:</h2>
+        <h2>@("Please input new file name:".localize(locals.helper))</h2>
 
-        <p>Name: <input placeholder="new file"/></p>
+        <p>@("Name:".localize(locals.helper)) <input placeholder="new file"/></p>
         <a class="remodal-confirm">OK</a>
     </div>
 
@@ -357,16 +377,20 @@ T3: 2014-01-02, 9d"></i>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Login:</h4>
+                    <h4 class="modal-title">@("Login:".localize(locals.helper))</h4>
                 </div>
                 <div class="modal-body">
-                    <a class="btn btn-danger">
+                    <a class="btn btn-danger" href="/passport/auth/sina">
                         <i class="fa fa-fw fa-weibo"></i>
-                        Sign in with Weibo
+                        @("Sign in with Weibo".localize(locals.helper))
                     </a>
-                    <a class="btn btn-social btn-github">
+                    <a class="btn btn-social btn-github" href="/passport/auth/github">
                         <i class="fa fa-github"></i>
-                        Sign in with GitHub
+                        @("Sign in with GitHub".localize(locals.helper))
+                    </a>
+                    <a class="btn btn-info" href="/passport/auth/qq">
+                        <i class="fa  fa-linux"></i>
+                        @("Sign in with QQ".localize(locals.helper))
                     </a>
                 </div>
             </div>

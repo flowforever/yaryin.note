@@ -25,7 +25,7 @@ var Controller = (function () {
         var version = !appConfig.devMode && appConfig.minifyJs && appConfig.minifyCss ? this.version : new Date();
         var manifest = [
             'CACHE MANIFEST',
-            '#' + version,
+            '#version:' + version + ', language',
             '/',
             "/styles/bin/resources/css/_fonts_ionicons.ttf?v=2.0.0",
             "/styles/bin/resources/css/_fonts_fontawesome-webfont.woff?v=4.3.0",

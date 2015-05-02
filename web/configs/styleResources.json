@@ -7,6 +7,7 @@
       "/third-party/font-awesome-4.3.0/css/font-awesome.min.css",
       "/bower_components/bootstrap/dist/css/bootstrap.min.css",
       "/third-party/AdminLTE-2.0.4/dist/css/AdminLTE.min.css",
+      "/third-party/AdminLTE-2.0.4/dist/css/skins/_all-skins.min.css",
       "/bower_components/jquery-ui-min/themes/base/jquery-ui.min.css",
       "/bower_components/jquery-ui-layout-min/layout-default.css",
       "/bower_components/github-markdown-css/github-markdown.css",

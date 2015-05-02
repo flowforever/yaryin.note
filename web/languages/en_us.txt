@@ -1,0 +1,30 @@
+{
+    "group": {
+        "/": {
+            "Loading ....": "",
+            "Login": "",
+            "Login:": "",
+            "Name:": "",
+            "New File": "",
+            "Please input file name:": "",
+            "Please input new file name:": "",
+            "Rename": "",
+            "Sign in with GitHub": "",
+            "Sign in with QQ": "",
+            "Sign in with Weibo": ""
+        }
+    },
+    "keyValues": {
+        "Loading ....": "",
+        "Login": "",
+        "Login:": "",
+        "Name:": "",
+        "New File": "",
+        "Please input file name:": "",
+        "Please input new file name:": "",
+        "Rename": "",
+        "Sign in with GitHub": "",
+        "Sign in with QQ": "",
+        "Sign in with Weibo": ""
+    }
+}

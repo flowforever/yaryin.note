@@ -67,6 +67,8 @@ class App {
             , styleResources: avril.getConfig('styleResources')
             , scriptResources: avril.getConfig('scriptResources')
         });
+
+        avril.initComponent('localize', {});
     }
 
     initPasport() {

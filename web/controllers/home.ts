@@ -29,6 +29,9 @@ class Controller {
         }).future()();
     }
 
+    '/view/:id' (req, res) {
+        res.end('view files')
+    }
 
 }
 module.exports = $injector.resolve(Controller);

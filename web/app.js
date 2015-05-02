@@ -46,6 +46,7 @@ var App = (function () {
             styleResources: avril.getConfig('styleResources'),
             scriptResources: avril.getConfig('scriptResources')
         });
+        avril.initComponent('localize', {});
     };
     App.prototype.initPasport = function () {
         var _this = this;
