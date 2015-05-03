@@ -2,7 +2,6 @@
   "base": {
     "attrs": {
     },
-    "version": "1.2",
     "items": [
       "/scripts/config.js",
       "/bower_components/jquery/dist/jquery.js",
@@ -26,7 +25,6 @@
   "editor": {
     "attrs": {
     },
-    "version": "1.2",
     "items": [
       "/bower_components/jquery-ui-layout-min/jquery.layout.min.js",
       "/bower_components/jquery.cookie-min/jquery.cookie.js",
@@ -45,7 +43,6 @@
     ]
   },
   "application": {
-    "version": "1.2",
     "attrs": {
     },
     "items": [

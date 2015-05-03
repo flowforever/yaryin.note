@@ -4,7 +4,7 @@ var scriptConfig = avril.getConfig('scriptResources');
 var styleConfig = avril.getConfig('styleResources');
 var Controller = (function () {
     function Controller() {
-        this.version = new Date();
+        this.version = appConfig.version;
         this.staticResources = [
             "/bower_components/ace-min-noconflict/ace.js",
             "/bower_components/ace-min-noconflict/ext-static_highlight.js",
@@ -25,7 +25,7 @@ var Controller = (function () {
         var version = !appConfig.devMode && appConfig.minifyJs && appConfig.minifyCss ? this.version : new Date();
         var manifest = [
             'CACHE MANIFEST',
-            '#version:' + version + ', language',
+            '#version:' + version + ', language ' + avril.localize.currentLanguage(req, res),
             '/',
             "/styles/bin/resources/css/_fonts_ionicons.ttf?v=2.0.0",
             "/styles/bin/resources/css/_fonts_fontawesome-webfont.woff?v=4.3.0",
@@ -58,6 +58,10 @@ var Controller = (function () {
         manifest.push('*');
         this.manifest = manifest.join('\n');
         res.end(this.manifest);
+    };
+    Controller.prototype['languagePack'] = function (req, res) {
+        var currentLanguage = avril.localize.currentLanguage(req, res);
+        res.send(avril.localize.languagePack(currentLanguage));
     };
     return Controller;
 })();

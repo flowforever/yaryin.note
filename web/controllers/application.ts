@@ -17,7 +17,8 @@ class Controller {
         function readDir() {
         }
     }
-    version = new Date();
+
+    version = appConfig.version;
 
     manifest: string;
 
@@ -41,7 +42,7 @@ class Controller {
 
         var manifest = [
             'CACHE MANIFEST'
-            , '#version:' + version + ', language'
+            , '#version:' + version + ', language ' + avril.localize.currentLanguage(req, res)
             , '/'
             , "/styles/bin/resources/css/_fonts_ionicons.ttf?v=2.0.0"
             , "/styles/bin/resources/css/_fonts_fontawesome-webfont.woff?v=4.3.0"
@@ -85,6 +86,11 @@ class Controller {
 
         res.end( this.manifest );
 
+    }
+
+    'languagePack' (req, res) {
+        var currentLanguage = avril.localize.currentLanguage(req, res);
+        res.send(avril.localize.languagePack(currentLanguage));
     }
 }
 module.exports = new Controller();
