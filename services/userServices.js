@@ -31,6 +31,19 @@ var UserServices = (function (_super) {
             return user;
         }).future()();
     };
+    UserServices.prototype.findBySocialId = function (socialId, socialType) {
+        return this.findOne({
+            socialId: socialId,
+            socialType: socialType
+        });
+    };
+    UserServices.prototype.checkLoginBySocialId = function (socialId, socialType) {
+        var _this = this;
+        return (function () {
+            var user = _this.findBySocialId(socialId, socialType).wait();
+            return user && user.token;
+        }).future()();
+    };
     return UserServices;
 })(sb.ServiceBase);
 exports.UserServices = UserServices;

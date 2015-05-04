@@ -4,6 +4,12 @@
 /// <reference path="./_references.d.ts"/>
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var UserSocialTypes;
+(function (UserSocialTypes) {
+    UserSocialTypes[UserSocialTypes["sina"] = 0] = "sina";
+    UserSocialTypes[UserSocialTypes["qq"] = 1] = "qq";
+    UserSocialTypes[UserSocialTypes["github"] = 2] = "github";
+})(UserSocialTypes || (UserSocialTypes = {}));
 var DBContext = (function () {
     function DBContext() {
         this._UserSchema = new Schema({
@@ -12,11 +18,11 @@ var DBContext = (function () {
             password: String,
             nickName: String,
             phone: String,
-            sinaId: String,
-            githubId: String,
-            qqId: String
+            socialId: String,
+            socialType: String //weibo, qq, github
         });
         this.User = mongoose.model('User', this._UserSchema);
+        this.UserSocialTypes = UserSocialTypes;
         this._Document = new Schema({
             name: String,
             content: String,

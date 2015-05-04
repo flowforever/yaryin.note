@@ -1,9 +1,32 @@
 var Future = require("fibers/future");
 var ServiceBase = (function () {
     function ServiceBase(table) {
+        var _this = this;
+        this._serviceName = 'services' + Math.random();
+        this.cache = {
+            getCacheKey: function (key) {
+                if (key.indexOf('CacheLayer') === 0) {
+                    return key;
+                }
+                return [
+                    'CacheLayer',
+                    _this.serviceName,
+                    key
+                ].join('-');
+            },
+            getByKey: function (key) {
+            },
+            setByKey: function (key, value) {
+            },
+            removeByKey: function (key) {
+            },
+            clearAll: function () {
+            }
+        };
         this.table = table;
         this.$table = Future.wrap(table);
         this.db = $injector.resolve('db');
+        this.redis = $injector.resolve('redisCacheServices');
     }
     ServiceBase.prototype.getAll = function () {
         return this.$table.findFuture.bind(this.table)({});
@@ -25,6 +48,13 @@ var ServiceBase = (function () {
     ServiceBase.prototype.isObjectId = function (id) {
         return this.db.isObjectId(id);
     };
+    Object.defineProperty(ServiceBase.prototype, "serviceName", {
+        get: function () {
+            return this._serviceName;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return ServiceBase;
 })();
 exports.ServiceBase = ServiceBase;

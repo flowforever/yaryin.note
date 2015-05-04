@@ -11,6 +11,7 @@ var App = (function () {
         this.initPasport();
         this.initAvril();
         App.initDB();
+        this.initProcessEvents();
     }
     Object.defineProperty(App.prototype, "app", {
         get: function () {
@@ -65,8 +66,16 @@ var App = (function () {
         this.app.use(passport.session());
         this.passportEntry.passports.forEach(function (p) {
             _this.app.get(p.authUrl, p.authAction);
-            _this.app.get(p.callbackUrl, p.authCallback);
+            _this.app.get(p.callbackUrl, p.authCallback, function (req, res) {
+                var user = req.user;
+            });
         });
+    };
+    App.prototype.initProcessEvents = function () {
+        var _this = this;
+        process.on('uncaughtException', function (arg) { return _this.onUnCaughtException(arg); });
+        process.on('beforeExit', function (arg) { return _this.beforeExit(arg); });
+        process.on('exit', function (arg) { return _this.onProcessExit(arg); });
     };
     App.prototype.run = function () {
         this.app.listen(appConfig.port);
@@ -77,6 +86,14 @@ var App = (function () {
         var dbConfig = avril.getConfig('db');
         var db = $injector.resolve('db');
         db.init(dbConfig.default_db);
+    };
+    //region process events
+    App.prototype.beforeExit = function (arg) {
+        var redis = $injector.resolve('redisCacheServices');
+    };
+    App.prototype.onProcessExit = function (arg) {
+    };
+    App.prototype.onUnCaughtException = function (arg) {
     };
     return App;
 })();

@@ -7,6 +7,12 @@ import mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
+enum UserSocialTypes {
+    sina
+    , qq
+    , github
+}
+
 export class DBContext {
 
     constructor () {
@@ -25,13 +31,13 @@ export class DBContext {
         , phone: String
 
         //begin social ids
-        , sinaId: String
-        , githubId: String
-        , qqId: String
+        , socialId: String
+        , socialType: String //weibo, qq, github
         //end social ids
     });
 
     User =  mongoose.model('User', this._UserSchema);
+    UserSocialTypes = UserSocialTypes;
 
     _Document = new Schema({
         name: String

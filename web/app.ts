@@ -24,6 +24,8 @@ class App {
         this.initAvril();
 
         App.initDB();
+
+        this.initProcessEvents();
     }
 
     passportEntry:passports.IPassportEntryServices;
@@ -52,7 +54,7 @@ class App {
         process.env.NODE_ENV !== 'production' && app.use(express['static'](__dirname + '/public'));
 
         app.use(require('cookie-parser')())
-        app.use(require('cookie-session')({ secret: 'a keyboard cat' }));
+        app.use(require('cookie-session')({secret: 'a keyboard cat'}));
         app.use(bodyParser.json()); // for parsing application/json
         app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
         app.use(multer()); // for parsing multipart/form-data
@@ -72,11 +74,11 @@ class App {
     }
 
     initPasport() {
-        passport.serializeUser(function(user, callback) {
+        passport.serializeUser(function (user, callback) {
             callback(null, user);
         });
 
-        passport.deserializeUser(function(obj, callback) {
+        passport.deserializeUser(function (obj, callback) {
             callback(null, obj);
         });
 
@@ -92,8 +94,17 @@ class App {
 
         this.passportEntry.passports.forEach(p => {
             this.app.get(p.authUrl, p.authAction);
-            this.app.get(p.callbackUrl, p.authCallback);
+            this.app.get(p.callbackUrl, p.authCallback, function (req, res) {
+                var user = req.user;
+            });
         });
+    }
+
+    initProcessEvents() {
+        process.on('uncaughtException', (arg)=>this.onUnCaughtException(arg));
+
+        process.on('beforeExit', (arg)=>this.beforeExit(arg));
+        process.on('exit', (arg)=>this.onProcessExit(arg));
     }
 
     run():App {
@@ -112,6 +123,20 @@ class App {
         db.init(dbConfig.default_db);
     }
 
+    //region process events
+    beforeExit(arg) {
+        var redis = $injector.resolve('redisCacheServices');
+
+    }
+
+    onProcessExit(arg) {
+
+    }
+
+    onUnCaughtException(arg) {
+
+    }
+    //endregion
 }
 
 $injector.resolve(App).run();

@@ -568,6 +568,9 @@ declare module "express" {
             download(path: string, fn: Errback): void;
             download(path: string, filename: string, fn: Errback): void;
 
+            view(viewPath: string): void ;
+            view(viewPath: string, opitons:any): void ;
+
             /**
              * Set _Content-Type_ response header with `type` through `mime.lookup()`
              * when it does not contain "/", or set the Content-Type to `type` otherwise.

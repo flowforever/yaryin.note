@@ -2,11 +2,13 @@
 import express = require('express');
 
 import services = require('../../services/documentServices');
+import cbs = require('../utils/controllerBase');
 
-class Controller {
+class Controller extends cbs.ControllerBase {
     userServices;
 
     constructor($userServices) {
+        super();
         this.userServices = $userServices;
     }
 
@@ -14,17 +16,18 @@ class Controller {
         res.view();
     }
 
-    'accountUser' (req:express.Request, res, next) {
+    'accountUser' (req:express.Request, res: express.Response, next) {
         if(!req.accepts('html')){
             return next();
         }
-        var accountId = req.params.accountId;
+        var accountId = req.params.accountId || req.query.accountId;
         (() => {
-            var user = this.userServices.findByAccount(accountId).wait();
-            if(!user) {
-                res.view('user_not_found');
-            }else{
-                res.view('index', { user: user });
+            var targetUser = this.userServices.findByAccount(accountId).wait();
+            if(!targetUser) {
+                res.redirect('/account/notfound?accountId=' + accountId);
+            } else {
+                var currentUser = this.helper.getCurrentUser(req, res);
+                res.view('index', { user: targetUser, currentUser: currentUser });
             }
         }).future()();
     }
