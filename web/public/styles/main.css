@@ -38,6 +38,7 @@
 }
 #dlg-fileList .main-sidebar{
     position: relative;
+    padding: 0;
 }
 
 .full-height{
