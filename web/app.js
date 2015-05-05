@@ -67,8 +67,14 @@ var App = (function () {
         this.passportEntry.passports.forEach(function (p) {
             _this.app.get(p.authUrl, p.authAction);
             _this.app.get(p.callbackUrl, p.authCallback, function (req, res) {
-                var accountController = $injector.resolve('accountController');
-                accountController.login(req, res);
+                (function () {
+                    var accountController = $injector.resolve('accountController');
+                    var dbUser = p.saveOrUpdateUser(req.user).wait();
+                    var sessionId = accountController.helper.getSessionId(req, res);
+                    accountController.helper.setCurrentUser(sessionId, dbUser).wait();
+                    accountController.helper.setUserId(res, dbUser._id.toString());
+                    res.redirect('/' + dbUser.name);
+                }).future()();
             });
         });
     };

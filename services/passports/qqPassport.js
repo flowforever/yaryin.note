@@ -26,6 +26,10 @@ var QQPassportServices = (function () {
             });
         }));
     };
+    QQPassportServices.prototype.saveOrUpdateUser = function (user) {
+        return (function () {
+        }).future()();
+    };
     return QQPassportServices;
 })();
 $injector.register('qqPassportServices', QQPassportServices);

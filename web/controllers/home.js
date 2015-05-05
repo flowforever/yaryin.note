@@ -26,7 +26,7 @@ var Controller = (function (_super) {
                 res.redirect('/account/notfound?accountId=' + accountId);
             }
             else {
-                var currentUser = _this.helper.getCurrentUser(req, res);
+                var currentUser = _this.helper.getCurrentUser(req, res).wait();
                 res.view('index', { user: targetUser, currentUser: currentUser });
             }
         }).future()();

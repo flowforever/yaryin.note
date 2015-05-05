@@ -2,7 +2,7 @@
   "version": "1.5",
   "host" : "http://yindoc.com",
   "port": 9501,
-  "minifyJs": true,
-  "minifyCss": true,
+  "minifyJs": false,
+  "minifyCss": false,
   "devMode": true
 }

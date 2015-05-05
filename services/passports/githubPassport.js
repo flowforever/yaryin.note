@@ -20,6 +20,10 @@ var GithubPassportServices = (function () {
             done();
         }));
     };
+    GithubPassportServices.prototype.saveOrUpdateUser = function (user) {
+        return (function () {
+        }).future()();
+    };
     return GithubPassportServices;
 })();
 $injector.register('githubPassportServices', GithubPassportServices);

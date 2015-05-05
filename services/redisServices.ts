@@ -12,7 +12,7 @@ import Fiber = require('fibers');
 class RedisCacheServices implements redisCaches.CacheServices{
 
     constructor() {
-        this.client = redis.createClient();
+        var client = this.client = redis.createClient();
         this.futureClient = Future.wrap(this.client);
     }
 

@@ -92,5 +92,11 @@ class Controller {
         var currentLanguage = avril.localize.currentLanguage(req, res);
         res.send(avril.localize.languagePack(currentLanguage));
     }
+
+    config(req, res) {
+        res.send({
+            version: this.version
+        });
+    }
 }
 module.exports = new Controller();

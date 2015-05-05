@@ -2,10 +2,12 @@
 import express = require('express');
 
 import services = require('../../services/documentServices');
+import cbs = require('../utils/controllerBase');
 
-class Controller {
+class Controller extends cbs.ControllerBase {
 
     constructor($documentServices) {
+        super();
         this.services = $documentServices;
     }
 
@@ -16,24 +18,45 @@ class Controller {
             var doc = this.services.findOne({
                 name: req.params.name
             }).wait();
-            res.send(doc||{});
+            if (doc && doc.userId && doc.userId != this.helper.getUserId(req)) {
+                doc = null;
+            }
+            res.send(doc || {});
         }).future()();
+    }
+
+    'get/:userId/:docName' (req, res) {
+
+    }
+
+    '[post]edit/:userId' (req, res) {
+
     }
 
     '[post]edit'(req:express.Request, res:express.Response) {
         (()=> {
             var saved = null;
-            if(!req.body._id) {
-                saved = this.services.add({
+
+            var saveNew = () => {
+                return this.services.add({
                     name: req.body.name
                     , content: req.body.content
+                    , userId: this.helper.getUserId(req)
                 }).wait();
+            };
+
+            if (!req.body._id) {
+                saved = saveNew();
                 res.send(saved);
             } else {
                 saved = this.services.findById(req.body._id).wait();
+                if (saved && saved.userId && saved.userId != this.helper.getUserId(req)) {
+                    saved = saveNew();
+                    return res.send(saved);
+                }
                 saved.content = req.body.content;
                 saved.name = req.body.name;
-                saved.save(function(){
+                saved.save(function () {
                     res.send(saved);
                 });
             }

@@ -33,6 +33,8 @@ export class DBContext {
         //begin social ids
         , socialId: String
         , socialType: String //weibo, qq, github
+        , socialDescription: String
+        , socialPhoto: String
         //end social ids
     });
 
@@ -43,7 +45,8 @@ export class DBContext {
         name: String
         , content: String
         , password: String
-        , mode:String // html, markdown
+        , mode: String // html, markdown
+        , userId: String
     });
     Document = mongoose.model('Document', this._Document);
 

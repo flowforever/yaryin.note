@@ -9,6 +9,7 @@ var ControllerBase = (function () {
                     var user = redis.get(sessionId).wait();
                     if (user) {
                         user = JSON.parse(user);
+                        redis.expire(sessionId, 3600 * 24 * 7);
                     }
                     return user;
                 }).future()();
@@ -16,8 +17,17 @@ var ControllerBase = (function () {
             setCurrentUser: function (sessionId, user) {
                 return (function () {
                     var redis = $injector.resolve('redisCacheServices');
-                    redis.set(sessionId, JSON.stringify(user));
+                    redis.set(sessionId, JSON.stringify(user)).wait();
                 }).future()();
+            },
+            getUserId: function (req) {
+                return req.signedCookies.userId;
+            },
+            setUserId: function (res, id) {
+                res.cookie('userId', id, {
+                    signed: true,
+                    httpOnly: true
+                });
             },
             getSessionId: function (req, res) {
                 var sessionId = req.signedCookies.sessionId;

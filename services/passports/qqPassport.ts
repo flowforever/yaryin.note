@@ -42,6 +42,12 @@ class QQPassportServices implements passports.IPassport {
     });
 
     authCallback = passport.authenticate('qq', {failureRedirect: '/passport/failed/qq', successRedirect: '/'});
+
+    saveOrUpdateUser(user): IFuture<any>{
+        return (()=>{
+
+        }).future()();
+    }
 }
 
 $injector.register('qqPassportServices', QQPassportServices);

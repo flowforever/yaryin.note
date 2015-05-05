@@ -26,3 +26,21 @@
 .skin-black.editor-page #toolbar .fa{
     color: #000000;
 }
+
+#dlg-fileList .container-fluid{
+    padding: 0;
+}
+#dlg-fileList .modal-dialog{
+    min-width: 1024px;
+}
+#dlg-fileList .modal-body{
+    height: 600px;
+}
+#dlg-fileList .main-sidebar{
+    position: relative;
+}
+
+.full-height{
+    height: 100%;
+    overflow-y: auto;
+}

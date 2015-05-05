@@ -63,6 +63,11 @@ var Controller = (function () {
         var currentLanguage = avril.localize.currentLanguage(req, res);
         res.send(avril.localize.languagePack(currentLanguage));
     };
+    Controller.prototype.config = function (req, res) {
+        res.send({
+            version: this.version
+        });
+    };
     return Controller;
 })();
 module.exports = new Controller();

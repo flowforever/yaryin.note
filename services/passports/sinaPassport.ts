@@ -12,9 +12,11 @@ var passport_sina = require('passport-sina');
 class SinaPassportServices implements passports.IPassport {
     serviceConfig;
     db;
+    userServices;
 
-    constructor($serviceConfig, $db) {
+    constructor($serviceConfig, $db, $userServices) {
         this.serviceConfig = $serviceConfig;
+        this.userServices = $userServices;
         this.db = $db;
     }
 
@@ -39,7 +41,26 @@ class SinaPassportServices implements passports.IPassport {
 
     authAction = passport.authenticate('sina');
 
-    authCallback = passport.authenticate('sina', {failureRedirect: '/passport/failed/sina', successRedirect: '/'});
+    authCallback = passport.authenticate('sina', {failureRedirect: '/passport/failed/sina'});
+
+    saveOrUpdateUser(user): IFuture<any>{
+        return (()=>{
+            var dbUser = this.userServices.findBySocialId( user.id, this.authName ).wait();
+            if(dbUser) {
+                dbUser.name = this.authName + '_' + user.name;
+                dbUser.socialDescription = user.description;
+                dbUser.socialPhoto = user.avatar_hd;
+                dbUser.save.future().bind(user)().wait();
+            }else{
+                dbUser = this.userServices.add({
+                    socialId: user.id
+                    , socialType: this.authName
+                    , name: this.authName + '_' + user.name
+                }).wait();
+            }
+            return dbUser;
+        }).future()();
+    }
 }
 
 $injector.register('sinaPassportServices', SinaPassportServices);

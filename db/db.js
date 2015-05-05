@@ -20,6 +20,9 @@ var DBContext = (function () {
             phone: String,
             socialId: String,
             socialType: String //weibo, qq, github
+            ,
+            socialDescription: String,
+            socialPhoto: String
         });
         this.User = mongoose.model('User', this._UserSchema);
         this.UserSocialTypes = UserSocialTypes;
@@ -28,6 +31,8 @@ var DBContext = (function () {
             content: String,
             password: String,
             mode: String // html, markdown
+            ,
+            userId: String
         });
         this.Document = mongoose.model('Document', this._Document);
     }

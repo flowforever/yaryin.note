@@ -13,6 +13,7 @@ export class ControllerBase {
                 var user = redis.get(sessionId).wait();
                 if(user){
                     user = JSON.parse(user);
+                    redis.expire(sessionId, 3600 * 24 * 7);
                 }
                 return user;
             }).future()();
@@ -20,8 +21,17 @@ export class ControllerBase {
         , setCurrentUser(sessionId, user):IFuture<any>{
             return (()=>{
                 var redis = <redisCaches.CacheServices>$injector.resolve('redisCacheServices');
-                redis.set(sessionId, JSON.stringify(user));
+                redis.set(sessionId, JSON.stringify(user)).wait();
             }).future()();
+        }
+        , getUserId(req) {
+            return req.signedCookies.userId;
+        }
+        , setUserId(res, id) {
+            res.cookie('userId', id, {
+                signed: true
+                , httpOnly: true
+            })
         }
         , getSessionId(req: express.Request, res: express.Response) {
             var sessionId = req.signedCookies.sessionId;

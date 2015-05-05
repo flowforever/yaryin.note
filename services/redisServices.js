@@ -6,7 +6,7 @@ var redis = require('redis');
 var Future = require("fibers/future");
 var RedisCacheServices = (function () {
     function RedisCacheServices() {
-        this.client = redis.createClient();
+        var client = this.client = redis.createClient();
         this.futureClient = Future.wrap(this.client);
     }
     RedisCacheServices.prototype.close = function () {

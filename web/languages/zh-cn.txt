@@ -2,6 +2,7 @@
     "group": {
         "/": {
             "": "",
+            "File list": "",
             "Loading ....": "正在加载...",
             "Login": "",
             "Login:": "登陆",
@@ -13,10 +14,25 @@
             "Sign in with GitHub": "使用Github登陆",
             "Sign in with QQ": "使用QQ登陆",
             "Sign in with Weibo": "使用微博登陆"
+        },
+        "/home/accountuser": {
+            "File list": "",
+            "Loading ....": "",
+            "Login": "",
+            "Login:": "",
+            "Name:": "",
+            "New File": "",
+            "Please input file name:": "",
+            "Please input new file name:": "",
+            "Rename": "",
+            "Sign in with GitHub": "",
+            "Sign in with QQ": "",
+            "Sign in with Weibo": ""
         }
     },
     "keyValues": {
         "": "",
+        "File list": "",
         "Loading ....": "",
         "Login": "",
         "Login:": "",

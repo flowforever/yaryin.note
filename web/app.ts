@@ -95,8 +95,16 @@ class App {
         this.passportEntry.passports.forEach(p => {
             this.app.get(p.authUrl, p.authAction);
             this.app.get(p.callbackUrl, p.authCallback, function (req, res) {
-                var accountController = $injector.resolve('accountController');
-                accountController.login(req, res);
+                (()=>{
+                    var accountController = $injector.resolve('accountController');
+                    var dbUser = p.saveOrUpdateUser(req.user).wait();
+                    var sessionId = accountController.helper.getSessionId(req, res);
+                    accountController.helper.setCurrentUser( sessionId, dbUser ).wait();
+                    accountController.helper.setUserId(res, dbUser._id.toString());
+
+                    res.redirect('/'+dbUser.name);
+
+                }).future()();
             });
         });
     }

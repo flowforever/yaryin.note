@@ -13,9 +13,6 @@ var UserServices = (function (_super) {
     UserServices.prototype.getList = function () {
         return this.$table.findFuture({});
     };
-    UserServices.prototype.add = function (user) {
-        return this.$table.createFuture(user);
-    };
     UserServices.prototype.findByAccount = function (accountId) {
         var _this = this;
         return (function () {
@@ -35,6 +32,16 @@ var UserServices = (function (_super) {
         return this.findOne({
             socialId: socialId,
             socialType: socialType
+        });
+    };
+    UserServices.prototype.findByUserNameOrId = function (nameOrId, socialType) {
+        return this.findOne({
+            $or: [
+                { _id: nameOrId, socialType: socialType },
+                { socialId: nameOrId, socialType: socialType },
+                { name: socialType + '_' + nameOrId, socialType: socialType },
+                { name: nameOrId, socialType: socialType }
+            ]
         });
     };
     UserServices.prototype.checkLoginBySocialId = function (socialId, socialType) {

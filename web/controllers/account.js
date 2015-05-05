@@ -11,10 +11,11 @@ var Controller = (function (_super) {
     function Controller($userServices, $documentServices) {
         _super.call(this);
     }
-    Controller.prototype.currentUser = function (req, res, next) {
+    Controller.prototype.currentUser = function (req, res) {
         var _this = this;
         (function () {
             var user = _this.helper.getCurrentUser(req, res).wait();
+            //user.password = null;
             res.send(user);
         }).future()();
     };

@@ -7,18 +7,10 @@
         return location.hash.replace('#', '');
     };
 
-    var removeLanguage = function(){
-        var newHref = getDocName();
-        if(/language/.test(location.search)){
-            newHref = location.pathname + newHref;
-        }
-        location.href = newHref;
-    };
-
     function navigateToNewFile(fileName) {
         fileName = fileName || ( new Date().getTime() ).toString(32);
         var newHref = '#' + fileName;
-        if(/language/.test(location.search)){
+        if (/language/.test(location.search)) {
             newHref = location.pathname + newHref;
         }
         document.location.href = newHref;
@@ -28,20 +20,25 @@
         navigateToNewFile();
     }
 
+    var mainQ = avQ();
     var apiServices = {
         preDoc: {}
+        , mainQ : mainQ
+        , appConfig: {}
+        , userInfo: {}
         , getDocument: function (name, done) {
             if (this.writeXHR) {
                 this.writeXHR.abort();
                 this.writeXHR = null;
             }
             var self = this
-                , otherArg = '';
-            if($.browser.msie) {
-                otherArg = '?r=' + (new Date()).getTime()
-            }
+                , otherArg = '?r=' + (new Date()).getTime();
+
             this.writeXHR = $.ajax({
                 url: '/api/get/' + encodeURIComponent(name) + otherArg
+                , data: {
+                    path: location.pathname
+                }
                 , dataType: 'json'
                 , success: function (res) {
                     done(res);
@@ -111,49 +108,66 @@
         }
     };
 
-    $(function () {
-        var $editor = $('#editor')
-            , editor = $editor.data('editor')
-            , $textarea = $editor.find('textarea')
-            , $win = $(window)
-            , _preDocName = getDocName()
-            , loadDocument = function (name) {
-                $('title').html(name + ' - Yindoc');
-                toggleLoadingMode(true);
-                apiServices.getDocument(name, function (res) {
-                    editor.setValue(res.content);
-                    editor.clearSelection();
-                    toggleLoadingMode(false);
-                });
-            }
-            , toggleLoadingMode = function (loadingMode) {
-                if (loadingMode) {
-                    $('.x-hide-onready').show();
-                } else {
-                    $('.x-hide-onready').hide();
+    mainQ
+        .paralFunc(function () {
+            $.getJSON('/application/config', function(config){
+                $.extend(apiServices.appConfig, config);
+            })
+        })
+        .paralFunc(function () {
+            $.getJSON('/account/currentUser', function(userInfo){
+                $.extend(apiServices.userInfo, userInfo);
+            })
+        }).func(function(){
+            applicationReady();
+        });
+
+    function applicationReady(){
+        $(function () {
+            var $editor = $('#editor')
+                , editor = $editor.data('editor')
+                , $textarea = $editor.find('textarea')
+                , $win = $(window)
+                , _preDocName = getDocName()
+                , loadDocument = function (name) {
+                    $('title').html(name + ' - Yindoc');
+                    toggleLoadingMode(true);
+                    apiServices.getDocument(name, function (res) {
+                        editor.setValue(res.content);
+                        editor.clearSelection();
+                        toggleLoadingMode(false);
+                    });
                 }
-            };
+                , toggleLoadingMode = function (loadingMode) {
+                    if (loadingMode) {
+                        $('.x-hide-onready').show();
+                    } else {
+                        $('.x-hide-onready').hide();
+                    }
+                };
 
-        loadDocument(_preDocName);
+            loadDocument(_preDocName);
 
-        $textarea.keyup(function () {
-            apiServices.saveDocument({
-                name: getDocName()
-                , content: editor.getValue()
-                , _preDoc: apiServices.preDoc
+            $textarea.keyup(function () {
+                apiServices.saveDocument({
+                    name: getDocName()
+                    , content: editor.getValue()
+                    , _preDoc: apiServices.preDoc
+                    , path: location.pathname
+                });
+            });
+
+            $win.hashchange(function () {
+                var docName = getDocName();
+                if (!docName) {
+                    navigateToNewFile();
+                } else {
+                    if (!apiServices.isRename && _preDocName != docName) {
+                        _preDocName = docName;
+                        loadDocument(docName);
+                    }
+                }
             });
         });
-
-        $win.hashchange(function () {
-            var docName = getDocName();
-            if (!docName) {
-                navigateToNewFile();
-            } else {
-                if (!apiServices.isRename && _preDocName != docName) {
-                    _preDocName = docName;
-                    loadDocument(docName);
-                }
-            }
-        });
-    });
+    }
 })(jQuery);

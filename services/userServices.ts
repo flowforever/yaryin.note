@@ -16,10 +16,6 @@ export class UserServices extends sb.ServiceBase {
         return this.$table.findFuture({});
     }
 
-    add(user):IFuture<void> {
-        return this.$table.createFuture(user);
-    }
-
     findByAccount(accountId:string):IFuture<any> {
         return (()=> {
             var user;
@@ -39,6 +35,17 @@ export class UserServices extends sb.ServiceBase {
         return this.findOne({
             socialId: socialId
             , socialType: socialType
+        });
+    }
+
+    findByUserNameOrId(nameOrId, socialType):IFuture<any>{
+        return this.findOne({
+            $or: [
+                { _id: nameOrId , socialType: socialType }
+                , { socialId: nameOrId , socialType: socialType }
+                , { name: socialType + '_' + nameOrId , socialType: socialType }
+                , { name: nameOrId, socialType: socialType }
+            ]
         });
     }
 

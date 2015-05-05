@@ -34,6 +34,12 @@ class GithubPassportServices implements passports.IPassport{
 
     authAction = passport.authenticate('github');
     authCallback = passport.authenticate('github', {failureRedirect: '/passport/failed/github', successRedirect: '/'});
+
+    saveOrUpdateUser(user): IFuture<any>{
+        return (()=>{
+
+        }).future()();
+    }
 }
 
 $injector.register('githubPassportServices', GithubPassportServices);

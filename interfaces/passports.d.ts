@@ -13,6 +13,8 @@ declare module "passports" {
         init();
         authAction: express.Handler ;
         authCallback: express.Handler;
+
+        saveOrUpdateUser(userInfo): IFuture<any>;
     }
 
     export interface IPassportEntryServices{
