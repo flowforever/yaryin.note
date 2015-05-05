@@ -53,7 +53,7 @@ class App {
         //use nginx to serve static files on production
         process.env.NODE_ENV !== 'production' && app.use(express['static'](__dirname + '/public'));
 
-        app.use(require('cookie-parser')())
+        app.use(require('cookie-parser')('JuddTrump'))
         app.use(require('cookie-session')({secret: 'a keyboard cat'}));
         app.use(bodyParser.json()); // for parsing application/json
         app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
@@ -95,7 +95,8 @@ class App {
         this.passportEntry.passports.forEach(p => {
             this.app.get(p.authUrl, p.authAction);
             this.app.get(p.callbackUrl, p.authCallback, function (req, res) {
-                var user = req.user;
+                var accountController = $injector.resolve('accountController');
+                accountController.login(req, res);
             });
         });
     }

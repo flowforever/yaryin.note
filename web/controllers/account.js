@@ -25,9 +25,24 @@ var Controller = (function (_super) {
         res.send('auth failed');
     };
     Controller.prototype.login = function (req, res, next) {
+        var _this = this;
         var isFromLoginAction = req.path.toLowerCase() === '/account/login';
+        (function () {
+            if (req.user) {
+                var sessionId = _this.helper.getSessionId(req, res);
+                _this.helper.setCurrentUser(sessionId, req.user);
+                var shortNs = req.user.name || req.user.id;
+                res.redirect('/' + shortNs);
+            }
+            else {
+                res.redirect('/account/login');
+            }
+        }).future()();
     };
     Controller.prototype.logout = function (req, res, next) {
+    };
+    Controller.prototype.sessionId = function (req, res) {
+        res.send(this.helper.getSessionId(req, res));
     };
     return Controller;
 })(cbs.ControllerBase);
