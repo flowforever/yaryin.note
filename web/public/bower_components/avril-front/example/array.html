@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html av-scope="$root" class="av-mvvm">
+<head >
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="../avril-release/avril.css">
+
+    <link rel="stylesheet" href="../ref/bootstrap/css/bootstrap.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="../ref/bootstrap/css/bootstrap-theme.min.css">
+    <!--[if lt IE 8]>
+    <link href="../ref/bootstrap/css/bootstrap-ie7.css" rel="stylesheet">
+    <![endif]-->
+
+    <style>
+        body {
+            min-height: 2000px;
+            padding-top: 70px;
+        }
+    </style>
+</head >
+<body >
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation" av-template="partials/menu.html" av-delay="false">
+</div>
+<div class="container">
+    <h2>av-each</h2>
+    <h3>basic foreach </h3>
+    <div class="row well form-horizontal">
+        <table class="table table-condensed" av-scope="basicEach">
+            <tbody av-each="$scope">
+            <tr av-each-item="true">
+                <td>name</td>
+                <td av-bind="$scope"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3 av-visible="false">simple each</h3>
+    <div class="row well form-horizontal" av-scope="simpleEach" av-stop="true" av-visible="false">
+        <table class="table table-condensed">
+            <tbody av-each="new Array(10000)">
+                <tr><td>Total</td> <td av-bind="$scope.length"></td>
+                    <td><span av-bind="$setVal('$scope.startTime',Date.now()) - $tryGet($scope.endTime)"></span>ms</td></tr>
+                <tr av-each-item="true">
+                    <td av-bind="name">name</td> <td> <input av-bind="name"/> </td>
+                </tr>
+                <tr>
+                    <td>last line</td> <td>item</td> <td>item</td>
+                </tr>
+            </tbody>
+            <tfoot>
+            <tr><th>Total time</th> <th av-bind="$tryGet($scope.startTime) - $setVal('$scope.endTime',Date.now())"></th> </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <h3>time test</h3>
+    <div class="row well form-horizontal" av-scope="timeTest">
+        <p>Start at: <span av-bind="$setVal('$scope.startTime', Date.now())"></span></p>
+        <ul av-each="$scope" style="max-height: 200px; overflow-y: auto">
+            <li av-each-item="true" av-bind="new Date()"></li>
+        </ul>
+        <p av-visible="true"> Total: <span av-bind="$scope.length"></span>, <span av-bind="Date.now() - $scope.startTime"  ></span> </p>
+    </div>
+
+    <h3 av-stop="true" av-visible="false" >complicate each (10000 * 10)</h3>
+    <div av-stop="true" av-visible="false" class="row well form-horizontal" av-scope="complicateEach">
+        <table class="table table-condensed" av-delay="false">
+            <thead>
+            <tr> <th av-bind="$setVal('$scope.complicateEachTime',Date.now())"  av-delay="false"></th> </tr>
+            </thead>
+            <tbody av-each="new Array(10000)"  av-delay="false">
+            <tr> <td>first line</td> <td>item</td> <td>item</td></tr>
+            <tr av-each-item="true">
+                <td av-bind="Date.now()"  av-delay="false">item</td>
+                <td av-each="new Array(2)">
+                    <span av-bind="Math.random()" av-delay="false"></span>
+                </td>
+                <td av-bind="Math.random()"  av-delay="false"></td>
+            </tr>
+            <tr>
+                <td>last line</td> <td>item</td> <td av-bind="Math.random()">item</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr><th>Total time</th>  <th av-bind="Date.now() - $scope.complicateEachTime"  av-delay="false"></th> </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script src="../ref/jquery-1.11.1.js"></script>
+    <script src="../avril.js"></script>
+    <script src="../avril.tools.js"></script>
+    <script src="../avril.mvvm.js"></script>
+    <script src="js/mvvm.example.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="../ref/bootstrap/js/bootstrap.min.js"></script>
+</div>
+</body>
+</html>

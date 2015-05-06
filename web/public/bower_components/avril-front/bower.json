@@ -1,0 +1,24 @@
+{
+  "name": "avril-front",
+  "version": "0.0.7",
+  "homepage": "https://github.com/flowforever/avril-front",
+  "description": "avril front mvvm framework",
+  "keywords": [
+    "avril",
+    "avril-mvvm",
+    "avril-front",
+    "mvvm",
+    "av"
+  ],
+  "authors": [
+    "Judd Trump"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

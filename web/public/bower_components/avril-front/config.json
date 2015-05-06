@@ -1,0 +1,10 @@
+{
+    "copy":{
+        "copy-avril-to-disk": {
+            "files": [
+                { "expand": true, "src": ["avril-release/**"], "dest": "copy" }
+                ,{ "expand": true, "src": ["avril-release/**"], "dest": "D:\\trump\\apps\\node\\yindoc\\web\\public\\third-party" }
+            ]
+        }
+    }
+}

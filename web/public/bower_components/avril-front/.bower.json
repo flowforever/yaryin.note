@@ -1,0 +1,33 @@
+{
+  "name": "avril-front",
+  "homepage": "https://github.com/flowforever/avril-front",
+  "description": "avril front mvvm framework",
+  "keywords": [
+    "avril",
+    "avril-mvvm",
+    "avril-front",
+    "mvvm",
+    "av"
+  ],
+  "authors": [
+    "Judd Trump"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "ab13abcfdb",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "ab13abcfdb55b0a8ff309035a15a09b57e1c93ce"
+  },
+  "_source": "git://github.com/flowforever/avril-front.git",
+  "_target": "*",
+  "_originalSource": "avril-front",
+  "_direct": true
+}

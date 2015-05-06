@@ -23,7 +23,7 @@
     var mainQ = avQ();
     var apiServices = {
         preDoc: {}
-        , mainQ : mainQ
+        , mainQ: mainQ
         , appConfig: {}
         , userInfo: {}
         , getDocument: function (name, done) {
@@ -52,7 +52,7 @@
         }
         , saveDocument: function (doc, done) {
             done = done || function () {
-                };
+            };
             var self = this;
             this.saveQ.func(function (next) {
                 self._saveDocument(doc, next);
@@ -110,23 +110,47 @@
 
     mainQ
         .paralFunc(function () {
-            $.getJSON('/application/config', function(config){
+            $.getJSON('/application/config', function (config) {
                 $.extend(apiServices.appConfig, config);
             })
         })
         .paralFunc(function () {
-            $.getJSON('/account/currentUser', function(userInfo){
+            $.getJSON('/account/currentUser', function (userInfo) {
                 $.extend(apiServices.userInfo, userInfo);
             })
-        }).func(function(){
+        })
+        .func(function () {
+            var mvvm = avril.mvvm;
+            mvvm.setVal('appConfig', apiServices.appConfig);
+            mvvm.setVal('userInfo', apiServices.userInfo);
+            var settings = apiServices.userInfo && apiServices.userInfo.settings || {};
+            mvvm.setVal('application.theme', $.cookie('application-theme') || settings.appTheme || 'sky-blue');
+            !$.cookie('editor-theme') && $.cookie('editor-theme', settings.editorTheme || 'kuroir');
+            mvvm.subscribe('$root.application.theme', function(val){
+                $.cookie('application-theme', val);
+            });
+
+            $(function(){
+                mvvm.bindDom(document);
+            })
+        })
+        .func(function () {
             applicationReady();
         });
 
-    function applicationReady(){
+    function applicationReady() {
         $(function () {
             var $editor = $('#editor')
                 , editor = $editor.data('editor')
                 , $textarea = $editor.find('textarea')
+                , saveChange = function() {
+                    apiServices.saveDocument({
+                        name: getDocName()
+                        , content: editor.getValue()
+                        , _preDoc: apiServices.preDoc
+                        , path: location.pathname
+                    });
+                }
                 , $win = $(window)
                 , _preDocName = getDocName()
                 , loadDocument = function (name) {
@@ -148,14 +172,8 @@
 
             loadDocument(_preDocName);
 
-            $textarea.keyup(function () {
-                apiServices.saveDocument({
-                    name: getDocName()
-                    , content: editor.getValue()
-                    , _preDoc: apiServices.preDoc
-                    , path: location.pathname
-                });
-            });
+            $textarea.on('change', saveChange);
+            editor.on('change', saveChange);
 
             $win.hashchange(function () {
                 var docName = getDocName();

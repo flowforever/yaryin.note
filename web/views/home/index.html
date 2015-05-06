@@ -7,7 +7,7 @@
     @locals.html.resourceStyle("editor")
     @locals.html.resourceStyle("application")
 </head>
-<body class="layout-top-nav fixed skin-blue editor-page">
+<body class="layout-top-nav fixed skin-blue editor-page" av-css-str=" 'layout-top-nav fixed skin-blue editor-page ' + ($root.application && $root.application.theme || '') ">
 
 <style>
     .spinner {
@@ -165,7 +165,6 @@ T3: 2014-01-02, 9d"></i>
             <i title="Preferences" class="fa fa-cog" data-toggle="modal" data-target="#preferences-modal"></i>
             <i title="Help" class="fa fa-question-circle" data-toggle="modal" data-target="#help-modal"></i>
 
-
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown hidden">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Markdown <span
@@ -183,11 +182,22 @@ T3: 2014-01-02, 9d"></i>
                         <li><a href="?language=en-us">English</a></li>
                     </ul>
                 </li>
-                <li><a class=""
+
+                <li av-visible="$root.userInfo&&!$root.userInfo.name">
+                    <a class=""
                        title="@('Login'.localize(locals.helper))"
                        href="#dlg-login"
                        data-name="new"
-                       data-toggle="modal"> @("Login".localize(locals.helper)) </a></li>
+                       data-toggle="modal"> @("Login".localize(locals.helper)) </a>
+                </li>
+
+                <li av-visible="$root.userInfo&&$root.userInfo.name">
+                    <a class=""
+                         title="@('Login'.localize(locals.helper))"
+                         href="#dlg-user-info"
+                         data-name="new"
+                         data-toggle="modal"> Hi, {{$root.userInfo.name}} </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -252,6 +262,16 @@ T3: 2014-01-02, 9d"></i>
                 </div>
                 <div class="modal-body">
                     <form role="form">
+                        <div class="form-group"><label>Preference: </label>
+                            <select class="form-control" id="application-theme" av-bind="$root.application.theme">
+                                <option value="skin-blue">skin-blue</option>
+                                <option value="skin-black">skin-black</option>
+                                <option value="skin-purple">skin-purple</option>
+                                <option value="skin-green">skin-green</option>
+                                <option value="skin-red">skin-red</option>
+                                <option value="skin-yellow">skin-yellow</option>
+                            </select>
+                        </div>
                         <div class="form-group"><label>Editor theme: </label>
                             <select class="form-control" id="editor-theme">
                                 <option value="tomorrow_night_blue">Blue</option>
@@ -632,7 +652,23 @@ T3: 2014-01-02, 9d"></i>
             </div>
         </div>
     </div>
+    <div id="dlg-user-info" class="modal" tabindex="-1" av-bind role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
 
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{$root.userInfo.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p> Are you going to logout? </p>
+                    <a class="btn btn-danger">Yes</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!--
 
