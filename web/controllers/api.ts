@@ -1,8 +1,13 @@
 ///<reference path="../_references.d.ts"/>
 import express = require('express');
 
+
+
 import services = require('../../services/documentServices');
 import cbs = require('../utils/controllerBase');
+
+import { ControllerBase } from "../utils/controllerBase";
+
 
 class Controller extends cbs.ControllerBase {
 

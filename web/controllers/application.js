@@ -46,7 +46,8 @@ var Controller = (function () {
         cacheResourceItems('application');
         function cacheResourceItems(resourceName, isJS) {
             if (isJS === void 0) { isJS = false; }
-            var items = isJS ? avril.mvc.HtmlHelper.resourceScriptList(resourceName) : avril.mvc.HtmlHelper.resourceStyleList(resourceName);
+            var items = isJS ? avril.mvc.HtmlHelper.resourceScriptList(resourceName)
+                : avril.mvc.HtmlHelper.resourceStyleList(resourceName);
             for (var k in items) {
                 manifest.push(items[k]);
             }

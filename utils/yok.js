@@ -314,8 +314,7 @@ var Yok = (function () {
         });
         var name = ctor.$inject.name;
         if (name && name[0] === name[0].toUpperCase()) {
-            function EmptyCtor() {
-            }
+            function EmptyCtor() { }
             EmptyCtor.prototype = ctor.prototype;
             var obj = new EmptyCtor();
             ctor.apply(obj, resolvedArgs);
