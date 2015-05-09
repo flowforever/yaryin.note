@@ -31,17 +31,17 @@ class SinaPassportServices implements passports.IPassport {
                 clientSecret: sinaConfig.APP_SECRET,
                 callbackURL: this.serviceConfig.absUrl(this.callbackUrl)
             },
-            function (accessToken, refreshToken, profile, callback) {
-                console.log( arguments );
-                process.nextTick(function () {
-                    return callback(null, profile);
-                });
+             (accessToken, refreshToken, profile, callback) => {
+                return (()=>{
+                    var user = this.saveOrUpdateUser(profile).wait();
+                    callback(null, user);
+                }).future()();
             }));
     }
 
     authAction = passport.authenticate('sina');
 
-    authCallback = passport.authenticate('sina', {failureRedirect: '/passport/failed/sina'});
+    authCallback = passport.authenticate('sina', { failureRedirect: '/passport/failed/sina' });
 
     saveOrUpdateUser(user): IFuture<any>{
         return (()=>{

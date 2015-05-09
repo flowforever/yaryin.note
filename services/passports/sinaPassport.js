@@ -16,16 +16,17 @@ var SinaPassportServices = (function () {
         this.db = $db;
     }
     SinaPassportServices.prototype.init = function () {
+        var _this = this;
         var sinaConfig = this.serviceConfig.authConfig.sina;
         passport.use(new passport_sina({
             clientID: sinaConfig.APP_KEY,
             clientSecret: sinaConfig.APP_SECRET,
             callbackURL: this.serviceConfig.absUrl(this.callbackUrl)
         }, function (accessToken, refreshToken, profile, callback) {
-            console.log(arguments);
-            process.nextTick(function () {
-                return callback(null, profile);
-            });
+            return (function () {
+                var user = _this.saveOrUpdateUser(profile).wait();
+                callback(null, user);
+            }).future()();
         }));
     };
     SinaPassportServices.prototype.saveOrUpdateUser = function (user) {

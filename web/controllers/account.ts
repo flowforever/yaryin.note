@@ -6,11 +6,7 @@ class Controller extends cbs.ControllerBase {
     }
 
     currentUser(req, res) {
-        (()=> {
-            var user = this.helper.getCurrentUser(req, res).wait();
-            //user.password = null;
-            res.send(user);
-        }).future()();
+        res.send(req.user || {});
     }
 
     notfound(req, res) {

@@ -97,13 +97,8 @@ class App {
             this.app.get(p.callbackUrl, p.authCallback, function (req, res) {
                 (()=>{
                     var accountController = $injector.resolve('accountController');
-                    var dbUser = p.saveOrUpdateUser(req.user).wait();
-                    var sessionId = accountController.helper.getSessionId(req, res);
-                    accountController.helper.setCurrentUser( sessionId, dbUser ).wait();
-                    accountController.helper.setUserId(res, dbUser._id.toString());
-
+                    var dbUser = req.user;
                     res.redirect('/'+dbUser.name);
-
                 }).future()();
             });
         });

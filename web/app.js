@@ -24,7 +24,10 @@ var App = (function () {
         configurable: true
     });
     App.initCommander = function () {
-        var program = commander.version(appConfig.version).option('-p, --port <n>', 'port').parse(process.argv);
+        var program = commander
+            .version(appConfig.version)
+            .option('-p, --port <n>', 'port')
+            .parse(process.argv);
         appConfig.mode = program.mode;
         appConfig.port = program.port || process.env.port || appConfig.port;
     };
@@ -69,10 +72,7 @@ var App = (function () {
             _this.app.get(p.callbackUrl, p.authCallback, function (req, res) {
                 (function () {
                     var accountController = $injector.resolve('accountController');
-                    var dbUser = p.saveOrUpdateUser(req.user).wait();
-                    var sessionId = accountController.helper.getSessionId(req, res);
-                    accountController.helper.setCurrentUser(sessionId, dbUser).wait();
-                    accountController.helper.setUserId(res, dbUser._id.toString());
+                    var dbUser = req.user;
                     res.redirect('/' + dbUser.name);
                 }).future()();
             });

@@ -12,12 +12,7 @@ var Controller = (function (_super) {
         _super.call(this);
     }
     Controller.prototype.currentUser = function (req, res) {
-        var _this = this;
-        (function () {
-            var user = _this.helper.getCurrentUser(req, res).wait();
-            //user.password = null;
-            res.send(user);
-        }).future()();
+        res.send(req.user || {});
     };
     Controller.prototype.notfound = function (req, res) {
         res.send('not found: ' + req.query.accountId);
