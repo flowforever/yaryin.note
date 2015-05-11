@@ -34,7 +34,7 @@ var Controller = (function () {
             "/third-party/font-awesome-4.3.0/fonts/fontawesome-webfont.woff2?v=4.3.0",
             "/bower_components/ionicons-min/fonts/ionicons.ttf?v=2.0.0",
             "/bower_components/font-awesome-min/fonts/fontawesome-webfont.woff2?v=4.3.0",
-            "http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"
+            "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"
         ];
         if (req.user) {
             manifest.push('/' + req.user.name);
