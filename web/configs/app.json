@@ -1,5 +1,5 @@
 {
-  "version": "1.7.1",
+  "version": "1.7.2",
   "host" : "http://localhost:9501",
   "port": 9501,
   "minifyJs": false,

@@ -78,11 +78,11 @@
                     this.writeXHR.abort();
                     this.writeXHR = null;
                 }
-                var self = this
-                    , otherArg = '?r=' + (new Date()).getTime();
+                var self = this;
 
                 this.writeXHR = $.ajax({
-                    url: '/api/get/' + encodeURIComponent(name) + otherArg
+                    url: '/api/get/' + encodeURIComponent(name)
+                    , cache: false
                     , data: {
                         path: location.pathname
                     }
