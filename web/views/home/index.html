@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html manifest="/application/note">
 <head lang="en">
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="description" content="Yindoc is an free cloud notepad, it saves your every keydown, never worry about reload the page, just write down what you want. Yindoc is a open source software you can download it from github. feel free to give me a start."/>
+    <meta name="keywords" content="yindoc, cloud note, opensource"/>
     <title> yindoc </title>
     @locals.html.resourceStyle("base")
     @locals.html.resourceStyle("editor")
@@ -618,9 +620,8 @@ T3: 2014-01-02, 9d"></i>
             </div>
         </div>
     </div>
-    <div class="remodal" data-remodal-options="hashTracking: false" editor-component="rename" id="dlg-rename">
+    <div class="remodal" editor-component="rename" id="dlg-rename">
         <h2>@("Please input new file name:".localize(locals.helper))</h2>
-
         <p>@("Name:".localize(locals.helper)) <input placeholder="new file"/></p>
         <a class="remodal-confirm">OK</a>
     </div>

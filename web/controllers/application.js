@@ -1,7 +1,5 @@
 var avril = require('avril');
 var appConfig = avril.getConfig('app');
-var scriptConfig = avril.getConfig('scriptResources');
-var styleConfig = avril.getConfig('styleResources');
 var Controller = (function () {
     function Controller() {
         this.version = appConfig.version;
@@ -25,7 +23,7 @@ var Controller = (function () {
         var version = !appConfig.devMode && appConfig.minifyJs && appConfig.minifyCss ? this.version : new Date();
         var manifest = [
             'CACHE MANIFEST',
-            '#version:' + version + ', language ' + avril.localize.currentLanguage(req, res),
+            '#version:' + version + ', language ' + req.cookies.language,
             '/',
             "/styles/bin/resources/css/_fonts_ionicons.ttf?v=2.0.0",
             "/styles/bin/resources/css/_fonts_fontawesome-webfont.woff?v=4.3.0",
@@ -38,6 +36,10 @@ var Controller = (function () {
             "/bower_components/font-awesome-min/fonts/fontawesome-webfont.woff2?v=4.3.0",
             "http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"
         ];
+        if (req.user) {
+            manifest.push('/' + req.user.name);
+            manifest.push('/' + req.user._id);
+        }
         cacheResourceItems('base', true);
         cacheResourceItems('editor', true);
         cacheResourceItems('application', true);
