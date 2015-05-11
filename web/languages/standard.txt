@@ -25,7 +25,6 @@
             "Please input new file name:": "",
             "Rename": "",
             "Sign in with GitHub": "",
-            "Sign in with QQ": "",
             "Sign in with Weibo": ""
         }
     },
@@ -42,5 +41,7 @@
         "Sign in with GitHub": "",
         "Sign in with QQ": "",
         "Sign in with Weibo": ""
+    }
+}   "Sign in with Weibo": ""
     }
 }

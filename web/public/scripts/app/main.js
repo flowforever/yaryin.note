@@ -26,6 +26,7 @@
         , mainQ: mainQ
         , appConfig: {}
         , userInfo: {}
+        , ownerInfo: {}
         , getDocument: function (name, done) {
             if (this.writeXHR) {
                 this.writeXHR.abort();
@@ -109,15 +110,29 @@
     };
 
     mainQ
-        .paralFunc(function () {
+        .paralFunc(function (next) {
             $.getJSON('/application/config', function (config) {
                 $.extend(apiServices.appConfig, config);
+                next();
             })
         })
-        .paralFunc(function () {
+        .paralFunc(function (next) {
             $.getJSON('/account/currentUser', function (userInfo) {
                 $.extend(apiServices.userInfo, userInfo);
-            })
+                next();
+            });
+        })
+        .func(function (next) {
+            var ownerName = location.pathname.substr(1);
+            if (ownerName && ownerName != apiServices.userInfo.name) {
+                $.getJSON('/account/userInfo/:' + ownerName, function (userInfo) {
+                    $.extend(apiServices.ownerInfo, userInfo);
+                    next();
+                })
+            } else {
+                apiServices.ownerInfo = apiServices.userInfo;
+                next();
+            }
         })
         .func(function () {
             var mvvm = avril.mvvm;
@@ -126,11 +141,11 @@
             var settings = apiServices.userInfo && apiServices.userInfo.settings || {};
             mvvm.setVal('application.theme', $.cookie('application-theme') || settings.appTheme || 'sky-blue');
             !$.cookie('editor-theme') && $.cookie('editor-theme', settings.editorTheme || 'kuroir');
-            mvvm.subscribe('$root.application.theme', function(val){
+            mvvm.subscribe('$root.application.theme', function (val) {
                 $.cookie('application-theme', val);
             });
 
-            $(function(){
+            $(function () {
                 mvvm.bindDom(document);
             })
         })
@@ -143,7 +158,7 @@
             var $editor = $('#editor')
                 , editor = $editor.data('editor')
                 , $textarea = $editor.find('textarea')
-                , saveChange = function() {
+                , saveChange = function () {
                     apiServices.saveDocument({
                         name: getDocName()
                         , content: editor.getValue()

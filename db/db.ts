@@ -47,6 +47,10 @@ export class DBContext {
         , password: String
         , mode: String // html, markdown
         , userId: String
+        , isPublic: {
+            type: Boolean
+            , "default": true
+        }
     });
     Document = mongoose.model('Document', this._Document);
 

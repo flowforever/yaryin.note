@@ -38,14 +38,13 @@ export class UserServices extends sb.ServiceBase {
         });
     }
 
-    findByUserNameOrId(nameOrId, socialType):IFuture<any>{
+    findByUserNameOrId(nameOrId, socialType = null):IFuture<any>{
+        var orQuery = [];
+        if(this.isObjectId(nameOrId)) { orQuery.push(nameOrId); }
+        orQuery.push({ socialId: nameOrId , socialType: socialType }
+            , { name: nameOrId });
         return this.findOne({
-            $or: [
-                { _id: nameOrId , socialType: socialType }
-                , { socialId: nameOrId , socialType: socialType }
-                , { name: socialType + '_' + nameOrId , socialType: socialType }
-                , { name: nameOrId, socialType: socialType }
-            ]
+            $or: orQuery
         });
     }
 

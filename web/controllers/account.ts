@@ -1,12 +1,24 @@
 ///<reference path="../_references.d.ts"/>
 import cbs = require('../utils/controllerBase');
 class Controller extends cbs.ControllerBase {
+
     constructor($userServices, $documentServices) {
         super();
+        this.userServices = $userServices;
     }
+
+    userServices;
 
     currentUser(req, res) {
         res.send(req.user || {});
+    }
+
+    'userInfo/:accountName'(req, res) {
+        var self = this;
+        (()=> {
+            var user = self.userServices.findByUserNameOrId(req.params.accountName).wait();
+            res.send(user);
+        }).future()();
     }
 
     notfound(req, res) {

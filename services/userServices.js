@@ -35,13 +35,14 @@ var UserServices = (function (_super) {
         });
     };
     UserServices.prototype.findByUserNameOrId = function (nameOrId, socialType) {
+        if (socialType === void 0) { socialType = null; }
+        var orQuery = [];
+        if (this.isObjectId(nameOrId)) {
+            orQuery.push(nameOrId);
+        }
+        orQuery.push({ socialId: nameOrId, socialType: socialType }, { name: nameOrId });
         return this.findOne({
-            $or: [
-                { _id: nameOrId, socialType: socialType },
-                { socialId: nameOrId, socialType: socialType },
-                { name: socialType + '_' + nameOrId, socialType: socialType },
-                { name: nameOrId, socialType: socialType }
-            ]
+            $or: orQuery
         });
     };
     UserServices.prototype.checkLoginBySocialId = function (socialId, socialType) {

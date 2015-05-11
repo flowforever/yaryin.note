@@ -10,9 +10,17 @@ var Controller = (function (_super) {
     __extends(Controller, _super);
     function Controller($userServices, $documentServices) {
         _super.call(this);
+        this.userServices = $userServices;
     }
     Controller.prototype.currentUser = function (req, res) {
         res.send(req.user || {});
+    };
+    Controller.prototype['userInfo/:accountName'] = function (req, res) {
+        var self = this;
+        (function () {
+            var user = self.userServices.findByUserNameOrId(req.params.accountName).wait();
+            res.send(user);
+        }).future()();
     };
     Controller.prototype.notfound = function (req, res) {
         res.send('not found: ' + req.query.accountId);

@@ -11,13 +11,29 @@ var Controller = (function (_super) {
         _super.call(this);
         this.services = $documentServices;
     }
+    Controller.prototype['list/:userId?'] = function (req, res) {
+        var _this = this;
+        var userId = req.params.userId || this.helper.getSessionId(req, res);
+        (function () {
+            var list = _this.services.find({
+                userId: userId
+            }).wait();
+            res.send(list);
+        }).future()();
+    };
     Controller.prototype['get/:name'] = function (req, res) {
         var _this = this;
         (function () {
-            var doc = _this.services.findOne({
-                name: req.params.name
-            }).wait();
-            if (doc && doc.userId && doc.userId != _this.helper.getUserId(req)) {
+            var ownerId = req.query.ownerId;
+            var query = { name: req.params.name };
+            if (ownerId) {
+                query.ownerId = ownerId;
+            }
+            var doc = _this.services.findOne(query).wait();
+            if (doc
+                && doc.userId
+                && !doc.isPublic
+                && doc.userId != _this.helper.getUserId(req)) {
                 doc = null;
             }
             res.send(doc || {});
@@ -31,11 +47,13 @@ var Controller = (function (_super) {
         var _this = this;
         (function () {
             var saved = null;
+            var ownerId = req.query.ownerId;
             var saveNew = function () {
                 return _this.services.add({
                     name: req.body.name,
                     content: req.body.content,
-                    userId: _this.helper.getUserId(req)
+                    userId: _this.helper.getUserId(req) || _this.helper.getSessionId(req, res),
+                    isPublic: ownerId ? false : true
                 }).wait();
             };
             if (!req.body._id) {
@@ -44,12 +62,11 @@ var Controller = (function (_super) {
             }
             else {
                 saved = _this.services.findById(req.body._id).wait();
-                if (saved && saved.userId && saved.userId != _this.helper.getUserId(req)) {
+                if (!saved || saved && saved.userId && saved.userId != _this.helper.getUserId(req)) {
                     saved = saveNew();
                     return res.send(saved);
                 }
                 saved.content = req.body.content;
-                saved.name = req.body.name;
                 saved.save(function () {
                     res.send(saved);
                 });
