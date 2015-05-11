@@ -25,7 +25,7 @@ export class ControllerBase {
             }).future()();
         }
         , getUserId(req) {
-            return req.signedCookies.userId;
+            return req.user && req.user._id;
         }
         , setUserId(res, id) {
             res.cookie('userId', id, {

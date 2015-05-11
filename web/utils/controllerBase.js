@@ -21,7 +21,7 @@ var ControllerBase = (function () {
                 }).future()();
             },
             getUserId: function (req) {
-                return req.signedCookies.userId;
+                return req.user && req.user._id;
             },
             setUserId: function (res, id) {
                 res.cookie('userId', id, {

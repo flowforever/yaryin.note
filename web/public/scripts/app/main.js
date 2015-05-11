@@ -20,87 +20,134 @@
         navigateToNewFile();
     }
 
-    var mainQ = avQ();
-    var apiServices = {
-        preDoc: {}
-        , mainQ: mainQ
-        , appConfig: {}
-        , userInfo: {}
-        , getDocument: function (name, done) {
-            if (this.writeXHR) {
-                this.writeXHR.abort();
-                this.writeXHR = null;
+    var mainQ = avQ()
+        , $$
+        , apiServices = $$ = {
+            preDoc: {}
+            , mainQ: mainQ
+            , appConfig: {}
+            , userInfo: {}
+            , ownerInfo: {}
+            , cacheKey: function (key, group) {
+                return ['note-cache', group || 'default', key].join(':');
             }
-            var self = this
-                , otherArg = '?r=' + (new Date()).getTime();
-
-            this.writeXHR = $.ajax({
-                url: '/api/get/' + encodeURIComponent(name) + otherArg
-                , data: {
-                    path: location.pathname
+            , getJSON: function (url, data, next) {
+                if (arguments.length == 2 && $.isFunction(data)) {
+                    next = data;
+                    data = undefined;
                 }
-                , dataType: 'json'
-                , success: function (res) {
-                    done(res);
-                    self.preDoc = res;
-                }
-                , error: function () {
-                    self.preDoc = {};
-                    done({});
-                }
-            });
-        }
-        , saveDocument: function (doc, done) {
-            done = done || function () {
-                };
-            var self = this;
-            this.saveQ.func(function (next) {
-                self._saveDocument(doc, next);
-            }).func(function () {
-                done();
-            });
-        }
-        , _saveDocument: function (doc, done) {
-            if (this.readXHR) {
-                this.readXHR.abort();
-                this.readXHR = null;
-            }
-            var self = this;
-            self.windowLeaveMessage = 'Saving content';
-            var content = doc.content;
-            if (content && content !== this.preDoc.content) {
-                this.preDoc.content = doc.content;
-                this.writeXHR = $.ajax({
-                    url: '/api/edit'
-                    , dataType: 'json'
-                    , data: {
-                        name: doc.name
-                        , content: doc.content
-                        , _id: doc._preDoc._id
-                    }
-                    , type: 'post'
+                return $.ajax({
+                    url: url
+                    , data: data
                     , success: function (res) {
-                        if (!doc._preDoc._id) {
-                            doc._preDoc._id = res._id;
-                        }
-                        self.windowLeaveMessage = null;
-                        done()
+                        next(null, res);
+                    }
+                    , error: function (err) {
+                        next(err);
+                    }
+                });
+            }
+            , getCachedJSON: function (url, data, next) {
+                if (arguments.length == 2 && $.isFunction(data)) {
+                    next = data;
+                    data = undefined;
+                }
+                return $$.getJSON(url, data, function (err, res) {
+                    if(err) {  }
+                });
+            }
+            , postJSON: function (url, data, next) {
+                if (arguments.length == 2 && $.isFunction(data)) {
+                    next = data;
+                    data = undefined;
+                }
+                return $.ajax({
+                    url: url
+                    , type: 'post'
+                    , data: data
+                    , success: function (res) {
+                        next(null, res);
+                    }
+                    , error: function (err) {
+                        next(err);
+                    }
+                });
+            }
+            , getDocument: function (name, done) {
+                if (this.writeXHR) {
+                    this.writeXHR.abort();
+                    this.writeXHR = null;
+                }
+                var self = this
+                    , otherArg = '?r=' + (new Date()).getTime();
+
+                this.writeXHR = $.ajax({
+                    url: '/api/get/' + encodeURIComponent(name) + otherArg
+                    , data: {
+                        path: location.pathname
+                    }
+                    , dataType: 'json'
+                    , success: function (res) {
+                        done(res);
+                        self.preDoc = res;
                     }
                     , error: function () {
-                        self.windowLeaveMessage = 'Failed to save';
-                        done();
+                        self.preDoc = {};
+                        done({});
                     }
-                })
-            } else {
-                done();
+                });
             }
-        }
-        , saveQ: avQ()
-        , isRename: false
-        , writeXHR: null
-        , readXHR: null
-        , windowLeaveMessage: null
-    };
+            , saveDocument: function (doc, done) {
+                done = done || function () {
+                    };
+                var self = this;
+                this.saveQ.func(function (next) {
+                    self._saveDocument(doc, next);
+                }).func(function () {
+                    done();
+                });
+            }
+            , _saveDocument: function (doc, done) {
+                if (this.readXHR) {
+                    this.readXHR.abort();
+                    this.readXHR = null;
+                }
+                var self = this;
+                self.windowLeaveMessage = 'Saving content';
+                var content = doc.content;
+                if (content && content !== this.preDoc.content) {
+                    this.preDoc.content = doc.content;
+                    this.writeXHR = $.ajax({
+                        url: '/api/edit'
+                        , dataType: 'json'
+                        , data: {
+                            name: doc.name
+                            , content: doc.content
+                            , _id: doc._preDoc._id
+                        }
+                        , type: 'post'
+                        , success: function (res) {
+                            if (!doc._preDoc._id) {
+                                doc._preDoc._id = res._id;
+                            }
+                            self.windowLeaveMessage = null;
+                            done()
+                        }
+                        , error: function () {
+                            self.windowLeaveMessage = 'Failed to save';
+                            done();
+                        }
+                    })
+                } else {
+                    done();
+                }
+            }
+            , saveQ: avQ()
+            , isRename: false
+            , writeXHR: null
+            , readXHR: null
+            , windowLeaveMessage: null
+        };
 
     window.onbeforeunload = function () {
         if (apiServices.saveQ.length > 0 && apiServices.windowLeaveMessage) {
@@ -110,21 +157,21 @@
 
     mainQ
         .paralFunc(function (next) {
-            $.getJSON('/application/config', function (config) {
+            $$.getJSON('/application/config', function (err, config) {
                 $.extend(apiServices.appConfig, config);
                 next();
-            })
+            });
         })
         .paralFunc(function (next) {
-            $.getJSON('/account/currentUser', function (userInfo) {
+            $$.getJSON('/account/currentUser', function (err, userInfo) {
                 $.extend(apiServices.userInfo, userInfo);
                 next();
-            })
+            });
         })
         .func(function (next) {
             var ownerName = location.pathname.substr(1);
             if (ownerName && ownerName != apiServices.userInfo.name) {
-                $.getJSON('/account/userInfo/:' + ownerName, function (userInfo) {
+                $$.getJSON('/account/userInfo/:' + ownerName, function (err, userInfo) {
                     $.extend(apiServices.ownerInfo, userInfo);
                     next();
                 })
@@ -134,7 +181,7 @@
             }
         })
         .func(function () {
-            if(apiServices.appConfig.version !== localStorage.appVersion) {
+            if (apiServices.appConfig.version !== localStorage.appVersion) {
                 window.applicationCache && applicationCache.update();
                 localStorage.appVersion = apiServices.appConfig.version;
             }
