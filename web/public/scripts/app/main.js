@@ -26,7 +26,6 @@
         , mainQ: mainQ
         , appConfig: {}
         , userInfo: {}
-        , ownerInfo: {}
         , getDocument: function (name, done) {
             if (this.writeXHR) {
                 this.writeXHR.abort();
@@ -53,7 +52,7 @@
         }
         , saveDocument: function (doc, done) {
             done = done || function () {
-            };
+                };
             var self = this;
             this.saveQ.func(function (next) {
                 self._saveDocument(doc, next);
@@ -120,7 +119,7 @@
             $.getJSON('/account/currentUser', function (userInfo) {
                 $.extend(apiServices.userInfo, userInfo);
                 next();
-            });
+            })
         })
         .func(function (next) {
             var ownerName = location.pathname.substr(1);
@@ -132,6 +131,12 @@
             } else {
                 apiServices.ownerInfo = apiServices.userInfo;
                 next();
+            }
+        })
+        .func(function () {
+            if(apiServices.appConfig.version !== localStorage.appVersion) {
+                window.applicationCache && applicationCache.update();
+                localStorage.appVersion = apiServices.appConfig.version;
             }
         })
         .func(function () {
