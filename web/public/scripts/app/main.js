@@ -182,7 +182,10 @@
         })
         .func(function () {
             if (apiServices.appConfig.version !== localStorage.appVersion) {
-                window.applicationCache && applicationCache.update();
+                try{
+                    window.applicationCache && applicationCache.update();
+                }catch(E){
+                }
                 localStorage.appVersion = apiServices.appConfig.version;
             }
         })
