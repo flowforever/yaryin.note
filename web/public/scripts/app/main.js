@@ -147,7 +147,6 @@
             , writeXHR: null
             , readXHR: null
             , windowLeaveMessage: null
-            , triggerEditorChange: true
         };
 
     window.onbeforeunload = function () {
@@ -215,23 +214,25 @@
                 , editor = $editor.data('editor')
                 , $textarea = $editor.find('textarea')
                 , saveChange = function () {
-                    apiServices.triggerEditorChange && apiServices.saveDocument({
+                    _triggerChange && apiServices.saveDocument({
                         name: getDocName()
                         , content: editor.getValue()
                         , _preDoc: apiServices.preDoc
                         , path: location.pathname
                     });
-                    apiServices.triggerEditorChange = true;
                 }
                 , $win = $(window)
                 , _preDocName = getDocName()
+                , _triggerChange = true
                 , loadDocument = function (name) {
                     $('title').html(name + ' - Yindoc');
                     toggleLoadingMode(true);
                     apiServices.getDocument(name, function (res) {
+                        _triggerChange = false;
                         editor.setValue(res.content);
                         editor.clearSelection();
                         toggleLoadingMode(false);
+                        _triggerChange = true;
                     });
                 }
                 , toggleLoadingMode = function (loadingMode) {
@@ -248,7 +249,6 @@
             editor.on('change', saveChange);
 
             $win.hashchange(function () {
-                apiServices.triggerEditorChange = false;
                 var docName = getDocName();
                 if (!docName) {
                     navigateToNewFile();
