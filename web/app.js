@@ -99,8 +99,10 @@ var App = (function () {
         var redis = $injector.resolve('redisCacheServices');
     };
     App.prototype.onProcessExit = function (arg) {
+        console.log('process exit.');
     };
     App.prototype.onUnCaughtException = function (arg) {
+        console.log('onUnCaughtException', arguments);
     };
     return App;
 })();

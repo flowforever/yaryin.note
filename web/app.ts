@@ -130,15 +130,14 @@ class App {
     //region process events
     beforeExit(arg) {
         var redis = $injector.resolve('redisCacheServices');
-
     }
 
     onProcessExit(arg) {
-
+        console.log('process exit.')
     }
 
     onUnCaughtException(arg) {
-
+        console.log('onUnCaughtException', arguments);
     }
     //endregion
 }
