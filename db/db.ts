@@ -29,6 +29,7 @@ export class DBContext {
         , password: String
         , nickName: String
         , phone: String
+        , date: Date
 
         //begin social ids
         , socialId: String
@@ -45,6 +46,7 @@ export class DBContext {
         name: String
         , content: String
         , password: String
+        , date: Date
         , mode: String // html, markdown
         , userId: String
         , isPublic: {
@@ -53,6 +55,14 @@ export class DBContext {
         }
     });
     Document = mongoose.model('Document', this._Document);
+
+    _LatestDocument = new Schema({
+        name: String
+        , docId: String
+        , userId: String
+        , date: Date
+    });
+    LatestDocument = mongoose.model('LatestDocument', this._LatestDocument);
 
     isObjectId (id) {
         return mongoose.Types.ObjectId.isValid(id);

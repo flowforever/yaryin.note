@@ -18,6 +18,7 @@ var DBContext = (function () {
             password: String,
             nickName: String,
             phone: String,
+            date: Date,
             socialId: String,
             socialType: String //weibo, qq, github
             ,
@@ -30,6 +31,7 @@ var DBContext = (function () {
             name: String,
             content: String,
             password: String,
+            date: Date,
             mode: String // html, markdown
             ,
             userId: String,
@@ -39,6 +41,13 @@ var DBContext = (function () {
             }
         });
         this.Document = mongoose.model('Document', this._Document);
+        this._LatestDocument = new Schema({
+            name: String,
+            docId: String,
+            userId: String,
+            date: Date
+        });
+        this.LatestDocument = mongoose.model('LatestDocument', this._LatestDocument);
     }
     DBContext.prototype.init = function (connectionStr) {
         mongoose.connect(connectionStr || 'mongodb://localhost/notes');

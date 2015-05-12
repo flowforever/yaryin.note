@@ -10,7 +10,9 @@ class Controller extends cbs.ControllerBase {
     userServices;
 
     currentUser(req, res) {
-        res.send(req.user || {});
+        var currentUser = req.user || {};
+        currentUser.sessionId = this.helper.getSessionId(req, res);
+        res.send(currentUser);
     }
 
     'userInfo/:accountName'(req, res) {

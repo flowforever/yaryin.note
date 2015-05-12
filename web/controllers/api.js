@@ -27,13 +27,15 @@ var Controller = (function (_super) {
             var ownerId = req.query.ownerId;
             var query = { name: req.params.name };
             if (ownerId) {
-                query.ownerId = ownerId;
+                query.userId = ownerId;
             }
             var doc = _this.services.findOne(query).wait();
             if (doc
-                && doc.userId
-                && !doc.isPublic
-                && doc.userId != _this.helper.getUserId(req)) {
+                &&
+                    (doc.userId
+                        && !doc.isPublic
+                        && doc.userId != _this.helper.getUserId(req)
+                        || !doc.userId && ownerId)) {
                 doc = null;
             }
             res.send(doc || {});
@@ -42,6 +44,13 @@ var Controller = (function (_super) {
     Controller.prototype['get/:userId/:docName'] = function (req, res) {
     };
     Controller.prototype['[post]edit/:userId'] = function (req, res) {
+    };
+    Controller.prototype['[post]addLatestDoc'] = function (req, res) {
+        var _this = this;
+        (function () {
+            var saved = _this.services.addLatestDocument(req.body).wait();
+            res.send(saved);
+        }).future()();
     };
     Controller.prototype['[post]edit'] = function (req, res) {
         var _this = this;
@@ -52,7 +61,7 @@ var Controller = (function (_super) {
                 return _this.services.add({
                     name: req.body.name,
                     content: req.body.content,
-                    userId: _this.helper.getUserId(req) || _this.helper.getSessionId(req, res),
+                    userId: req.query.path !== '/' ? _this.helper.getUserId(req) : null,
                     isPublic: ownerId ? false : true
                 }).wait();
             };

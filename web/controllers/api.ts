@@ -31,13 +31,17 @@ class Controller extends cbs.ControllerBase {
         (()=> {
             var ownerId = req.query.ownerId;
             var query = <any>{ name: req.params.name };
-            if (ownerId) { query.ownerId = ownerId; }
+            if (ownerId) { query.userId = ownerId; }
             var doc = this.services.findOne(query).wait();
 
             if (doc
-                && doc.userId
-                && !doc.isPublic
-                && doc.userId != this.helper.getUserId(req)) {
+                &&
+                (doc.userId
+                    && !doc.isPublic
+                    && doc.userId != this.helper.getUserId(req)
+                    || !doc.userId && ownerId
+                )
+            ) {
                 doc = null;
             }
 
@@ -53,6 +57,13 @@ class Controller extends cbs.ControllerBase {
 
     }
 
+    '[post]addLatestDoc' (req, res) {
+        (()=>{
+            var saved = this.services.addLatestDocument(req.body).wait();
+            res.send( saved );
+        }).future()();
+    }
+
     '[post]edit'(req:express.Request, res:express.Response) {
         (()=> {
             var saved = null;
@@ -62,7 +73,7 @@ class Controller extends cbs.ControllerBase {
                 return this.services.add({
                     name: req.body.name
                     , content: req.body.content
-                    , userId: this.helper.getUserId(req) || this.helper.getSessionId(req, res)
+                    , userId: req.query.path !== '/' ? this.helper.getUserId(req) : null
                     , isPublic: ownerId? false: true
                 }).wait();
             };

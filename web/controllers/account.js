@@ -13,7 +13,9 @@ var Controller = (function (_super) {
         this.userServices = $userServices;
     }
     Controller.prototype.currentUser = function (req, res) {
-        res.send(req.user || {});
+        var currentUser = req.user || {};
+        currentUser.sessionId = this.helper.getSessionId(req, res);
+        res.send(currentUser);
     };
     Controller.prototype['userInfo/:accountName'] = function (req, res) {
         var self = this;

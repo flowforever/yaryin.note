@@ -4,6 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
+var Future = require("fibers/future");
 var sb = require('./servicesBase');
 var Document = (function (_super) {
     __extends(Document, _super);
@@ -13,6 +14,23 @@ var Document = (function (_super) {
     }
     Document.prototype.getList = function () {
         return this.getAll();
+    };
+    Document.prototype.addLatestDocument = function (item) {
+        var $latestDocuments = Future.wrap(this.db.LatestDocument);
+        return (function () {
+            var latestDoc = $latestDocuments.findOneFuture({
+                docId: item.docId,
+                userId: item.userId
+            }).wait();
+            if (latestDoc) {
+                latestDoc.date = new Date();
+                return latestDoc.save.future().bind(latestDoc)().wait();
+            }
+            else {
+                item.date = new Date();
+                return $latestDocuments.createFuture(item).wait();
+            }
+        }).future()();
     };
     return Document;
 })(sb.ServiceBase);

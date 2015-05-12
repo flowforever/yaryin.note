@@ -36,6 +36,7 @@
                     next = data;
                     data = undefined;
                 }
+                if(!$.isFunction(next)) { next = function(){} };
                 return $.ajax({
                     url: url
                     , data: data
@@ -53,7 +54,8 @@
                     data = undefined;
                 }
                 return $$.getJSON(url, data, function (err, res) {
-                    if(err) {  }
+                    if (err) {
+                    }
                 });
             }
             , postJSON: function (url, data, next) {
@@ -61,6 +63,7 @@
                     next = data;
                     data = undefined;
                 }
+                if(!$.isFunction(next)) { next = function(){} };
                 return $.ajax({
                     url: url
                     , type: 'post'
@@ -99,13 +102,20 @@
             }
             , saveDocument: function (doc, done) {
                 done = done || function () {
-                    };
+                };
                 var self = this;
                 this.saveQ.func(function (next) {
                     self._saveDocument(doc, next);
                 }).func(function () {
                     done();
                 });
+            }
+            , _saveCache: {}
+            , addToLatestChange: function (docId) {
+                !this._saveCache[docId] && this.postJSON('/api/addLatestDoc', {
+                    docId: docId
+                    , userId: this.userInfo._id || this.userInfo.sessionId
+                })
             }
             , _saveDocument: function (doc, done) {
                 if (this.readXHR) {
@@ -130,6 +140,8 @@
                             if (!doc._preDoc._id) {
                                 doc._preDoc._id = res._id;
                             }
+                            self.addToLatestChange(res._id);
+                            self._saveCache[res._id] = true;
                             self.windowLeaveMessage = null;
                             done()
                         }
@@ -182,9 +194,9 @@
         })
         .func(function () {
             if (apiServices.appConfig.version !== localStorage.appVersion) {
-                try{
+                try {
                     window.applicationCache && applicationCache.update();
-                }catch(E){
+                } catch (E) {
                 }
                 localStorage.appVersion = apiServices.appConfig.version;
             }
