@@ -2,223 +2,238 @@
  * Created by trump.wang on 2015/4/24.
  */
 (function ($) {
-
-    var getDocName = function () {
-        return location.hash.replace('#', '');
-    };
-
-    function navigateToNewFile(fileName) {
-        fileName = fileName || ( new Date().getTime() ).toString(32);
-        var newHref = '#' + fileName;
-        if (/language/.test(location.search)) {
-            newHref = location.pathname + newHref;
+    var $services = {
+        preDoc: {}
+        , appConfig: {
         }
-        document.location.href = newHref;
-    }
+        , apiUrls: {
+            documents: {
+                'edit': '/api/edit'
+                , get: '/api/get'
+            }
+            , accounts: {
+                currentUser: '/account/currentUser'
+                , 'userInfo': '/account/userInfo'
+            }
+            , applications: {
+                config: '/application/config'
+            }
+        }
+        , userInfo: {}
+        , ownerInfo: {}
+        , getDocName: function () {
+            return location.hash.replace('#', '');
+        }
+        , navigateToNewFile: function (fileName) {
+            fileName = fileName || ( new Date().getTime() ).toString(32);
+            var newHref = '#' + fileName;
+            if (/language/.test(location.search)) {
+                newHref = location.pathname + newHref;
+            }
+            document.location.href = newHref;
+        }
+        , cacheKey: function (key, group) {
+            return ['note-cache', group || 'default', key].join(':');
+        }
+        , getJSON: function (url, data, next) {
+            if (arguments.length == 2 && $.isFunction(data)) {
+                next = data;
+                data = undefined;
+            }
+            if (!$.isFunction(next)) {
+                next = function () {
+                }
+            }
+            ;
+            return $.ajax({
+                url: url
+                , data: data
+                , success: function (res) {
+                    next(null, res);
+                }
+                , error: function (err) {
+                    next(err);
+                }
+            });
+        }
+        , getCachedJSON: function (url, data, next) {
+            if (arguments.length == 2 && $.isFunction(data)) {
+                next = data;
+                data = undefined;
+            }
+            return $services.getJSON(url, data, function (err, res) {
+                if (err) {
+                }
+            });
+        }
+        , postJSON: function (url, data, next) {
+            if (arguments.length == 2 && $.isFunction(data)) {
+                next = data;
+                data = undefined;
+            }
+            if (!$.isFunction(next)) {
+                next = function () {
+                }
+            }
+            ;
+            return $.ajax({
+                url: url
+                , type: 'post'
+                , data: data
+                , success: function (res) {
+                    next(null, res);
+                }
+                , error: function (err) {
+                    next(err);
+                }
+            });
+        }
+        , getDocument: function (name, done) {
+            if (this.writeXHR) {
+                this.writeXHR.abort();
+                this.writeXHR = null;
+            }
+            var self = this;
 
-    if (!getDocName()) {
-        navigateToNewFile();
-    }
-
-    var mainQ = avQ()
-        , $$
-        , apiServices = $$ = {
-            preDoc: {}
-            , mainQ: mainQ
-            , appConfig: {}
-            , userInfo: {}
-            , ownerInfo: {}
-            , cacheKey: function (key, group) {
-                return ['note-cache', group || 'default', key].join(':');
-            }
-            , getJSON: function (url, data, next) {
-                if (arguments.length == 2 && $.isFunction(data)) {
-                    next = data;
-                    data = undefined;
+            this.writeXHR = $.ajax({
+                url: '/api/get/' + encodeURIComponent(name)
+                , cache: false
+                , data: {
+                    path: location.pathname
                 }
-                if(!$.isFunction(next)) { next = function(){} };
-                return $.ajax({
-                    url: url
-                    , data: data
-                    , success: function (res) {
-                        next(null, res);
-                    }
-                    , error: function (err) {
-                        next(err);
-                    }
-                });
-            }
-            , getCachedJSON: function (url, data, next) {
-                if (arguments.length == 2 && $.isFunction(data)) {
-                    next = data;
-                    data = undefined;
+                , dataType: 'json'
+                , success: function (res) {
+                    done(res);
+                    self.preDoc = res;
                 }
-                return $$.getJSON(url, data, function (err, res) {
-                    if (err) {
-                    }
-                });
-            }
-            , postJSON: function (url, data, next) {
-                if (arguments.length == 2 && $.isFunction(data)) {
-                    next = data;
-                    data = undefined;
+                , error: function () {
+                    self.preDoc = {};
+                    done({});
                 }
-                if(!$.isFunction(next)) { next = function(){} };
-                return $.ajax({
-                    url: url
-                    , type: 'post'
-                    , data: data
-                    , success: function (res) {
-                        next(null, res);
-                    }
-                    , error: function (err) {
-                        next(err);
-                    }
-                });
+            });
+        }
+        , saveDocument: function (doc, done) {
+            done = done || function () {
+            };
+            var self = this;
+            this.saveQ.func(function (next) {
+                self._saveDocument(doc, next);
+            }).func(function () {
+                done();
+            });
+        }
+        , getUserDocuments: function (userId, next) { }
+        , getRecentDocuments: function(userId, next) {}
+        , _saveCache: {}
+        , addToLatestChange: function (docId) {
+            !this._saveCache[docId] && this.postJSON('/api/addLatestDoc', {
+                docId: docId
+                , userId: this.userInfo._id || this.userInfo.sessionId
+            })
+        }
+        , _saveDocument: function (doc, done) {
+            if (this.readXHR) {
+                this.readXHR.abort();
+                this.readXHR = null;
             }
-            , getDocument: function (name, done) {
-                if (this.writeXHR) {
-                    this.writeXHR.abort();
-                    this.writeXHR = null;
-                }
-                var self = this;
-
+            var self = this;
+            self.windowLeaveMessage = 'Saving content';
+            var content = doc.content;
+            if (content && content !== this.preDoc.content) {
+                this.preDoc.content = doc.content;
                 this.writeXHR = $.ajax({
-                    url: '/api/get/' + encodeURIComponent(name)
-                    , cache: false
-                    , data: {
-                        path: location.pathname
-                    }
+                    url: '/api/edit'
                     , dataType: 'json'
+                    , data: {
+                        name: doc.name
+                        , content: doc.content
+                        , _id: doc._preDoc._id
+                    }
+                    , type: 'post'
                     , success: function (res) {
-                        done(res);
-                        self.preDoc = res;
+                        if (!doc._preDoc._id) {
+                            doc._preDoc._id = res._id;
+                        }
+                        self.addToLatestChange(res._id);
+                        self._saveCache[res._id] = true;
+                        self.windowLeaveMessage = null;
+                        done()
                     }
                     , error: function () {
-                        self.preDoc = {};
-                        done({});
+                        self.windowLeaveMessage = 'Failed to save';
+                        done();
                     }
-                });
-            }
-            , saveDocument: function (doc, done) {
-                done = done || function () {
-                };
-                var self = this;
-                this.saveQ.func(function (next) {
-                    self._saveDocument(doc, next);
-                }).func(function () {
-                    done();
-                });
-            }
-            , _saveCache: {}
-            , addToLatestChange: function (docId) {
-                !this._saveCache[docId] && this.postJSON('/api/addLatestDoc', {
-                    docId: docId
-                    , userId: this.userInfo._id || this.userInfo.sessionId
                 })
+            } else {
+                done();
             }
-            , _saveDocument: function (doc, done) {
-                if (this.readXHR) {
-                    this.readXHR.abort();
-                    this.readXHR = null;
-                }
-                var self = this;
-                self.windowLeaveMessage = 'Saving content';
-                var content = doc.content;
-                if (content && content !== this.preDoc.content) {
-                    this.preDoc.content = doc.content;
-                    this.writeXHR = $.ajax({
-                        url: '/api/edit'
-                        , dataType: 'json'
-                        , data: {
-                            name: doc.name
-                            , content: doc.content
-                            , _id: doc._preDoc._id
-                        }
-                        , type: 'post'
-                        , success: function (res) {
-                            if (!doc._preDoc._id) {
-                                doc._preDoc._id = res._id;
-                            }
-                            self.addToLatestChange(res._id);
-                            self._saveCache[res._id] = true;
-                            self.windowLeaveMessage = null;
-                            done()
-                        }
-                        , error: function () {
-                            self.windowLeaveMessage = 'Failed to save';
-                            done();
-                        }
-                    })
-                } else {
-                    done();
-                }
-            }
-            , saveQ: avQ()
-            , isRename: false
-            , writeXHR: null
-            , readXHR: null
-            , windowLeaveMessage: null
-        };
+        }
+        , saveQ: avQ()
+        , isRename: false
+        , writeXHR: null
+        , readXHR: null
+        , windowLeaveMessage: null
+    };
+
+    if (!$services.getDocName()) {
+        $services.navigateToNewFile();
+    }
 
     window.onbeforeunload = function () {
-        if (apiServices.saveQ.length > 0 && apiServices.windowLeaveMessage) {
-            return apiServices.windowLeaveMessage;
+        if ($services.saveQ.length > 0) {
+            return "Yindoc is saving the documents. please wait ...";
         }
     };
 
-    mainQ
+    avQ()
         .paralFunc(function (next) {
-            $$.getJSON('/application/config', function (err, config) {
-                $.extend(apiServices.appConfig, config);
+            $services.getJSON('/application/config', function (err, config) {
+                config && $.extend($services.appConfig, config);
                 next();
             });
         })
         .paralFunc(function (next) {
-            $$.getJSON('/account/currentUser', function (err, userInfo) {
-                $.extend(apiServices.userInfo, userInfo);
+            $services.getJSON('/account/currentUser', function (err, userInfo) {
+                userInfo && $.extend($services.userInfo, userInfo);
                 next();
             });
         })
         .func(function (next) {
             var ownerName = location.pathname.substr(1);
-            if (ownerName && ownerName != apiServices.userInfo.name) {
-                $$.getJSON('/account/userInfo/:' + ownerName, function (err, userInfo) {
-                    $.extend(apiServices.ownerInfo, userInfo);
+            if (ownerName && ownerName != $services.userInfo.name) {
+                $services.getJSON('/account/userInfo/' + ownerName, function (err, userInfo) {
+                    userInfo && $.extend($services.ownerInfo, userInfo);
                     next();
                 })
             } else {
-                apiServices.ownerInfo = apiServices.userInfo;
+                $services.ownerInfo = $services.userInfo;
                 next();
             }
         })
         .func(function () {
-            if (apiServices.appConfig.version !== localStorage.appVersion) {
+            if ($services.appConfig.version !== localStorage.appVersion) {
                 try {
                     window.applicationCache && applicationCache.update();
                 } catch (E) {
                 }
-                localStorage.appVersion = apiServices.appConfig.version;
+                localStorage.appVersion = $services.appConfig.version;
             }
         })
         .func(function () {
-            var mvvm = avril.mvvm;
-            mvvm.setVal('appConfig', apiServices.appConfig);
-            mvvm.setVal('userInfo', apiServices.userInfo);
-            var settings = apiServices.userInfo && apiServices.userInfo.settings || {};
-            mvvm.setVal('application.theme', $.cookie('application-theme') || settings.appTheme || 'sky-blue');
-            !$.cookie('editor-theme') && $.cookie('editor-theme', settings.editorTheme || 'kuroir');
-            mvvm.subscribe('$root.application.theme', function (val) {
-                $.cookie('application-theme', val);
-            });
-
             $(function () {
+                var mvvm = avril.mvvm;
+                mvvm.setVal('appConfig', $services.appConfig);
+                mvvm.setVal('userInfo', $services.userInfo);
+                var settings = $services.userInfo && $services.userInfo.settings || {};
+                mvvm.setVal('application.theme', $.cookie('application-theme') || settings.appTheme || 'sky-blue');
+                !$.cookie('editor-theme') && $.cookie('editor-theme', settings.editorTheme || 'kuroir');
+                mvvm.subscribe('$root.application.theme', function (val) {
+                    $.cookie('application-theme', val);
+                });
                 mvvm.bindDom(document);
-            })
+            });
         })
-        .func(function () {
-            applicationReady();
-        });
+        .func(applicationReady);
 
     function applicationReady() {
         $(function () {
@@ -226,20 +241,20 @@
                 , editor = $editor.data('editor')
                 , $textarea = $editor.find('textarea')
                 , saveChange = function () {
-                    _triggerChange && apiServices.saveDocument({
-                        name: getDocName()
+                    _triggerChange && $services.saveDocument({
+                        name: $services.getDocName()
                         , content: editor.getValue()
-                        , _preDoc: apiServices.preDoc
+                        , _preDoc: $services.preDoc
                         , path: location.pathname
                     });
                 }
                 , $win = $(window)
-                , _preDocName = getDocName()
+                , _preDocName = $services.getDocName()
                 , _triggerChange = true
                 , loadDocument = function (name) {
                     $('title').html(name + ' - Yindoc');
                     toggleLoadingMode(true);
-                    apiServices.getDocument(name, function (res) {
+                    $services.getDocument(name, function (res) {
                         _triggerChange = false;
                         editor.setValue(res.content);
                         editor.clearSelection();
@@ -261,11 +276,11 @@
             editor.on('change', saveChange);
 
             $win.hashchange(function () {
-                var docName = getDocName();
+                var docName = $services.getDocName();
                 if (!docName) {
-                    navigateToNewFile();
+                    $services.navigateToNewFile();
                 } else {
-                    if (!apiServices.isRename && _preDocName != docName) {
+                    if (!$services.isRename && _preDocName != docName) {
                         _preDocName = docName;
                         loadDocument(docName);
                     }
@@ -273,4 +288,5 @@
             });
         });
     }
-})(jQuery);
+})
+(jQuery);

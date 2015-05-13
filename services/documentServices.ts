@@ -21,18 +21,24 @@ export class Document extends sb.ServiceBase {
     addLatestDocument(item):IFuture<any> {
         return (()=> {
             var LatestDocument = this.db.LatestDocument;
-            var latestDoc = LatestDocument.findOne.bind(LatestDocument).future().bind(LatestDocument)({
+            var $LatestDocument = Future.wrap(LatestDocument);
+
+            var findFuture = $LatestDocument.findOneFuture.bind(LatestDocument);
+
+            var latestDoc = findFuture({
                 docId: item.docId
                 , userId: item.userId
             }).wait();
 
             if (latestDoc) {
                 latestDoc.date = new Date();
-                return latestDoc.save.bind(latestDoc).future()().wait();
+                var $latestDoc = Future.wrap(latestDoc);
+                return $latestDoc.saveFuture.bind(latestDoc)().wait()
+                //return latestDoc.save.bind(latestDoc).future()().wait();
             }
             else {
                 item.date = new Date();
-                return LatestDocument.create.bind(LatestDocument).future()(item).wait();
+                return $LatestDocument.createFuture.bind(LatestDocument)(item).wait();
             }
         }).future()();
     }
