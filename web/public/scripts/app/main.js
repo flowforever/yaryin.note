@@ -1,5 +1,7 @@
 /**
  * Created by trump.wang on 2015/4/24.
+ * scripts/app
+ *
  */
 (function ($) {
     var $services = {
@@ -17,6 +19,7 @@
             }
             , applications: {
                 config: '/application/config'
+
             }
         }
         , userInfo: {}
